@@ -1,6 +1,8 @@
 package com.openclassrooms.patientmanagement.service;
 
+import com.openclassrooms.patientmanagement.exceptions.PatientNotFoundException;
 import com.openclassrooms.patientmanagement.model.Patient;
+import jakarta.transaction.Transactional;
 
 import java.util.Optional;
 
@@ -28,6 +30,13 @@ public interface IPatientService {
      * @return The added patient.
      */
     public Patient addPatient(Patient patient);
+
+    /**
+     * Updates a patient to the repository.
+     * @param patient The Patient object to be updated.
+     * @return The updated Patient object.
+     */
+    public Patient updatePatient(Patient patient);
 
     /**
      * Deletes a patient by their ID.
