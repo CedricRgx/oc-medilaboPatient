@@ -1,5 +1,6 @@
 package com.openclassrooms.patientmanagement.model;
 
+import com.openclassrooms.patientmanagement.util.Gender;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
@@ -38,8 +39,8 @@ public class PatientTest {
     @Test
     public void testGetGender() {
         Patient patient = new Patient();
-        patient.setGender("H");
-        assertThat(patient.getGender()).isEqualTo("H");
+        patient.setGender(Gender.H);
+        assertThat(patient.getGender()).isEqualTo(Gender.H);
     }
 
     @Test
@@ -90,8 +91,8 @@ public class PatientTest {
     @Test
     public void testSetGender() {
         Patient patient = new Patient();
-        patient.setGender("F");
-        assertThat(patient.getGender()).isEqualTo("F");
+        patient.setGender(Gender.F);
+        assertThat(patient.getGender()).isEqualTo(Gender.F);
     }
 
     @Test
