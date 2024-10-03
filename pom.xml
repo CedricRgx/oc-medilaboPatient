@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.patientmanagement</groupId>
-	<artifactId>patientmanagement</artifactId>
+	<artifactId>ms-patient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>patientmanagement</name>
 	<description>Patient management for MedilaboPatient</description>
