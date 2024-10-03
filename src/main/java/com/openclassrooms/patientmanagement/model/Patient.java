@@ -28,7 +28,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
-    private Long idPat;
+    private Long id;
 
     /**
      * The firstname of the patient
@@ -63,6 +63,7 @@ public class Patient {
      */
     @NotNull
     @NotBlank(message="Gender is mandatory")
+    @Enumerated(EnumType.STRING)
     @Column(name="gender")
     private Gender gender;
 
