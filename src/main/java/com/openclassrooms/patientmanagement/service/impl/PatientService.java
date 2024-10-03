@@ -62,10 +62,10 @@ public class PatientService implements IPatientService {
      */
     @Transactional
     public Patient updatePatient(Patient patient) {
-        log.info("Updating a patient with ID: {}", patient.getIdPat());
-        if (!patientRepository.existsById(patient.getIdPat())) {
-            log.error("Patient not found with ID: {}", patient.getIdPat());
-            throw new PatientNotFoundException("Patient not found with ID: " + patient.getIdPat());
+        log.info("Updating a patient with ID: {}", patient.getId());
+        if (!patientRepository.existsById(patient.getId())) {
+            log.error("Patient not found with ID: {}", patient.getId());
+            throw new PatientNotFoundException("Patient not found with ID: " + patient.getId());
         }
         return patientRepository.save(patient);
     }
