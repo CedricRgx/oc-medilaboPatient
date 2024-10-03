@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f94f5eba-9ae0-46a6-aacb-e338282e5918" name="Changes" comment="Remove the patient management module">
+      <change afterPath="$PROJECT_DIR$/../ms-client-ui/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/PatientmanagementApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/controller/PatientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/exceptions/PatientNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/model/Patient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/repository/PatientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/service/IPatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/service/impl/PatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/util/BirthdateValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/util/Gender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/patientmanagement/util/ValidBirthdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/schemaMedilaboPatient.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/patientmanagement/PatientmanagementApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/patientmanagement/controller/PatientControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/patientmanagement/model/PatientTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/patientmanagement/service/impl/PatientServiceTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CedricRgx&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CedricRgx/oc-medilaboPatient.git&quot;,
+    &quot;accountId&quot;: &quot;e98a8a6d-4635-4649-be8a-619f668214fb&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2mWgFpN5tYdAYZudOMO8zuFi98l" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "JUnit.All in patientmanagement.executor": "Run",
+    "JUnit.PatientControllerTest.executor": "Run",
+    "JUnit.PatientServiceTest.executor": "Run",
+    "JUnit.PatientServiceTest.testDeletePatientById.executor": "Run",
+    "JUnit.PatientServiceTest.testGetPatientById.executor": "Run",
+    "JUnit.PatientServiceTest.testGetPatientById_NotFound.executor": "Run",
+    "JUnit.PatientServiceTest.testGetPatientById_PatientExists.executor": "Run",
+    "JUnit.PatientServiceTest.testUpdatePatient.executor": "Run",
+    "JUnit.PatientTest.executor": "Run",
+    "JUnit.PatientTest.testSetGender.executor": "Run",
+    "JUnit.PatientmanagementApplicationTests.executor": "Run",
+    "JUnit.java in patientmanagement.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Vcs Notifications": "VCS notifications",
+    "Notification.DoNotAsk-Vcs Notifications": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.PatientmanagementApplication.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/cedri/git/medilabo/ms-patient",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\cedri\git\medilabo\" />
+      <recent name="C:\Users\cedri\git\oc-medilaboPatient\src\main\resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.openclassrooms.patientmanagement.controller" />
+      <recent name="com.openclassrooms.patientmanagement.service.impl" />
+      <recent name="com.openclassrooms.patientmanagement.service" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.openclassrooms.patientmanagement.model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.PatientmanagementApplicationTests">
+    <configuration name="PatientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ms-patient" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.openclassrooms.patientmanagement.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.openclassrooms.patientmanagement.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.patientmanagement.service.impl.PatientServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.testGetPatientById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ms-patient" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.openclassrooms.patientmanagement.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.openclassrooms.patientmanagement.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.patientmanagement.service.impl.PatientServiceTest" />
+      <option name="METHOD_NAME" value="testGetPatientById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.testGetPatientById_PatientExists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ms-patient" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.openclassrooms.patientmanagement.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.openclassrooms.patientmanagement.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.patientmanagement.service.impl.PatientServiceTest" />
+      <option name="METHOD_NAME" value="testGetPatientById_PatientExists" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientmanagementApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ms-patient" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.openclassrooms.patientmanagement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.openclassrooms.patientmanagement" />
+      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.patientmanagement.PatientmanagementApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in patientmanagement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ms-patient" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ms-patient" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ms-patient" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientmanagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="APP_DB_HOST" value="127.0.0.1" />
+        <env name="APP_DB_NAME" value="medilabopatient" />
+        <env name="APP_DB_PORT" value="3306" />
+        <env name="DATASOURCE_PASSWORD" value="admin" />
+        <env name="DATASOURCE_USERNAME" value="root" />
+      </envs>
+      <module name="ms-patient" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.openclassrooms.patientmanagement.PatientmanagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.PatientServiceTest" />
+      <item itemvalue="JUnit.PatientServiceTest.testGetPatientById" />
+      <item itemvalue="JUnit.PatientServiceTest.testGetPatientById_PatientExists" />
+      <item itemvalue="JUnit.java in patientmanagement" />
+      <item itemvalue="JUnit.PatientmanagementApplicationTests" />
+      <item itemvalue="Spring Boot.PatientmanagementApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PatientmanagementApplicationTests" />
+        <item itemvalue="JUnit.java in patientmanagement" />
+        <item itemvalue="JUnit.PatientServiceTest.testGetPatientById_PatientExists" />
+        <item itemvalue="JUnit.PatientServiceTest.testGetPatientById" />
+        <item itemvalue="JUnit.PatientServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f94f5eba-9ae0-46a6-aacb-e338282e5918" name="Changes" comment="" />
+      <created>1727197644472</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727197644472</updated>
+      <workItem from="1727197645581" duration="7767000" />
+      <workItem from="1727295279565" duration="165000" />
+      <workItem from="1727295525237" duration="209000" />
+      <workItem from="1727529605330" duration="553000" />
+      <workItem from="1727530243198" duration="3443000" />
+      <workItem from="1727534112526" duration="2810000" />
+      <workItem from="1727610638904" duration="1870000" />
+      <workItem from="1727801553769" duration="4158000" />
+      <workItem from="1727889743857" duration="2397000" />
+      <workItem from="1727892157092" duration="44000" />
+      <workItem from="1727899685895" duration="960000" />
+      <workItem from="1727973751951" duration="5571000" />
+      <workItem from="1727985354172" duration="333000" />
+    </task>
+    <task id="LOCAL-00001" summary="Initialize patient management project">
+      <option name="closed" value="true" />
+      <created>1727198031010</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727198031010</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add Patient Management CRUD operations&#10;Added schema initialization script for patient table">
+      <option name="closed" value="true" />
+      <created>1727210214381</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727210214381</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add unit tests for Patient management (includes a test application.properties file for testing)">
+      <option name="closed" value="true" />
+      <created>1727534507048</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727534507048</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add Spring Security configuration">
+      <option name="closed" value="true" />
+      <created>1727536365429</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727536365429</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add validation annotations and new utility classes">
+      <option name="closed" value="true" />
+      <created>1727892137001</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727892137001</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add PatientNotFoundException">
+      <option name="closed" value="true" />
+      <created>1727900619987</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727900619987</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated SecurityConfig to use BCryptPasswordEncoder">
+      <option name="closed" value="true" />
+      <created>1727976214756</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727976214757</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Refactor patient endpoint">
+      <option name="closed" value="true" />
+      <created>1727976326880</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727976326880</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Rename artifactId to 'ms-patient'">
+      <option name="closed" value="true" />
+      <created>1727984870236</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727984870236</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Remove the patient management module">
+      <option name="closed" value="true" />
+      <created>1727985467007</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727985467007</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit" />
+    <MESSAGE value="Initialize patient management project" />
+    <MESSAGE value="Add Patient Management CRUD operations&#10;Added schema initialization script for patient table" />
+    <MESSAGE value="Add unit tests for Patient management (includes a test application.properties file for testing)" />
+    <MESSAGE value="Add Spring Security configuration" />
+    <MESSAGE value="Add validation annotations and new utility classes" />
+    <MESSAGE value="Add PatientNotFoundException" />
+    <MESSAGE value="Updated SecurityConfig to use BCryptPasswordEncoder" />
+    <MESSAGE value="Refactor patient endpoint" />
+    <MESSAGE value="Rename artifactId to 'ms-patient'" />
+    <MESSAGE value="Remove the patient management module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove the patient management module" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/oc_medilaboPatient$java_in_patientmanagement.ic" NAME="java in patientmanagement Coverage Results" MODIFIED="1727804210295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>
