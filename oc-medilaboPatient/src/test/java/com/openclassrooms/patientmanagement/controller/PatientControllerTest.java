@@ -31,7 +31,7 @@ class PatientControllerTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         patient = new Patient();
-        patient.setIdPat(1L);
+        patient.setId(1L);
         patient.setFirstname("John");
         patient.setLastname("Doe");
     }

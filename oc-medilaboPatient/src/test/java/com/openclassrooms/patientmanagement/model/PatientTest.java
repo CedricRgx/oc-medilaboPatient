@@ -8,10 +8,10 @@ import java.time.LocalDate;
 public class PatientTest {
 
     @Test
-    public void testGetIdPat() {
+    public void testGetId() {
         Patient patient = new Patient();
-        patient.setIdPat(1L);
-        assertThat(patient.getIdPat()).isEqualTo(1L);
+        patient.setId(1L);
+        assertThat(patient.getId()).isEqualTo(1L);
     }
 
     @Test
@@ -39,8 +39,8 @@ public class PatientTest {
     @Test
     public void testGetGender() {
         Patient patient = new Patient();
-        patient.setGender(Gender.H);
-        assertThat(patient.getGender()).isEqualTo(Gender.H);
+        patient.setGender(Gender.M);
+        assertThat(patient.getGender()).isEqualTo(Gender.M);
     }
 
     @Test
@@ -60,10 +60,10 @@ public class PatientTest {
     // Tests pour les setters
 
     @Test
-    public void testSetIdPat() {
+    public void testSetId() {
         Patient patient = new Patient();
-        patient.setIdPat(2L);
-        assertThat(patient.getIdPat()).isEqualTo(2L);
+        patient.setId(2L);
+        assertThat(patient.getId()).isEqualTo(2L);
     }
 
     @Test

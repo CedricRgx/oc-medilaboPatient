@@ -1,8 +1,6 @@
 package com.openclassrooms.patientmanagement.service;
 
-import com.openclassrooms.patientmanagement.exceptions.PatientNotFoundException;
 import com.openclassrooms.patientmanagement.model.Patient;
-import jakarta.transaction.Transactional;
 
 import java.util.Optional;
 
