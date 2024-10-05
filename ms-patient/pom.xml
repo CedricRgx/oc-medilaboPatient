@@ -8,10 +8,10 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.patientmanagement</groupId>
+	<groupId>com.ms-patient</groupId>
 	<artifactId>ms-patient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>patientmanagement</name>
+	<name>ms-patient</name>
 	<description>Patient management for MedilaboPatient</description>
 	<url/>
 	<properties>

@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
  * This class initializes the Spring Boot application and contains the entry point method.
  */
 @SpringBootApplication
-public class PatientmanagementApplication implements CommandLineRunner {
+public class MSPatientApplication implements CommandLineRunner {
 
 	/**
 	 * The entry point for the MediLaboPatient application. It initializes and starts the Spring Boot application.
 	 * @param args The command-line arguments passed to the application.
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(PatientmanagementApplication.class, args);
+		SpringApplication.run(MSPatientApplication.class, args);
 	}
 
 	/**
