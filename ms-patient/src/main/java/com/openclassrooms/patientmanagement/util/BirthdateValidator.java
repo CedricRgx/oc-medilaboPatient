@@ -5,19 +5,11 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 
 /**
- * Validates that a given {@link LocalDate} is a valid birthdate,
+ * Validates that a given LocalDate is a valid birthdate,
  * meaning it is prior to the current date.
  */
 public class BirthdateValidator implements ConstraintValidator<ValidBirthdate, LocalDate> {
 
-//    /**
-//     * No initialization needed for this validator.
-//     *
-//     * @param constraintAnnotation Annotation instance for a given constraint declaration.
-//     */
-//    @Override
-//    public void initialize(ValidBirthdate constraintAnnotation) {
-//    }
 
     /**
      * Checks if the provided LocalDate is valid and before the current date.
