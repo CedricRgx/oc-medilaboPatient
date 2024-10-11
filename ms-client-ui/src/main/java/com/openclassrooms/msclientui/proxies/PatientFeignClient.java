@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name="ms-patient", url="${patient.service.url}")
+@FeignClient(name="ms-patient", url="http://localhost:8081/patient")
 public interface PatientFeignClient {
 
     @GetMapping("/allpatients")
     List<Patient> getPatientsList();
 
-    @GetMapping("/${id}")
+    @GetMapping("/{id}")
     Patient getPatientById(@PathVariable("id") Long id);
 
     @PostMapping()
-    Patient savePatient(Patient patient);
+    Patient savePatient(@RequestBody Patient patient);
 
-    @PutMapping("/${id}")
-    Patient updatePatient(@PathVariable("id") Long id, Patient patient);
+    @PutMapping("/{id}")
+    Patient updatePatient(@PathVariable("id") Long id, @RequestBody Patient patient);
 
-    @DeleteMapping("/${id}")
+    @DeleteMapping("/{id}")
     boolean deletePatient(@PathVariable("id") Long id);
 
 }

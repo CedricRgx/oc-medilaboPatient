@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class ClientUIService {
 
-    @Autowired
-    private PatientFeignClient patientFeignClient;
+    private final PatientFeignClient patientFeignClient;
+
+    public ClientUIService(PatientFeignClient patientFeignClient) {
+        this.patientFeignClient = patientFeignClient;
+    }
 
     public List<Patient> getPatientsList() {
         return patientFeignClient.getPatientsList();
@@ -26,11 +29,11 @@ public class ClientUIService {
         return patientFeignClient.savePatient(patient);
     }
 
-    public Patient updatePatient(@PathVariable("id") Long id, Patient patient){
+    public Patient updatePatient(Long id, Patient patient){
         return patientFeignClient.updatePatient(id, patient);
     }
 
-    public boolean deletePatient(@PathVariable("id") Long id){
+    public boolean deletePatient(Long id){
         return patientFeignClient.deletePatient(id);
     }
 
