@@ -2,6 +2,7 @@ package com.openclassrooms.mspatient.controller;
 
 import com.openclassrooms.mspatient.model.Patient;
 import com.openclassrooms.mspatient.service.impl.PatientService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controller responsible for manage patients in the MediLaboPatient application
+ * Controller responsible for manage patients in the MS-Patient
  */
 @Slf4j
 @RestController
@@ -60,10 +61,10 @@ public class PatientController {
     /**
      * This method adds a patient to the repository
      * @param patientToAdd The patient to add
-     * @return the person added
+     * @return the patient added
      */
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@RequestBody Patient patientToAdd) {
+    public ResponseEntity<Patient> addPatient(@Valid @RequestBody Patient patientToAdd) {
         log.info("POST request on the endpoint /patient: add an patient to the repository");
         Patient patient = patientService.addPatient(patientToAdd);
         if(patient == null){
