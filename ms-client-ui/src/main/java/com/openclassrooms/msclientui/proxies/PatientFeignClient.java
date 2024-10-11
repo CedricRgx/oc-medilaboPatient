@@ -2,8 +2,7 @@ package com.openclassrooms.msclientui.proxies;
 
 import com.openclassrooms.msclientui.beans.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,5 +14,14 @@ public interface PatientFeignClient {
 
     @GetMapping("/${id}")
     Patient getPatientById(@PathVariable("id") Long id);
+
+    @PostMapping()
+    Patient savePatient(Patient patient);
+
+    @PutMapping("/${id}")
+    Patient updatePatient(@PathVariable("id") Long id, Patient patient);
+
+    @DeleteMapping("/${id}")
+    boolean deletePatient(@PathVariable("id") Long id);
 
 }
