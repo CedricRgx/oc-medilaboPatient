@@ -1,4 +1,4 @@
-package com.openclassrooms.msclientui.model;
+package com.openclassrooms.msclientui.beans;
 
 import com.openclassrooms.msclientui.util.Gender;
 
@@ -8,13 +8,17 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 /**
- * Represents a patient in the MediLaboPatient application.
- * This class is annotated as a JPA entity
+ * Represents a patient for the client ui
  */
 
 @Getter
 @Setter
 public class Patient {
+
+    /**
+     * The id of the patient
+     */
+    private Long id;
 
     /**
      * The firstname of the patient

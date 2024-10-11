@@ -3,13 +3,16 @@ package com.openclassrooms.mspatient;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The main class for the MediLaboPatient application.
  * This class initializes the Spring Boot application and contains the entry point method.
  */
+
 @SpringBootApplication
+@EnableFeignClients
 public class MSPatientApplication implements CommandLineRunner {
 
 	/**
