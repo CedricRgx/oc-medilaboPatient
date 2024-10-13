@@ -20,6 +20,7 @@
         <th>Gender</th>
         <th>Adress</th>
         <th>Phone</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -29,8 +30,13 @@
         <td th:text="${patient.lastname}"></td>
         <td th:text="${patient.birthdate}"></td>
         <td th:text="${patient.gender}"></td>
-        <td th:text="${patient.address != null ? patient.address : 'Not adress'}"></td>
-        <td th:text="${patient.phone != null ? patient.phone : 'Not phone'}"></td>
+        <td th:text="${patient.address != null ? patient.address : 'No adress'}"></td>
+        <td th:text="${patient.phone != null ? patient.phone : 'No phone'}"></td>
+        <td>
+            <a th:href="@{/patient/{id}(id=${patient.id})}">
+                <button class="btn btn-primary">Details</button>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>

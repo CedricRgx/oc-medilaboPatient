@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Patient</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container col-6">
+    <h2 class="text-center">Edit Patient</h2>
+
+    <form th:action="@{/patient/save}" th:object="${patient}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <table class="table table-bordered border border-dark">
+            <tbody>
+            <tr>
+                <td>Firstname</td>
+                <td><input type="text" th:field="*{firstname}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Lastname</td>
+                <td><input type="text" th:field="*{lastname}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Birthdate</td>
+                <td>
+                    <input type="date" th:field="*{birthdate}" class="form-control" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <select th:field="*{gender}" class="form-control" required>
+                        <option value="M" th:selected="${gender=='M'}">Male</option>
+                        <option value="F" th:selected="${gender=='F'}">Female</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" th:field="*{address}" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="text" th:field="*{phone}" class="form-control"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/patient/{id}(id=${patient.id})}" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

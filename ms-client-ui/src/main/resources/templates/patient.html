@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Details</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container col-6">
+    <h2 class="text-center">Patient details</h2>
+
+    <div class="text-center mb-3">
+        <a th:href="@{/patientslist}">
+            <button class="btn btn-secondary">Back to list of patients</button>
+        </a>
+    </div>
+
+    <table class="table table-bordered border border-dark text-center">
+        <thead class="bg-success text-white">
+        <tr>
+            <th>Information</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>ID</td>
+            <td th:text="${patient.id}"></td>
+        </tr>
+        <tr>
+            <td>Firstname</td>
+            <td th:text="${patient.firstname}"></td>
+        </tr>
+        <tr>
+            <td>Lastname</td>
+            <td th:text="${patient.lastname}"></td>
+        </tr>
+        <tr>
+            <td>Birthdate</td>
+            <td th:text="${patient.birthdate}"></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td th:text="${patient.gender}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td th:text="${patient.address != null ? patient.address : 'No address'}"></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td th:text="${patient.phone != null ? patient.phone : 'No phone'}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-3">
+        <a th:href="@{/patient/edit/{id}(id=${patient.id})}">
+            <button class="btn btn-warning">Edit</button>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>
