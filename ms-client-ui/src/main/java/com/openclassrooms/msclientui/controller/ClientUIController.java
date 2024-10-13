@@ -1,8 +1,9 @@
 package com.openclassrooms.msclientui.controller;
 
 
-import com.openclassrooms.msclientui.beans.Patient;
+import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.service.ClientUIService;
+import com.openclassrooms.msclientui.util.CustomPage;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -24,13 +20,14 @@ public class ClientUIController {
     private ClientUIService clientUIService;
 
     @GetMapping("/patientslist")
-    public String getAllPatients(Model model) {
-        log.info("patientsList");
-        List<Patient> patientslist = clientUIService.getPatientsList();
-        if(patientslist == null) {
-            log.info("The list of patients is null");
-        }
-        model.addAttribute("patientslist", patientslist);
+    public String getAllPatients(Model model, @RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="size", defaultValue = "5") int size) {
+
+        CustomPage<Patient> patientsPage = clientUIService.getPatientsList(page, size);
+        model.addAttribute("patientslist", patientsPage.getContent());
+        model.addAttribute("pages", patientsPage.getTotalPages());
+        model.addAttribute("currentPage", patientsPage.getCurrentPage());
+        model.addAttribute("pageSize", size);
+
         return "patientslist";
     }
 

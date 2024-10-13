@@ -1,33 +1,29 @@
-package com.openclassrooms.mspatient.model;
+package com.openclassrooms.msclientui.model;
 
-import com.openclassrooms.mspatient.util.Gender;
-import com.openclassrooms.mspatient.util.ValidBirthdate;
-import jakarta.persistence.*;
+import com.openclassrooms.msclientui.util.Gender;
+
+import com.openclassrooms.msclientui.util.ValidBirthdate;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 /**
- * Represents a patient in the MediLaboPatient application.
- * This class is annotated as a JPA entity
+ * Represents a patient for the client ui
  */
+
 @Getter
 @Setter
-@Entity
-@Table(name = "patient")
 public class Patient {
 
     /**
-     * The unique identifier for the patient
+     * The id of the patient
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patient_id")
     private Long id;
 
     /**
@@ -36,7 +32,6 @@ public class Patient {
     @NotNull
     @NotBlank(message="The lastname is mandatory.")
     @Size(min=2, max=250, message = "The lastname must contain between {min} and {max} characters.")
-    @Column(name="lastname")
     private String lastname;
 
     /**
@@ -45,7 +40,6 @@ public class Patient {
     @NotNull
     @NotBlank(message="The firstname is mandatory.")
     @Size(min=2, max=250, message="The firstname must contain between {min} and {max} characters.")
-    @Column(name="firstname")
     private String firstname;
 
     /**
@@ -53,27 +47,24 @@ public class Patient {
      */
     @NotNull
     @ValidBirthdate(message = "The birthdate must be a valid date format and prior to the current date.")
-    @Column(name="birthdate")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
 
     /**
      * The gender of the patient
      */
-    @Enumerated(EnumType.STRING)
-    @Column(name="gender")
+    @Pattern(regexp="^[MF]$", message="The gender has to be M or F.")
     private Gender gender;
 
     /**
      * The address of the patient
      */
     @Size(min=2, max=255, message="The address must contain between {min} and {max} characters.")
-    @Column(name="address")
     private String address;
 
     /**
      * The phone of the patient
      */
     @Pattern(regexp="^\\d{3}-\\d{3}-\\d{4}$", message="The phone number is invalid.")
-    @Column(name="phone")
     private String phone;
 }

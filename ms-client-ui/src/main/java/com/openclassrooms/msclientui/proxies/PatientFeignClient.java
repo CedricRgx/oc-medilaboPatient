@@ -1,6 +1,6 @@
 package com.openclassrooms.msclientui.proxies;
 
-import com.openclassrooms.msclientui.beans.Patient;
+import com.openclassrooms.msclientui.model.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
