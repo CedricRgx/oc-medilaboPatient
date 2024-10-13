@@ -23,11 +23,11 @@ public interface IPatientService {
     public Optional<Patient> getPatientById(Long id);
 
     /**
-     * Adds a new patient.
+     * Saves a new patient.
      * @param patient The user to add.
      * @return The added patient.
      */
-    public Patient addPatient(Patient patient);
+    public Patient savePatient(Patient patient);
 
     /**
      * Updates a patient to the repository.

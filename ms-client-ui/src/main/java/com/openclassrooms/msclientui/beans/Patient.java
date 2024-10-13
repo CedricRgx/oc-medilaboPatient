@@ -4,6 +4,7 @@ import com.openclassrooms.msclientui.util.Gender;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -33,6 +34,7 @@ public class Patient {
     /**
      * The birthdate of the patient
      */
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
 
     /**

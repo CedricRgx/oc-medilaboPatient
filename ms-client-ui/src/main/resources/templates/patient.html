@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container col-6">
-    <h2 class="text-center">Patient details</h2>
+    <h2 class="text-center">Details of your patient <span th:text="${#strings.concat(patient.firstname, ' ', patient.lastname)}"/></h2>
 
     <div class="text-center mb-3">
         <a th:href="@{/patientslist}">

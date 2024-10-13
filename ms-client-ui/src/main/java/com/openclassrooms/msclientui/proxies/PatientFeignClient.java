@@ -18,8 +18,8 @@ public interface PatientFeignClient {
     @PostMapping()
     Patient savePatient(@RequestBody Patient patient);
 
-    @PutMapping("/{id}")
-    Patient updatePatient(@PathVariable("id") Long id, @RequestBody Patient patient);
+    @PutMapping("")
+    Patient updatePatient(@RequestBody Patient patient);
 
     @DeleteMapping("/{id}")
     boolean deletePatient(@PathVariable("id") Long id);

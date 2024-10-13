@@ -5,6 +5,7 @@ import com.openclassrooms.mspatient.service.impl.PatientService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,9 +65,9 @@ public class PatientController {
      * @return the patient added
      */
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@Valid @RequestBody Patient patientToAdd) {
+    public ResponseEntity<Patient> savePatient(@Valid @RequestBody Patient patientToAdd) {
         log.info("POST request on the endpoint /patient: add an patient to the repository");
-        Patient patient = patientService.addPatient(patientToAdd);
+        Patient patient = patientService.savePatient(patientToAdd);
         if(patient == null){
             log.error("Error adding the patient");
             return new ResponseEntity<>(patient, HttpStatus.NOT_FOUND);
@@ -102,14 +103,23 @@ public class PatientController {
     @DeleteMapping("/{id}")
     public ResponseEntity deletePatientById(@PathVariable Long id) {
         log.info("DELETE request on the endpoint /patient/{id}: delete an patient from its id");
-        boolean isDeleted = patientService.deletePatientById(id);
-        if(!isDeleted){
-            log.error("Error deleting the patient from the id: {}", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
-            log.info("Success deleting the patient from the id: {}", id);
-            return new ResponseEntity<>(HttpStatus.OK);
+//        boolean isDeleted = patientService.deletePatientById(id);
+//        if(!isDeleted){
+//            log.error("Error deleting the patient from the id: {}", id);
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }else{
+//            log.info("Success deleting the patient from the id: {}", id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+        boolean isDeleted = false;
+        try {
+            isDeleted = patientService.deletePatientById(id); // Utilisation du service pour supprimer le patient
+        } catch (EmptyResultDataAccessException e) {
+            isDeleted = false; // Patient non trouvé
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false); // Autre exception
         }
+        return ResponseEntity.ok(isDeleted);
     }
 
 }

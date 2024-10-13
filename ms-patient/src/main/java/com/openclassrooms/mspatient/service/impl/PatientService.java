@@ -50,7 +50,7 @@ public class PatientService implements IPatientService {
      * @return The added Patient object.
      */
     @Transactional
-    public Patient addPatient(Patient patient) {
+    public Patient savePatient(Patient patient) {
         log.info("Adding an patient");
         return patientRepository.save(patient);
     }

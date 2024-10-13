@@ -35,11 +35,12 @@ public class ClientUIService {
     }
 
     public Patient updatePatient(Long id, Patient patient){
-        return patientFeignClient.updatePatient(id, patient);
+        return patientFeignClient.updatePatient(patient);
     }
 
     public boolean deletePatient(Long id){
-        return patientFeignClient.deletePatient(id);
+        boolean isDeleted = patientFeignClient.deletePatient(id);
+        return isDeleted;
     }
 
 }

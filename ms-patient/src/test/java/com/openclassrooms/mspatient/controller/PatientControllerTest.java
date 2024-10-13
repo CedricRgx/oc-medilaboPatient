@@ -80,9 +80,9 @@ class PatientControllerTest {
 
     @Test
     public void testAddPatient() {
-        when(patientService.addPatient(any(Patient.class))).thenReturn(patient);
+        when(patientService.savePatient(any(Patient.class))).thenReturn(patient);
 
-        ResponseEntity<Patient> response = patientController.addPatient(patient);
+        ResponseEntity<Patient> response = patientController.savePatient(patient);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(patient, response.getBody());
@@ -90,9 +90,9 @@ class PatientControllerTest {
 
     @Test
     public void testAddPatientError() {
-        when(patientService.addPatient(any(Patient.class))).thenReturn(null);
+        when(patientService.savePatient(any(Patient.class))).thenReturn(null);
 
-        ResponseEntity<Patient> response = patientController.addPatient(patient);
+        ResponseEntity<Patient> response = patientController.savePatient(patient);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
