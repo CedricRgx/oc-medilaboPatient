@@ -20,13 +20,17 @@ public class ClientUIController {
     private ClientUIService clientUIService;
 
     @GetMapping("/patientslist")
-    public String getAllPatients(Model model, @RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="size", defaultValue = "5") int size) {
+    public String getAllPatients(Model model,
+                                 @RequestParam(name="page", defaultValue = "0") int page,
+                                 @RequestParam(name="size", defaultValue = "5") int size) {
+                                 //@RequestParam(name="search", required = false) String search) {
 
-        CustomPage<Patient> patientsPage = clientUIService.getPatientsList(page, size);
+        CustomPage<Patient> patientsPage = clientUIService.getPatientsList(page, size);//, search);
         model.addAttribute("patientslist", patientsPage.getContent());
         model.addAttribute("pages", patientsPage.getTotalPages());
         model.addAttribute("currentPage", patientsPage.getCurrentPage());
         model.addAttribute("pageSize", size);
+        //model.addAttribute("search", search);
 
         return "patientslist";
     }

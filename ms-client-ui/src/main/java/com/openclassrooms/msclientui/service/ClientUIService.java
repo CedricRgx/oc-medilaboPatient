@@ -7,6 +7,7 @@ import com.openclassrooms.msclientui.util.CustomPage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientUIService {
@@ -20,8 +21,14 @@ public class ClientUIService {
         return patientFeignClient.getPatientsList();
     }
 
-    public CustomPage<Patient> getPatientsList(int page, int size) {
+    public CustomPage<Patient> getPatientsList(int page, int size){//}, String search) {
         List<Patient> patientslist = patientFeignClient.getPatientsList();
+
+//        if (search != null && !search.isEmpty()) {
+//            patientslist = patientslist.stream()
+//                    .filter(patient -> patient.getLastname().toLowerCase().contains(search.toLowerCase()))
+//                    .collect(Collectors.toList());
+//        }
 
         int totalPatients = patientslist.size();
         int totalPages = (int) Math.ceil((double) totalPatients / size);

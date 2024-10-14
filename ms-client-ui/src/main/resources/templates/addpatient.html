@@ -14,11 +14,11 @@
             <tbody>
             <tr>
                 <td>Firstname</td>
-                <td><input type="text" th:field="*{firstname}" class="form-control" required></td>
+                <td><input type="text" th:field="*{firstname}" placeholder="Enter the firstname of your patient" class="form-control" required></td>
             </tr>
             <tr>
                 <td>Lastname</td>
-                <td><input type="text" th:field="*{lastname}" class="form-control" required></td>
+                <td><input type="text" th:field="*{lastname}" placeholder="Enter the lastname of your patient" class="form-control" required></td>
             </tr>
             <tr>
                 <td>Birthdate</td>
@@ -28,7 +28,7 @@
                 <td>Gender</td>
                 <td>
                     <select th:field="*{gender}" class="form-control" required>
-                        <option value="" disabled selected>Select Gender</option>
+                        <option value="" selected>Select the gender of your patient</option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
                     </select>
@@ -36,11 +36,11 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td><input type="text" th:field="*{address}" class="form-control"></td>
+                <td><input type="text" th:field="*{address}" placeholder="Enter the address of your patient" class="form-control"></td>
             </tr>
             <tr>
                 <td>Phone</td>
-                <td><input type="text" th:field="*{phone}" class="form-control"></td>
+                <td><input type="text" th:field="*{phone}" placeholder="Enter the phone number of your patient" class="form-control"></td>
             </tr>
             </tbody>
         </table>

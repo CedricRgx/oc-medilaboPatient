@@ -6,89 +6,83 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container col-6">
-    <div class="mb-5">
+    <div class="container col-6">
+        <div class="mb-5">
 
-<h2 class="text-center">List of patients</h2>
+            <h2 class="text-center">List of patients</h2>
 
-        <div class="text-center mb-3">
-            <a th:href="@{/patient/add}">
-                <button class="btn btn-success">Add a new patient</button>
-            </a>
-        </div>
-
-<table class="table table-striped border border-dark text-center mb-0">
-    <thead class="bg-success text-white">
-    <tr>
-        <th>ID</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Birthdate</th>
-        <th>Gender</th>
-        <th>Adress</th>
-        <th>Phone</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="patient : ${patientslist}">
-        <td th:text="${patient.id}"></td>
-        <td th:text="${patient.firstname}"></td>
-        <td th:text="${patient.lastname}"></td>
-        <td th:text="${patient.birthdate}"></td>
-        <td th:text="${patient.gender}"></td>
-        <td th:text="${patient.address != null ? patient.address : 'No adress'}"></td>
-        <td th:text="${patient.phone != null ? patient.phone : 'No phone'}"></td>
-        <td>
-            <div class="d-flex justify-content-center align-items-center" style="gap: 10px;">
-                <a th:href="@{/patient/{id}(id=${patient.id})}">
-                    <button class="btn btn-primary btn-sm" style="min-width: 100px;">Details</button>
+            <div class="text-center mb-3">
+                <a th:href="@{/patient/add}">
+                    <button class="btn btn-success">Add a new patient</button>
                 </a>
 
-                <form th:action="@{/removePatient(id=${patient.id})}" method="post">
-                    <button type="submit"
-                            onclick="return confirm('Are you sure to delete this patient?')"
-                            class="btn btn-danger btn-sm" style="min-width: 100px;">Remove</button>
-                </form>
+<!--                <form th:action="@{/patientslist}" method="get" class="d-flex">-->
+<!--                    <input type="text" name="search" th:value="${search}" placeholder="Search by lastname" class="form-control me-2">-->
+<!--                    <button type="submit" class="btn btn-primary">Search</button>-->
+<!--                </form>-->
+
             </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
 
+            <table class="table table-striped border border-dark text-center mb-0">
+            <thead class="bg-success text-white">
+            <tr>
+                <th>ID</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+                <th>Adress</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="patient : ${patientslist}">
+                    <td th:text="${patient.id}"></td>
+                    <td th:text="${patient.firstname}"></td>
+                    <td th:text="${patient.lastname}"></td>
+                    <td th:text="${patient.birthdate}"></td>
+                    <td th:text="${patient.gender}"></td>
+                    <td th:text="${patient.address != null ? patient.address : 'No adress'}"></td>
+                    <td th:text="${patient.phone != null ? patient.phone : 'No phone'}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center align-items-center" style="gap: 10px;">
+                            <a th:href="@{/patient/{id}(id=${patient.id})}">
+                                <button class="btn btn-primary btn-sm" style="min-width: 100px;">Details</button>
+                            </a>
 
+                            <form th:action="@{/removePatient(id=${patient.id})}" method="post">
+                                <button type="submit"
+                                        onclick="return confirm('Are you sure to delete this patient?')"
+                                        class="btn btn-danger btn-sm" style="min-width: 100px;">Remove</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
 
+            <nav class="d-flex justify-content-center mt-0">
+                <th:block th:if="${pages > 1}">
+                    <ul class="pagination">
+                        <li class="page-item" th:class="${(currentPage == 0) ? 'disabled' : ''}">
+                            <a class="page-link" th:if="${currentPage > 0}" th:href="@{/patientslist(page=${currentPage != null ? currentPage - 1 : 0}, size=${pageSize})}" aria-label="Previous">
+                                <span>&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(0, pages - 1)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+                            <a class="page-link" th:href="@{/patientslist(page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:class="${(currentPage + 1 >= pages) ? 'disabled' : ''}">
+                            <a class="page-link" th:if="${currentPage + 1 < pages}"  th:href="@{/patientslist(page=${currentPage != null ? currentPage + 1 : 1}, size=${pageSize})}" aria-label="Next">
+                                <span>&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </th:block>
+            </nav>
 
-
-        <nav class="d-flex justify-content-center mt-0">
-            <th:block th:if="${pages > 1}">
-                <ul class="pagination">
-                    <li class="page-item" th:class="${(currentPage == 0) ? 'disabled' : ''}">
-                        <a class="page-link" th:if="${currentPage > 0}" th:href="@{/patientslist(page=${currentPage != null ? currentPage - 1 : 0}, size=${pageSize})}" aria-label="Previous">
-                            <span>&laquo;</span>
-                        </a>
-                    </li>
-                    <li th:each="i : ${#numbers.sequence(0, pages - 1)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{/patientslist(page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
-                    </li>
-                    <li class="page-item" th:class="${(currentPage + 1 >= pages) ? 'disabled' : ''}">
-                        <a class="page-link" th:if="${currentPage + 1 < pages}"  th:href="@{/patientslist(page=${currentPage != null ? currentPage + 1 : 1}, size=${pageSize})}" aria-label="Next">
-                            <span>&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </th:block>
-        </nav>
-
-
-
-
-</div>
-</div>
-
-
-
-
-
+        </div>
+    </div>
 </body>
 </html>
