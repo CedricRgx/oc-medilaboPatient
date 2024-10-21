@@ -1,4 +1,4 @@
-package com.openclassrooms.msclientui.proxies;
+package com.openclassrooms.msclientui.proxy;
 
 import com.openclassrooms.msclientui.model.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -6,22 +6,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name="ms-patient", url="http://localhost:8081/patient")
+//@FeignClient(name="ms-patient", url="http://localhost:8081")
+@FeignClient(name="ms-gateway-server", url="http://localhost:8082")
 public interface PatientFeignClient {
 
-    @GetMapping("/allpatients")
+    @GetMapping("/patient/allpatients")
     List<Patient> getPatientsList();
 
-    @GetMapping("/{id}")
+    @GetMapping("/patient/{id}")
     Patient getPatientById(@PathVariable("id") Long id);
 
-    @PostMapping()
+    @PostMapping("/patient")
     Patient savePatient(@RequestBody Patient patient);
 
-    @PutMapping("")
+    @PutMapping("/patient")
     Patient updatePatient(@RequestBody Patient patient);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/patient/{id}")
     boolean deletePatient(@PathVariable("id") Long id);
 
 }

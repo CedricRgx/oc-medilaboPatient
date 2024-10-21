@@ -47,7 +47,6 @@ public class Patient {
      */
     @NotNull
     @ValidBirthdate(message = "The birthdate must be a valid date format and prior to the current date.")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
 
     /**

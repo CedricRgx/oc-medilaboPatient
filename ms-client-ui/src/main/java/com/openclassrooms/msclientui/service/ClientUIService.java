@@ -2,12 +2,11 @@ package com.openclassrooms.msclientui.service;
 
 import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.exception.PatientNotFoundException;
-import com.openclassrooms.msclientui.proxies.PatientFeignClient;
+import com.openclassrooms.msclientui.proxy.PatientFeignClient;
 import com.openclassrooms.msclientui.util.CustomPage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientUIService {
@@ -17,6 +16,7 @@ public class ClientUIService {
     public ClientUIService(PatientFeignClient patientFeignClient) {
         this.patientFeignClient = patientFeignClient;
     }
+
     public List<Patient> getPatientsList() {
         return patientFeignClient.getPatientsList();
     }

@@ -19,7 +19,7 @@ public class ClientUIController {
     @Autowired
     private ClientUIService clientUIService;
 
-    @GetMapping("/patientslist")
+    @GetMapping("/home")
     public String getAllPatients(Model model,
                                  @RequestParam(name="page", defaultValue = "0") int page,
                                  @RequestParam(name="size", defaultValue = "5") int size) {
@@ -32,8 +32,15 @@ public class ClientUIController {
         model.addAttribute("pageSize", size);
         //model.addAttribute("search", search);
 
-        return "patientslist";
+        return "home";
     }
+
+    @GetMapping("/patientslist")
+    public String showPatientsList(Model model) {
+        return "redirect:/home";
+    }
+
+
 
     @GetMapping("/patient/{id}")
     public String getPatientById(@PathVariable Long id, Model model) {
@@ -51,7 +58,7 @@ public class ClientUIController {
         Patient patient = clientUIService.getPatientById(id);
         if (patient == null) {
             log.error("Patient not found with id: " + id);
-            return "redirect:/patientslist";
+            return "redirect:/home";
         }
         model.addAttribute("patient", patient);
         return "editpatient";
@@ -117,10 +124,11 @@ public class ClientUIController {
         log.info("deletePatient");
         boolean isDeleted = clientUIService.deletePatient(id);
         if (isDeleted) {
-            return "redirect:/patientslist"; // Redirection en cas de succès
+            model.addAttribute("successDeletePatientMessage", "Success to delete the patient.");
+            return "redirect:/home";
         } else {
-            model.addAttribute("errorMessage", "Unable to delete the patient. Please try again.");
-            return "patientslist"; // Retourne à la vue avec un message d'erreur en cas d'échec
+            model.addAttribute("errorDeletePatientMessage", "Unable to delete the patient. Please try again.");
+            return "home"; // Retourne à la vue avec un message d'erreur en cas d'échec
         }
     }
 

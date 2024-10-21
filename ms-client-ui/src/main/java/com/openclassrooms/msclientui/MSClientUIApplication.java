@@ -5,15 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * The main class for the UI of MediLaboPatient application.
  * This class initializes the Spring Boot application and contains the entry point method.
  */
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.openclassrooms.msclientui.proxies")
+@EnableFeignClients(basePackages = "com.openclassrooms.msclientui.proxy")
 @EnableDiscoveryClient
 public class MSClientUIApplication implements CommandLineRunner {
 
