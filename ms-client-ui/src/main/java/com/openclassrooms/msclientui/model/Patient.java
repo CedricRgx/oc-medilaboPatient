@@ -45,14 +45,15 @@ public class Patient {
     /**
      * The birthdate of the patient
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull
-    @ValidBirthdate(message = "The birthdate must be a valid date format and prior to the current date.")
+    @ValidBirthdate(message="The birthdate must be a valid date format and prior to the current date.")
     private LocalDate birthdate;
 
     /**
      * The gender of the patient
      */
-    @Pattern(regexp="^[MF]$", message="The gender has to be M or F.")
+    //@Pattern(regexp="^[MF]$", message="The gender has to be M or F.")
     private Gender gender;
 
     /**

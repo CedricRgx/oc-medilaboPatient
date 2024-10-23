@@ -20,11 +20,15 @@
             </tr>
             <tr>
                 <td>Lastname</td>
-                <td><input type="text" th:field="*{lastname}" class="form-control" required></td>
+                <td><input type="text" th:field="*{lastname}" class="form-control" required>
+                </td>
             </tr>
             <tr>
                 <td>Birthdate</td>
-                <td><input type="date" name="birthdate" th:field="*{birthdate}" class="form-control" required></td>
+                <td>
+                    <input type="date" th:field="*{birthdate}" class="form-control" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+                </td>
             </tr>
             <tr>
                 <td>Gender</td>

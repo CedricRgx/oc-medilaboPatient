@@ -41,7 +41,6 @@ public class ClientUIController {
     }
 
 
-
     @GetMapping("/patient/{id}")
     public String getPatientById(@PathVariable Long id, Model model) {
         log.info("getPatientById");
