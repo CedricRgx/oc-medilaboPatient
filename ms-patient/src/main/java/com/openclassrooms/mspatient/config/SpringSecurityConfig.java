@@ -1,21 +1,22 @@
-package com.openclassrooms.msgatewayserver.config;
+package com.openclassrooms.mspatient.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * Configuration class for Spring Security
  */
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebSecurity
 public class SpringSecurityConfig {
 
     /**
@@ -25,15 +26,14 @@ public class SpringSecurityConfig {
      * @return the configured SecurityFilterChain object.
      */
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
                 .csrf().disable()
-                .authorizeExchange() // Configure access rules for exchanges (reactive requests)
-                .anyExchange().authenticated()
+                .authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .and()
-                .build();
+                .httpBasic();
+        return http.build();
     }
 
     /**
@@ -47,17 +47,19 @@ public class SpringSecurityConfig {
     }
 
     /**
-     * Defines the bean for a MapReactiveUserDetailsService bean that provides an in-memory user
+     * Defines the bean for a UserDetailsService bean that provides an user
      * details service
      *
      * @param passwordEncoder the PasswordEncoder used to encode the user's password
-     * @return a MapReactiveUserDetailsService containing the user details for authentication
+     * @return a UserDetailsService containing the user details for authentication
      */
     @Bean
-    public MapReactiveUserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.withUsername("username")
                 .password(passwordEncoder.encode("password"))
                 .build();
-        return new MapReactiveUserDetailsService(user);
+        return new InMemoryUserDetailsManager(user);
     }
+
+
 }
