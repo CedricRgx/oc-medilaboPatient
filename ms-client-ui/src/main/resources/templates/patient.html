@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <td>Birthdate</td>
-            <td th:text="${patient.birthdate}"></td>
+            <td th:text="${#temporals.format(patient.birthdate, 'dd/MM/yyyy')}"></td>
         </tr>
         <tr>
             <td>Gender</td>

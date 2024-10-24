@@ -41,7 +41,7 @@
                     <td th:text="${patient.id}"></td>
                     <td th:text="${patient.firstname}"></td>
                     <td th:text="${patient.lastname}"></td>
-                    <td th:text="${patient.birthdate}"></td>
+                    <td th:text="${#temporals.format(patient.birthdate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${patient.gender}"></td>
                     <td th:text="${patient.address != null ? patient.address : 'No adress'}"></td>
                     <td th:text="${patient.phone != null ? patient.phone : 'No phone'}"></td>
