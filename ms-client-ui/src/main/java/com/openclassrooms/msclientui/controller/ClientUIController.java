@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -50,7 +51,7 @@ public class ClientUIController {
         }
         model.addAttribute("patient", patient);
         return "patient";
-    }
+    }//TODO: add error and success messages (by FlashAttributes)
 
     @GetMapping("/patient/edit/{id}")
     public String editPatientForm(@PathVariable Long id, Model model) {
@@ -61,7 +62,7 @@ public class ClientUIController {
         }
         model.addAttribute("patient", patient);
         return "editpatient";
-    }
+    }//TODO: add error and success messages (by FlashAttributes)
 
     @GetMapping("/patient/add")
     public String addPatientForm(Model model) {
@@ -96,7 +97,7 @@ public class ClientUIController {
         Patient savedPatient = clientUIService.savePatient(patient);
 
         return "redirect:/patient/" + savedPatient.getId();
-    }
+    }//TODO: add error and success messages (by FlashAttributes)
 
 //    @PostMapping("/patient/update")
 //    public String updatePatient(@Valid @ModelAttribute Patient patient, BindingResult result, Model model) {
@@ -119,15 +120,15 @@ public class ClientUIController {
 //    }
 
     @PostMapping("/removePatient")
-    public String deletePatient(@RequestParam("id") Long id, Model model) {
+    public String deletePatient(@RequestParam("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         log.info("deletePatient");
         boolean isDeleted = clientUIService.deletePatient(id);
         if (isDeleted) {
-            model.addAttribute("successDeletePatientMessage", "Success to delete the patient.");
+            redirectAttributes.addFlashAttribute("successDeletePatientMessage", "Success to delete the patient.");
             return "redirect:/home";
         } else {
-            model.addAttribute("errorDeletePatientMessage", "Unable to delete the patient. Please try again.");
-            return "home"; // Retourne à la vue avec un message d'erreur en cas d'échec
+            redirectAttributes.addFlashAttribute("errorDeletePatientMessage", "Unable to delete the patient. Please try again.");
+            return "redirect:/home";
         }
     }
 

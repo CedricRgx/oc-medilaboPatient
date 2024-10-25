@@ -3,6 +3,8 @@ package com.openclassrooms.msclientui.model;
 import com.openclassrooms.msclientui.util.Gender;
 
 import com.openclassrooms.msclientui.util.ValidBirthdate;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -53,7 +55,7 @@ public class Patient {
     /**
      * The gender of the patient
      */
-    //@Pattern(regexp="^[MF]$", message="The gender has to be M or F.")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     /**
