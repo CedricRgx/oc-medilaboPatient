@@ -30,7 +30,7 @@ public class PatientController {
      */
     @GetMapping("/allpatients")
     public ResponseEntity<List<Patient>> getPatients() {
-        log.info("GET request on the endpoint /patients: retrieve all patients");
+        log.info("GET request on the endpoint /patient/allpatients: retrieve all patients");
         List<Patient> patients = patientService.getPatients();
         if(patients.isEmpty()){
             log.error("Error getting the list of patients");

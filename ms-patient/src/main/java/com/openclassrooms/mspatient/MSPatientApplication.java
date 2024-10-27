@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @SpringBootApplication
-//@EnableFeignClients
 @EnableDiscoveryClient
 public class MSPatientApplication implements CommandLineRunner {
 

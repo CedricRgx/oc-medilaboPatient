@@ -3,7 +3,6 @@ package com.openclassrooms.msgatewayserver;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.discovery.ReactiveDiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
@@ -34,7 +33,9 @@ public class GatewayServerApplication implements CommandLineRunner {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("ms-patient", r -> r.path("/patient/**")
-                        .uri("lb://MS-PATIENT"))
+                    .uri("lb://MS-PATIENT"))
+                .route("ms-note", r -> r.path("/note/**")
+                    .uri("lb://MS-NOTE"))
                 .build();
     }
 
