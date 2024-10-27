@@ -13,6 +13,15 @@
         <a th:href="@{/patientslist}">
             <button class="btn btn-secondary">Back to list of patients</button>
         </a>
+
+        <div th:if="${successAddPatientMessage}" class="alert alert-success" role="alert">
+            <p th:text="${successAddPatientMessage}"></p>
+        </div>
+
+        <div th:if="${successUpdatePatientMessage}" class="alert alert-success" role="alert">
+            <p th:text="${successUpdatePatientMessage}"></p>
+        </div>
+
     </div>
 
     <table class="table table-bordered border border-dark text-center">

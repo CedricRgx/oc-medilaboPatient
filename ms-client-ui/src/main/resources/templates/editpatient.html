@@ -9,6 +9,10 @@
 <div class="container col-6">
     <h2 class="text-center">Edit a patient</h2>
 
+    <div class="text-center mb-3 alert alert-danger" th:if="${errorUpdatePatientMessage}" role="alert">
+        <p th:text="${errorUpdatePatientMessage}"></p>
+    </div>
+
     <form th:action="@{/patient/save}" th:object="${patient}" method="post">
         <input type="hidden" th:field="${patient.id}"/>
 

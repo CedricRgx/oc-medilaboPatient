@@ -51,7 +51,7 @@ public class ClientUIController {
         }
         model.addAttribute("patient", patient);
         return "patient";
-    }//TODO: add error and success messages (by FlashAttributes)
+    }
 
     @GetMapping("/patient/edit/{id}")
     public String editPatientForm(@PathVariable Long id, Model model) {
@@ -62,7 +62,7 @@ public class ClientUIController {
         }
         model.addAttribute("patient", patient);
         return "editpatient";
-    }//TODO: add error and success messages (by FlashAttributes)
+    }
 
     @GetMapping("/patient/add")
     public String addPatientForm(Model model) {
@@ -71,7 +71,7 @@ public class ClientUIController {
     }
 
     @PostMapping("/patient/save")
-    public String savePatient(@Valid @ModelAttribute Patient patient, BindingResult result, Model model) {
+    public String savePatient(@Valid @ModelAttribute Patient patient, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if(result.hasErrors()) {
             log.error("Validation errors while submitting form.");
             model.addAttribute("patient", patient);
@@ -81,43 +81,29 @@ public class ClientUIController {
                 return "editpatient";
             }
         }
-
-        if (patient.getId() == null) {
-            log.info("Creating new patient");
-        } else {
-            log.info("Updating patient with id: " + patient.getId());
+        try{
+            if (patient.getId() == null) {
+                log.info("Creating new patient");
+                Patient newPatient = clientUIService.savePatient(patient);
+                redirectAttributes.addFlashAttribute("successAddPatientMessage", "Success to add the patient.");
+                return "redirect:/patient/" + newPatient.getId();
+            } else {
+                log.info("Updating patient with id: " + patient.getId());
+                Patient updatedPatient = clientUIService.savePatient(patient);
+                redirectAttributes.addFlashAttribute("successUpdatePatientMessage", "Success to update the patient.");
+                return "redirect:/patient/" + updatedPatient.getId();
+            }
+        }catch(Exception e){
+            log.error("Error occurred while saving or updating patient", e);
+            if (patient.getId() == null) {
+                redirectAttributes.addFlashAttribute("errorAddPatientMessage", "Failed to add the patient.");
+                return "redirect:/addpatient";
+            }else{
+                redirectAttributes.addFlashAttribute("errorUpdatePatientMessage", "Failed to update the patient.");
+                return "redirect:/editpatient";
+            }
         }
-        log.info("Firstname: " + patient.getFirstname());
-        log.info("Lastname: " + patient.getLastname());
-        log.info("Birthdate: " + patient.getBirthdate());
-        log.info("Gender: " + patient.getGender());
-        log.info("Address: " + patient.getAddress());
-        log.info("Phone: " + patient.getPhone());
-
-        Patient savedPatient = clientUIService.savePatient(patient);
-
-        return "redirect:/patient/" + savedPatient.getId();
-    }//TODO: add error and success messages (by FlashAttributes)
-
-//    @PostMapping("/patient/update")
-//    public String updatePatient(@Valid @ModelAttribute Patient patient, BindingResult result, Model model) {
-//        log.info("updatePatient");
-//        if(result.hasErrors()) {
-//            log.error("Validation errors while submitting form.");
-//            model.addAttribute("patient", patient);
-//            return "editpatient";
-//        }
-//        try {
-//            log.info("Updating patient with id: {}", patient.getId());
-//            Patient updatedPatient = clientUIService.updatePatient(patient.getId(), patient);
-//            model.addAttribute("patient", updatedPatient);
-//            return "redirect:/patient/" + updatedPatient.getId();
-//        } catch (Exception e) {
-//            log.error("Error occurred while updating patient", e);
-//            model.addAttribute("errorMessage", "Failed to update patient.");
-//            return "editpatient";
-//        }
-//    }
+    }
 
     @PostMapping("/removePatient")
     public String deletePatient(@RequestParam("id") Long id, Model model, RedirectAttributes redirectAttributes) {
