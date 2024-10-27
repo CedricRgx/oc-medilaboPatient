@@ -53,10 +53,11 @@ public class ClientUIController {
             log.error("The patient is null");
         }
 
-        List<Note> notes = clientUIService.getAllNotes();
+        Note note = clientUIService.getNoteById(id);
 
         model.addAttribute("patient", patient);
-        model.addAttribute("notes", notes);
+        model.addAttribute("note", note);
+
         return "patient";
     }
 

@@ -85,23 +85,24 @@
             <thead class="bg-success text-white">
             <tr>
                 <th>Id</th>
+                <th>Patient Id</th>
                 <th>Title</th>
                 <th>Content</th>
             </tr>
             </thead>
-            <tbody th:if="${notes != null && !notes.isEmpty()}">
-            <tr th:each="note : ${notes}">
+            <tbody th:if="${note != null}">
+            <tr>
                 <td th:text="${note.id}"></td>
+                <td th:text="${note.patientId}"></td>
                 <td th:text="${note.title}"></td>
                 <td th:text="${note.content}"></td>
             </tr>
             </tbody>
-            <tbody th:if="${notes == null || notes.isEmpty()}">
+            <tbody th:if="${note == null}">
             <tr>
-                <td colspan="3">No notes available for this patient.</td>
+                <td colspan="4">No note available for this patient.</td>
             </tr>
             </tbody>
-
         </table>
     </div>
 

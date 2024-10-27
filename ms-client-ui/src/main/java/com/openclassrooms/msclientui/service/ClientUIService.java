@@ -1,5 +1,6 @@
 package com.openclassrooms.msclientui.service;
 
+import com.openclassrooms.msclientui.exception.NoteNotFoundException;
 import com.openclassrooms.msclientui.model.Note;
 import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.exception.PatientNotFoundException;
@@ -8,6 +9,7 @@ import com.openclassrooms.msclientui.util.CustomPage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientUIService {
@@ -60,21 +62,24 @@ public class ClientUIService {
     }
 
     public List<Note> getAllNotes(){
-        //List<Note> notes = patientFeignClient.getNotesList();
 
-        Note note1 = new Note();
-        note1.setId(1L);
-        note1.setTitle("Title of note 1");
-        note1.setContent("Content of note 1");
+        List<Note> notes = feignClient.getNotesList();
+        return notes;
+    }
 
-        Note note2 = new Note();
-        note2.setId(2L);
-        note2.setTitle("Title of note 2");
-        note2.setContent("Content of note 2");
+    public Note getNoteById(Long patientId){
 
-        return List.of(note1, note2);
+        List<Note> notes = getAllNotes();
 
-        //return notes;
+        List<Note> newListOfOneNote = notes.stream()
+                .filter(note -> note.getPatientId().equals(patientId))
+                .collect(Collectors.toList());
+
+        if (newListOfOneNote.isEmpty()) {
+            return null;
+        }
+        return newListOfOneNote.get(0);
+
     }
 
 }

@@ -9,6 +9,8 @@ public class Note {
 
     private Long id;
 
+    private Long patientId;
+
     private String title;
 
     private String content;
