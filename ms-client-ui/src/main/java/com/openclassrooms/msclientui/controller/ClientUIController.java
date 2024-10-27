@@ -1,6 +1,7 @@
 package com.openclassrooms.msclientui.controller;
 
 
+import com.openclassrooms.msclientui.model.Note;
 import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.service.ClientUIService;
 import com.openclassrooms.msclientui.util.CustomPage;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -49,7 +52,11 @@ public class ClientUIController {
         if(patient == null) {
             log.error("The patient is null");
         }
+
+        List<Note> notes = clientUIService.getAllNotes();
+
         model.addAttribute("patient", patient);
+        model.addAttribute("notes", notes);
         return "patient";
     }
 

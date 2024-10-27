@@ -12,7 +12,7 @@ import java.util.Base64;
  * Configuration class for Feign clients that provides a basic authentication interceptor.
  */
 @Configuration
-public class PatientFeignClientConfig {
+public class FeignClientConfig {
 
     /**
      * The username for the Feign client

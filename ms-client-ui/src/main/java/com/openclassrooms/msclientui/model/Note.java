@@ -1,4 +1,4 @@
-package com.openclassrooms.msnote.model;
+package com.openclassrooms.msclientui.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +7,6 @@ import lombok.Setter;
 @Setter
 public class Note {
 
-    /**
-     * The unique identifier for the note
-     */
     private Long id;
 
     private String title;

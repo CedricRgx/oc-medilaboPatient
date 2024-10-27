@@ -1,8 +1,9 @@
 package com.openclassrooms.msclientui.service;
 
+import com.openclassrooms.msclientui.model.Note;
 import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.exception.PatientNotFoundException;
-import com.openclassrooms.msclientui.proxy.PatientFeignClient;
+import com.openclassrooms.msclientui.proxy.FeignClient;
 import com.openclassrooms.msclientui.util.CustomPage;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +12,20 @@ import java.util.List;
 @Service
 public class ClientUIService {
 
-    private final PatientFeignClient patientFeignClient;
+    private final FeignClient feignClient;
 
-    public ClientUIService(PatientFeignClient patientFeignClient) {
-        this.patientFeignClient = patientFeignClient;
+    //private final NoteFeignClient noteFeignClient;
+
+    public ClientUIService(FeignClient feignClient) {
+        this.feignClient = feignClient;
     }
 
     public List<Patient> getPatientsList() {
-        return patientFeignClient.getPatientsList();
+        return feignClient.getPatientsList();
     }
 
     public CustomPage<Patient> getPatientsList(int page, int size){//}, String search) {
-        List<Patient> patientslist = patientFeignClient.getPatientsList();
+        List<Patient> patientslist = feignClient.getPatientsList();
 
 //        if (search != null && !search.isEmpty()) {
 //            patientslist = patientslist.stream()
@@ -40,7 +43,7 @@ public class ClientUIService {
     }
 
     public Patient getPatientById(Long id) {
-        Patient patient = patientFeignClient.getPatientById(id);
+        Patient patient = feignClient.getPatientById(id);
         if (patient == null) {
             throw new PatientNotFoundException("Patient not found with ID: " + id);
         }
@@ -48,12 +51,30 @@ public class ClientUIService {
     }
 
     public Patient savePatient(Patient patient){
-        return patientFeignClient.savePatient(patient);
+        return feignClient.savePatient(patient);
     }
 
     public boolean deletePatient(Long id){
-        boolean isDeleted = patientFeignClient.deletePatient(id);
+        boolean isDeleted = feignClient.deletePatient(id);
         return isDeleted;
+    }
+
+    public List<Note> getAllNotes(){
+        //List<Note> notes = patientFeignClient.getNotesList();
+
+        Note note1 = new Note();
+        note1.setId(1L);
+        note1.setTitle("Title of note 1");
+        note1.setContent("Content of note 1");
+
+        Note note2 = new Note();
+        note2.setId(2L);
+        note2.setTitle("Title of note 2");
+        note2.setContent("Content of note 2");
+
+        return List.of(note1, note2);
+
+        //return notes;
     }
 
 }

@@ -1,8 +1,8 @@
 package com.openclassrooms.msclientui.proxy;
 
+import com.openclassrooms.msclientui.model.Note;
 import com.openclassrooms.msclientui.model.Patient;
-import com.openclassrooms.msclientui.proxy.config.PatientFeignClientConfig;
-import org.springframework.cloud.openfeign.FeignClient;
+import com.openclassrooms.msclientui.proxy.config.FeignClientConfig;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Feign client interface to interact with the Patient microservice through the ms-gateway-server
  */
-@FeignClient(name="ms-gateway-server", url="http://localhost:8082", configuration=PatientFeignClientConfig.class)
-public interface PatientFeignClient {
+@org.springframework.cloud.openfeign.FeignClient(name="ms-gateway-server", url="http://localhost:8082", configuration=FeignClientConfig.class)
+public interface FeignClient {
 
     /**
      * Retrieves a list of all patients.
@@ -56,5 +56,11 @@ public interface PatientFeignClient {
      */
     @DeleteMapping("/patient/{id}")
     boolean deletePatient(@PathVariable("id") Long id);
+
+    @GetMapping("/note/allnotes")
+    List<Note> getNotesList();
+
+    @GetMapping("/note/{id}")
+    Note getNoteById(@PathVariable("id") Long id);
 
 }
