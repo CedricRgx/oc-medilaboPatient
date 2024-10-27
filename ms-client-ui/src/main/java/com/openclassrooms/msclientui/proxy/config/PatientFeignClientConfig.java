@@ -1,6 +1,7 @@
 package com.openclassrooms.msclientui.proxy.config;
 
 import feign.RequestInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,18 @@ import java.util.Base64;
  */
 @Configuration
 public class PatientFeignClientConfig {
+
+    /**
+     * The username for the Feign client
+     */
+    @Value("${feign.client.username}")
+    private String username;
+
+    /**
+     * The password for the Feign client
+     */
+    @Value("${feign.client.password}")
+    private String password;
 
     /**
      * Creates a RequestInterceptor bean that adds the Basic Authentication header to every request.
