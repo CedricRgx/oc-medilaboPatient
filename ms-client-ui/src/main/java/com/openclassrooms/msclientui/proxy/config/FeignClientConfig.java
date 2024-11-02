@@ -1,6 +1,7 @@
 package com.openclassrooms.msclientui.proxy.config;
 
 import feign.RequestInterceptor;
+import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,14 +32,20 @@ public class FeignClientConfig {
      *
      * @return a RequestInterceptor that sets the Authorization header with Basic Authentication
      */
+//    @Bean
+//    public RequestInterceptor basicAuthRequestInterceptor() {
+//        return requestTemplate -> {
+//            String auth = "username:password";
+//            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
+//            String authHeader = "Basic " + encodedAuth;
+//            requestTemplate.header("Authorization", authHeader);
+//        };
+//    }
+
     @Bean
-    public RequestInterceptor basicAuthRequestInterceptor() {
-        return requestTemplate -> {
-            String auth = "username:password";
-            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
-            String authHeader = "Basic " + encodedAuth;
-            requestTemplate.header("Authorization", authHeader);
-        };
+    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+        return new BasicAuthRequestInterceptor(username, password);
     }
+    //TODO créer des validateurs (voir birthdate sur PayMyBuddy) sur l'adresse et le numéro de téléphone (ils sont optionnels mais réponde à un certain format)
 
 }

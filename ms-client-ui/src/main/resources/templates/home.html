@@ -35,7 +35,6 @@
             <table class="table table-striped border border-dark text-center mb-0">
             <thead class="bg-success text-white">
             <tr>
-                <th>ID</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Birthdate</th>
@@ -47,7 +46,6 @@
             </thead>
             <tbody>
                 <tr th:each="patient : ${patientslist}">
-                    <td th:text="${patient.id}"></td>
                     <td th:text="${patient.firstname}"></td>
                     <td th:text="${patient.lastname}"></td>
                     <td th:text="${#temporals.format(patient.birthdate, 'dd/MM/yyyy')}"></td>

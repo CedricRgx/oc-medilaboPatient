@@ -48,12 +48,16 @@ public class ClientUIController {
     @GetMapping("/patient/{id}")
     public String getPatientById(@PathVariable Long id, Model model) {
         log.info("getPatientById");
+
         Patient patient = clientUIService.getPatientById(id);
         if(patient == null) {
-            log.error("The patient is null");
+            log.error("The patient for the id {} is null", id);
         }
 
         Note note = clientUIService.getNoteById(id);
+        if(note == null) {
+            log.error("The notes for the patient {} is null", id);
+        }
 
         model.addAttribute("patient", patient);
         model.addAttribute("note", note);

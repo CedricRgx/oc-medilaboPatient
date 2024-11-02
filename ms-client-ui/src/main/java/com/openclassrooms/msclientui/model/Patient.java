@@ -61,7 +61,7 @@ public class Patient {
     /**
      * The address of the patient
      */
-    @Size(min=2, max=255, message="The address must contain between {min} and {max} characters.")
+    //@Size(min=2, max=255, message="The address must contain between {min} and {max} characters.")
     private String address;
 
     /**

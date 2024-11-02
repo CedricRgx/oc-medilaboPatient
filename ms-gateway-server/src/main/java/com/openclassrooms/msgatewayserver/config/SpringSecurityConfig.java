@@ -1,5 +1,6 @@
 package com.openclassrooms.msgatewayserver.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -17,6 +18,18 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SpringSecurityConfig {
+
+    /**
+     * The username for the MS-GATEWAY
+     */
+    @Value("${security.username}")
+    private String username;
+
+    /**
+     * The password for the MS-GATEWAY
+     */
+    @Value("${security.password}")
+    private String password;
 
     /**
      * Configures the SecurityFilterChain to specify security settings
@@ -55,8 +68,8 @@ public class SpringSecurityConfig {
      */
     @Bean
     public MapReactiveUserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("username")
-                .password(passwordEncoder.encode("password"))
+        UserDetails user = User.withUsername(username)
+                .password(passwordEncoder.encode(password))
                 .build();
         return new MapReactiveUserDetailsService(user);
     }
