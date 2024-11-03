@@ -27,14 +27,12 @@ public class ClientUIController {
     public String getAllPatients(Model model,
                                  @RequestParam(name="page", defaultValue = "0") int page,
                                  @RequestParam(name="size", defaultValue = "5") int size) {
-                                 //@RequestParam(name="search", required = false) String search) {
 
-        CustomPage<Patient> patientsPage = clientUIService.getPatientsList(page, size);//, search);
+        CustomPage<Patient> patientsPage = clientUIService.getPatientsList(page, size);
         model.addAttribute("patientslist", patientsPage.getContent());
         model.addAttribute("pages", patientsPage.getTotalPages());
         model.addAttribute("currentPage", patientsPage.getCurrentPage());
         model.addAttribute("pageSize", size);
-        //model.addAttribute("search", search);
 
         return "home";
     }
@@ -94,12 +92,12 @@ public class ClientUIController {
             }
         }
         try{
-            if (patient.getId() == null) {
+            if(patient.getId() == null) {
                 log.info("Creating new patient");
                 Patient newPatient = clientUIService.savePatient(patient);
                 redirectAttributes.addFlashAttribute("successAddPatientMessage", "Success to add the patient.");
                 return "redirect:/patient/" + newPatient.getId();
-            } else {
+            }else{
                 log.info("Updating patient with id: " + patient.getId());
                 Patient updatedPatient = clientUIService.savePatient(patient);
                 redirectAttributes.addFlashAttribute("successUpdatePatientMessage", "Success to update the patient.");
@@ -109,10 +107,10 @@ public class ClientUIController {
             log.error("Error occurred while saving or updating patient", e);
             if (patient.getId() == null) {
                 redirectAttributes.addFlashAttribute("errorAddPatientMessage", "Failed to add the patient.");
-                return "redirect:/addpatient";
+                return "redirect:/home";
             }else{
                 redirectAttributes.addFlashAttribute("errorUpdatePatientMessage", "Failed to update the patient.");
-                return "redirect:/editpatient";
+                return "redirect:/patient/" + patient.getId();
             }
         }
     }

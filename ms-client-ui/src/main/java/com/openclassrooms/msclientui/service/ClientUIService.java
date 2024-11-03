@@ -6,12 +6,15 @@ import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.exception.PatientNotFoundException;
 import com.openclassrooms.msclientui.proxy.FeignClient;
 import com.openclassrooms.msclientui.util.CustomPage;
+import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ClientUIService {
 
     private final FeignClient feignClient;
@@ -26,14 +29,8 @@ public class ClientUIService {
         return feignClient.getPatientsList();
     }
 
-    public CustomPage<Patient> getPatientsList(int page, int size){//}, String search) {
+    public CustomPage<Patient> getPatientsList(int page, int size){
         List<Patient> patientslist = feignClient.getPatientsList();
-
-//        if (search != null && !search.isEmpty()) {
-//            patientslist = patientslist.stream()
-//                    .filter(patient -> patient.getLastname().toLowerCase().contains(search.toLowerCase()))
-//                    .collect(Collectors.toList());
-//        }
 
         int totalPatients = patientslist.size();
         int totalPages = (int) Math.ceil((double) totalPatients / size);
@@ -53,7 +50,19 @@ public class ClientUIService {
     }
 
     public Patient savePatient(Patient patient){
-        return feignClient.savePatient(patient);
+        try {
+            log.info("Saving patient: {}", patient);
+            return feignClient.savePatient(patient);
+        } catch (FeignException.BadRequest e) {
+            log.error("Error while saving patient. BadRequest: {}", e.responseBody());
+            throw new RuntimeException("Failed to save patient. Error: " + e.getMessage(), e);
+        } catch (FeignException e) {
+            log.error("Error while saving patient. Feign error: {}", e.getMessage());
+            throw new RuntimeException("Failed to save patient. Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("General error while saving patient. Error: {}", e.getMessage());
+            throw new RuntimeException("Failed to save patient. Error: " + e.getMessage(), e);
+        }
     }
 
     public boolean deletePatient(Long id){

@@ -9,10 +9,6 @@
 <div class="container col-6">
     <h2 class="text-center">Edit a patient</h2>
 
-    <div class="text-center mb-3 alert alert-danger" th:if="${errorUpdatePatientMessage}" role="alert">
-        <p th:text="${errorUpdatePatientMessage}"></p>
-    </div>
-
     <form th:action="@{/patient/save}" th:object="${patient}" method="post">
         <input type="hidden" th:field="${patient.id}"/>
 
@@ -45,11 +41,17 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td><input type="text" th:field="*{address}" class="form-control"></td>
+                <td>
+                    <input type="text" th:field="*{address}" class="form-control">
+                    <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                </td>
             </tr>
             <tr>
                 <td>Phone</td>
-                <td><input type="text" th:field="*{phone}" class="form-control"></td>
+                <td>
+                    <input type="text" th:field="*{phone}" class="form-control">
+                    <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                </td>
             </tr>
             </tbody>
         </table>

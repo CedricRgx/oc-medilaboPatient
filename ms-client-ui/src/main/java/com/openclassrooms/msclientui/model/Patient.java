@@ -2,12 +2,14 @@ package com.openclassrooms.msclientui.model;
 
 import com.openclassrooms.msclientui.util.Gender;
 
+import com.openclassrooms.msclientui.util.ValidAddress;
 import com.openclassrooms.msclientui.util.ValidBirthdate;
+import com.openclassrooms.msclientui.util.ValidPhone;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +51,7 @@ public class Patient {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull
-    @ValidBirthdate(message="The birthdate must be a valid date format and prior to the current date.")
+    @ValidBirthdate(message="The birthdate must be prior to the current date.")
     private LocalDate birthdate;
 
     /**
@@ -61,12 +63,13 @@ public class Patient {
     /**
      * The address of the patient
      */
-    //@Size(min=2, max=255, message="The address must contain between {min} and {max} characters.")
+    @ValidAddress(message="The address is invalid.")
     private String address;
 
     /**
      * The phone of the patient
+     * This field is optional, but if provided, it must match the pattern 012-345-6789.
      */
-    @Pattern(regexp="^\\d{3}-\\d{3}-\\d{4}$", message="The phone number is invalid.")
+    @ValidPhone(message="The phone number is invalid.")
     private String phone;
 }

@@ -16,6 +16,10 @@
                     <button class="btn btn-success">Add a new patient</button>
                 </a>
 
+                <div th:if="${errorAddPatientMessage}" class="alert alert-danger" role="alert">
+                    <p th:text="${errorAddPatientMessage}"></p>
+                </div>
+
                 <div th:if="${successDeletePatientMessage}" class="alert alert-success" role="alert">
                     <p th:text="${successDeletePatientMessage}"></p>
                 </div>
@@ -23,7 +27,6 @@
                 <div th:if="${errorDeletePatientMessage}" class="alert alert-danger" role="alert">
                     <p th:text="${errorDeletePatientMessage}"></p>
                 </div>
-
 
 <!--                <form th:action="@{/patientslist}" method="get" class="d-flex">-->
 <!--                    <input type="text" name="search" th:value="${search}" placeholder="Search by lastname" class="form-control me-2">-->

@@ -9,10 +9,6 @@
 <div class="container col-6">
     <h2 class="text-center">Add a new patient</h2>
 
-    <div class="text-center mb-3 alert alert-danger" th:if="${errorAddPatientMessage}" role="alert">
-        <p th:text="${errorAddPatientMessage}"></p>
-    </div>
-
     <form th:action="@{/patient/save}" th:object="${patient}" method="post">
         <table class="table table-bordered border border-dark">
             <tbody>
@@ -26,7 +22,10 @@
             </tr>
             <tr>
                 <td>Birthdate</td>
-                <td><input type="date" th:field="*{birthdate}" class="form-control" required></td>
+                <td>
+                    <input type="date" th:field="*{birthdate}" class="form-control" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+                </td>
             </tr>
             <tr>
                 <td>Gender</td>
@@ -40,11 +39,17 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td><input type="text" th:field="*{address}" placeholder="Enter the address of your patient" class="form-control"></td>
+                <td>
+                    <input type="text" th:field="*{address}" placeholder="Enter the address of your patient" class="form-control">
+                    <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                </td>
             </tr>
             <tr>
                 <td>Phone</td>
-                <td><input type="text" th:field="*{phone}" placeholder="Enter the phone number of your patient" class="form-control"></td>
+                <td>
+                    <input type="text" th:field="*{phone}" placeholder="Enter the phone number of your patient" class="form-control">
+                    <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                </td>
             </tr>
             </tbody>
         </table>

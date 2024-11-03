@@ -28,6 +28,9 @@
         </div>
 
         <div class="text-center mb-3">
+            <div th:if="${errorUpdatePatientMessage}" class="alert alert-success" role="alert">
+                <p th:text="${errorUpdatePatientMessage}"></p>
+            </div>
             <div th:if="${successAddPatientMessage}" class="alert alert-success" role="alert">
                 <p th:text="${successAddPatientMessage}"></p>
             </div>

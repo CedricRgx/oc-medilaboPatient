@@ -1,7 +1,9 @@
 package com.openclassrooms.mspatient.model;
 
 import com.openclassrooms.mspatient.util.Gender;
+import com.openclassrooms.mspatient.util.ValidAddress;
 import com.openclassrooms.mspatient.util.ValidBirthdate;
+import com.openclassrooms.mspatient.util.ValidPhone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -66,14 +68,15 @@ public class Patient {
     /**
      * The address of the patient
      */
-    @Size(min=2, max=255, message="The address must contain between {min} and {max} characters.")
+    @ValidAddress(message="The address is invalid.")
     @Column(name="address")
     private String address;
 
     /**
      * The phone of the patient
+     * This field is optional, but if provided, it must match the pattern 012-345-6789.
      */
-    @Pattern(regexp="^\\d{3}-\\d{3}-\\d{4}$", message="The phone number is invalid.")
+    @ValidPhone(message="The phone number is invalid.")
     @Column(name="phone")
     private String phone;
 }

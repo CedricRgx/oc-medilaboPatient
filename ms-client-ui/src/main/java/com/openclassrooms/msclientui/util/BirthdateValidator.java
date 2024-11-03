@@ -1,6 +1,5 @@
 package com.openclassrooms.msclientui.util;
 
-import com.openclassrooms.msclientui.util.ValidBirthdate;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
