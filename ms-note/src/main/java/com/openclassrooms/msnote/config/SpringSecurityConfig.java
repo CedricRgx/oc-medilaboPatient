@@ -1,5 +1,6 @@
 package com.openclassrooms.msnote.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+
+    /**
+     * The username for the MS-NOTE
+     */
+    @Value("${security.username}")
+    private String username;
+
+    /**
+     * The password for the MS-NOTE
+     */
+    @Value("${security.password}")
+    private String password;
 
     /**
      * Configures the SecurityFilterChain to specify security settings
@@ -55,8 +68,8 @@ public class SpringSecurityConfig {
      */
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("username")
-                .password(passwordEncoder.encode("password"))
+        UserDetails user = User.withUsername(username)
+                .password(passwordEncoder.encode(password))
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
