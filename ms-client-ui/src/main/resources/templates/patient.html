@@ -19,7 +19,7 @@
     <hr class="my-4">
 
     <div class="container col-6">
-        <h3 class="text-center">Details of the Patient</h3>
+        <h3 class="text-center">Patient Details</h3>
 
         <div class="text-center mb-3">
             <a th:href="@{/patient/edit/{id}(id=${patient.id})}">
@@ -78,29 +78,30 @@
     <hr class="my-4">
 
     <div class="container col-6">
-        <h3 class="text-center">Notes of the Patient</h3>
+        <h3 class="text-center">Patient Notes</h3>
 
         <table class="table table-bordered border border-dark text-center">
             <thead class="bg-success text-white">
             <tr>
                 <th>Id</th>
                 <th>Patient Id</th>
-                <th>Title</th>
-                <th>Content</th>
+                <th>Note</th>
+                <th>Patient</th>
             </tr>
             </thead>
-            <tbody th:if="${note != null}">
-            <tr>
-                <td th:text="${note.id}"></td>
-                <td th:text="${note.patientId}"></td>
-                <td th:text="${note.title}"></td>
-                <td th:text="${note.content}"></td>
-            </tr>
+            <tbody th:if="${notes!=null}">
+<!--            <tbody th:if="${notes!=null}">-->
+                <tr th:each="note : ${notes}">
+                    <td th:text="${note.id}"></td>
+                    <td th:text="${note.patId}"></td>
+                    <td th:text="${note.note}"></td>
+                    <td th:text="${note.patient}"></td>
+                </tr>
             </tbody>
-            <tbody th:if="${note == null}">
-            <tr>
-                <td colspan="4">No note available for this patient.</td>
-            </tr>
+            <tbody th:if="${notes==null}">
+                <tr>
+                    <td colspan="4">No notes available for this patient.</td>
+                </tr>
             </tbody>
         </table>
     </div>

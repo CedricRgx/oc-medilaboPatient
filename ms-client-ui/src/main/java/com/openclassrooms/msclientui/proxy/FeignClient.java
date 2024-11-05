@@ -61,6 +61,6 @@ public interface FeignClient {
     List<Note> getNotesList();
 
     @GetMapping("/note/{id}")
-    Note getNoteById(@PathVariable("id") Long id);
+    List<Note> getNotesByPatientId(@PathVariable("id") Long patId);
 
 }

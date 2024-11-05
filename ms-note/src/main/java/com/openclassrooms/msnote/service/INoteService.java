@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface INoteService {
 
-    public List<Note> getAllNotes();
+    List<Note> getNotesByPatId(Long id);
 }

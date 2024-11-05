@@ -28,6 +28,10 @@
                     <p th:text="${errorDeletePatientMessage}"></p>
                 </div>
 
+                <div th:if="${errorFoundPatientMessage}" class="alert alert-danger" role="alert">
+                    <p th:text="${errorFoundPatientMessage}"></p>
+                </div>
+
 <!--                <form th:action="@{/patientslist}" method="get" class="d-flex">-->
 <!--                    <input type="text" name="search" th:value="${search}" placeholder="Search by lastname" class="form-control me-2">-->
 <!--                    <button type="submit" class="btn btn-primary">Search</button>-->

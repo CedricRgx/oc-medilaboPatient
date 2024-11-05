@@ -1,6 +1,7 @@
 package com.openclassrooms.msclientui.controller;
 
 
+import com.openclassrooms.msclientui.exception.NoteNotFoundException;
 import com.openclassrooms.msclientui.model.Note;
 import com.openclassrooms.msclientui.model.Patient;
 import com.openclassrooms.msclientui.service.ClientUIService;
@@ -44,21 +45,27 @@ public class ClientUIController {
 
 
     @GetMapping("/patient/{id}")
-    public String getPatientById(@PathVariable Long id, Model model) {
+    public String getPatientById(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         log.info("getPatientById");
 
         Patient patient = clientUIService.getPatientById(id);
         if(patient == null) {
-            log.error("The patient for the id {} is null", id);
+            log.error("No patient found with id : " + id);
+            redirectAttributes.addFlashAttribute("errorFoundPatientMessage", "This patient doesn't exist.");
+            return "redirect:/home";
         }
-
-        Note note = clientUIService.getNoteById(id);
-        if(note == null) {
-            log.error("The notes for the patient {} is null", id);
-        }
-
         model.addAttribute("patient", patient);
-        model.addAttribute("note", note);
+
+        try{
+            List<Note> notes = clientUIService.getNotesByPatientId(id);
+            if(!notes.isEmpty()) {
+                model.addAttribute("notes", notes);
+            }else{
+                log.error("No notes found for patient with id: " + id);
+            }
+        }catch(NoteNotFoundException e){
+            log.error("No notes found for patient with id: " + id);
+        }
 
         return "patient";
     }

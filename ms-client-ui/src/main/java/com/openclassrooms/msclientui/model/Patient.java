@@ -5,7 +5,6 @@ import com.openclassrooms.msclientui.util.Gender;
 import com.openclassrooms.msclientui.util.ValidAddress;
 import com.openclassrooms.msclientui.util.ValidBirthdate;
 import com.openclassrooms.msclientui.util.ValidPhone;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +19,6 @@ import java.time.LocalDate;
 /**
  * Represents a patient for the client ui
  */
-
 @Getter
 @Setter
 public class Patient {

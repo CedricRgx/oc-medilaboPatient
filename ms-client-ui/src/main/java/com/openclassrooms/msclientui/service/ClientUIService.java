@@ -19,8 +19,6 @@ public class ClientUIService {
 
     private final FeignClient feignClient;
 
-    //private final NoteFeignClient noteFeignClient;
-
     public ClientUIService(FeignClient feignClient) {
         this.feignClient = feignClient;
     }
@@ -42,11 +40,19 @@ public class ClientUIService {
     }
 
     public Patient getPatientById(Long id) {
-        Patient patient = feignClient.getPatientById(id);
-        if (patient == null) {
-            throw new PatientNotFoundException("Patient not found with ID: " + id);
+        try {
+            Patient patient = feignClient.getPatientById(id);
+            if (patient == null) {
+                throw new PatientNotFoundException("Patient not found with ID: " + id);
+            }
+            return patient;
+        } catch (FeignException.InternalServerError e) {
+            log.error("Internal server error while fetching patient with ID: {}. Error: {}", id, e.getMessage());
+            return null;
+        } catch (FeignException e) {
+            log.error("Error while fetching patient with ID: {}. Error: {}", id, e.getMessage());
+            return null;
         }
-        return patient;
     }
 
     public Patient savePatient(Patient patient){
@@ -71,23 +77,19 @@ public class ClientUIService {
     }
 
     public List<Note> getAllNotes(){
-
         List<Note> notes = feignClient.getNotesList();
         return notes;
     }
 
-    public Note getNoteById(Long patientId){
-
-        List<Note> notes = getAllNotes();
-
-        List<Note> newListOfOneNote = notes.stream()
-                .filter(note -> note.getPatientId().equals(patientId))
-                .collect(Collectors.toList());
-
-        if (newListOfOneNote.isEmpty()) {
-            return null;
+    public List<Note> getNotesByPatientId(Long patientId){
+        log.info("getNoteByPatientId");
+        try {
+            List<Note> notes = feignClient.getNotesByPatientId(patientId);
+            log.info("Notes found for patient with ID: {}", patientId);
+            return notes;
+        }catch (FeignException.NotFound e){
+            throw new NoteNotFoundException("No notes found for patient with ID: " + patientId);
         }
-        return newListOfOneNote.get(0);
 
     }
 

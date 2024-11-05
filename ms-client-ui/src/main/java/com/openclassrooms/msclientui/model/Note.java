@@ -3,16 +3,31 @@ package com.openclassrooms.msclientui.model;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents a note for the client ui
+ */
 @Getter
 @Setter
 public class Note {
 
-    private Long id;
+    /**
+     * The unique identifier for the note
+     */
+    private String id;
 
-    private Long patientId;
+    /**
+     * The ID of patient for the note
+     */
+    private Long patId;
 
-    private String title;
+    /**
+     * The content of the note
+     */
+    private String note;
 
-    private String content;
+    /**
+     * The name of the patient
+     */
+    private String patient;
 
 }

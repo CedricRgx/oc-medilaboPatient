@@ -2,20 +2,36 @@ package com.openclassrooms.msnote.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@Document(collection="note")
 public class Note {
 
     /**
      * The unique identifier for the note
      */
-    private Long id;
+    @Id
+    private String id;
 
-    private Long patientId;
+    /**
+     * The ID of patient for the note
+     */
+    @Indexed
+    private Long patId;
 
-    private String title;
+    /**
+     * The content of the note
+     */
+    private String note;
 
-    private String content;
+    /**
+     * The name of the patient
+     */
+    private String patient;
 
 }
