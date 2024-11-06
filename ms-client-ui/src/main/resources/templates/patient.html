@@ -37,6 +37,9 @@
             <div th:if="${successUpdatePatientMessage}" class="alert alert-success" role="alert">
                 <p th:text="${successUpdatePatientMessage}"></p>
             </div>
+            <div th:if="${successAddNoteMessage}" class="alert alert-success" role="alert">
+                <p th:text="${successAddNoteMessage}"></p>
+            </div>
         </div>
 
         <table class="table table-bordered border border-dark text-center">
@@ -80,22 +83,34 @@
     <div class="container col-6">
         <h3 class="text-center">Patient Notes</h3>
 
+        <div class="text-center mb-3">
+            <a th:href="@{/note/add(patientId=${patient.id})}" class="btn btn-success">
+                <button class="btn btn-success">Add a new note</button>
+            </a>
+        </div>
+
         <table class="table table-bordered border border-dark text-center">
             <thead class="bg-success text-white">
             <tr>
-                <th>Id</th>
-                <th>Patient Id</th>
                 <th>Note</th>
-                <th>Patient</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody th:if="${notes!=null}">
-<!--            <tbody th:if="${notes!=null}">-->
                 <tr th:each="note : ${notes}">
-                    <td th:text="${note.id}"></td>
-                    <td th:text="${note.patId}"></td>
                     <td th:text="${note.note}"></td>
-                    <td th:text="${note.patient}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center align-items-center" style="gap: 10px;">
+                            <a th:href="@{/note/edit/{id}(id=${note.id})}">
+                                <button class="btn btn-primary btn-sm" style="min-width: 100px;">Edit</button>
+                            </a>
+                            <form th:action="@{/removeNote(id=${note.id})}" method="post">
+                                <button type="submit"
+                                        onclick="return confirm('Are you sure to delete this note?')"
+                                        class="btn btn-danger btn-sm" style="min-width: 100px;">Remove</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
             <tbody th:if="${notes==null}">

@@ -63,4 +63,36 @@ public interface FeignClient {
     @GetMapping("/note/{id}")
     List<Note> getNotesByPatientId(@PathVariable("id") Long patId);
 
+    @GetMapping("/note/id/{id}")
+    Note getNoteById(@PathVariable("id") String id);
+
+    /**
+     * Saves a new note.
+     *
+     * @param note the Note object to save
+     * @return the saved Note object
+     */
+    @PostMapping("/note")
+    Note saveNote(@RequestBody Note note);
+
+    /**
+     * Updates an existing note.
+     *
+     * @param id   the ID of the note to update
+     * @param note the Note object with updated information
+     * @return the updated Note object
+     */
+    @PutMapping("/note/{id}")
+    Note updateNote(@PathVariable("id") String id, @RequestBody Note note);
+
+    /**
+     * Deletes a note by their ID.
+     *
+     * @param id the ID of the note to delete
+     * @return true if the note was successfully deleted, false otherwise
+     */
+    @PostMapping("/note/removeNote/{id}")
+    boolean deleteNoteById(@PathVariable("id") String id);
+
+
 }

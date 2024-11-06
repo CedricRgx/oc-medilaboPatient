@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -81,6 +80,14 @@ public class ClientUIService {
         return notes;
     }
 
+    public Note getNoteById(String id){
+        Note note = feignClient.getNoteById(id);
+        if(note == null) {
+            throw new NoteNotFoundException("Note not found with ID: " + id);
+        }
+        return note;
+    }
+
     public List<Note> getNotesByPatientId(Long patientId){
         log.info("getNoteByPatientId");
         try {
@@ -91,6 +98,38 @@ public class ClientUIService {
             throw new NoteNotFoundException("No notes found for patient with ID: " + patientId);
         }
 
+    }
+
+    public Note saveNote(Note note){
+        try {
+            log.info("Saving note: {}", note);
+            return feignClient.saveNote(note);
+        } catch (FeignException.BadRequest e) {
+            log.error("Error while saving note. BadRequest: {}", e.responseBody());
+            throw new RuntimeException("Failed to save note. Error: " + e.getMessage(), e);
+        } catch (FeignException e) {
+            log.error("Error while saving note. Feign error: {}", e.getMessage());
+            throw new RuntimeException("Failed to save note. Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("General error while saving note. Error: {}", e.getMessage());
+            throw new RuntimeException("Failed to save note. Error: " + e.getMessage(), e);
+        }
+    }
+
+    public Note updateNote(String id, Note note) {
+        try {
+            log.info("Updating note with ID: {}", id);
+            return feignClient.updateNote(id, note);
+        } catch (Exception e) {
+            log.error("Error while updating note. Error: {}", e.getMessage());
+            throw new RuntimeException("Failed to update note. Error: " + e.getMessage(), e);
+        }
+    }
+
+    public boolean deleteNoteById(String id){
+        log.info("deleteNote");
+        boolean isDeleted = feignClient.deleteNoteById(id);
+        return isDeleted;
     }
 
 }

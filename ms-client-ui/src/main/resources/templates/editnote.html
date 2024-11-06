@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit a note</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container col-6">
+    <h2 class="text-center">Edit a note</h2>
+    <input type="hidden" name="patId" th:value="${note.patId}"/>
+
+    <form th:action="@{/note/update}" th:object="${note}" method="post">
+        <input type="hidden" th:name="noteId" th:value="${note.id}"/>
+
+        <table class="table table-bordered border border-dark">
+            <tbody>
+            <tr>
+                <td>Note</td>
+                <td><input type="text" th:field="*{note}" class="form-control" required></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/patient/{id}(id=${note.patId})}" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

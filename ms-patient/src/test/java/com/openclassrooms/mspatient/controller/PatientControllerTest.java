@@ -120,7 +120,7 @@ class PatientControllerTest {
     public void testDeletePatientById() {
         when(patientService.deletePatientById(1L)).thenReturn(true);
 
-        ResponseEntity<Void> response = patientController.deletePatientById(1L);
+        ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -129,7 +129,7 @@ class PatientControllerTest {
     public void testDeletePatientByIdError() {
         when(patientService.deletePatientById(1L)).thenReturn(false);
 
-        ResponseEntity<Void> response = patientController.deletePatientById(1L);
+        ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }

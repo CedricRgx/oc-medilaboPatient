@@ -13,34 +13,34 @@ public interface IPatientService {
      * Retrieves all patients
      * @return An iterable containing all patients
      */
-    public Iterable<Patient> getPatients();
+    Iterable<Patient> getPatients();
 
     /**
      * Retrieves a patient by their ID.
      * @param id The ID of the patient to retrieve.
      * @return An optional containing the patient if found, otherwise empty.
      */
-    public Optional<Patient> getPatientById(Long id);
+    Optional<Patient> getPatientById(Long id);
 
     /**
      * Saves a new patient.
      * @param patient The user to add.
      * @return The added patient.
      */
-    public Patient savePatient(Patient patient);
+    Patient savePatient(Patient patient);
 
     /**
      * Updates a patient to the repository.
      * @param patient The Patient object to be updated.
      * @return The updated Patient object.
      */
-    public Patient updatePatient(Patient patient);
+    Patient updatePatient(Patient patient);
 
     /**
      * Deletes a patient by their ID.
-     * @param id The ID of the patient to delete.
-     * @return
+     * @param id The ID of the patient to be deleted.
+     * @return True if the deletion was successful, otherwise False.
      */
-    public boolean deletePatientById(Long id);
+    boolean deletePatientById(Long id);
 
 }

@@ -73,10 +73,6 @@ public class PatientService implements IPatientService {
     /**
      * Deletes a patient by their ID.
      * @param id The ID of the patient to be deleted.
-     */
-    /**
-     * Deletes a patient by their ID.
-     * @param id The ID of the patient to be deleted.
      * @return True if the deletion was successful, otherwise False.
      */
     @Transactional

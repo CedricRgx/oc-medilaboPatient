@@ -101,23 +101,15 @@ public class PatientController {
      * @return the status code
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity deletePatientById(@PathVariable Long id) {
-        log.info("DELETE request on the endpoint /patient/{id}: delete an patient from its id");
-//        boolean isDeleted = patientService.deletePatientById(id);
-//        if(!isDeleted){
-//            log.error("Error deleting the patient from the id: {}", id);
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }else{
-//            log.info("Success deleting the patient from the id: {}", id);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
+    public ResponseEntity<Boolean> deletePatientById(@PathVariable Long id) {
+        log.info("DELETE request on the endpoint /patient/{id}: delete a patient from its id");
         boolean isDeleted = false;
-        try {
-            isDeleted = patientService.deletePatientById(id); // Utilisation du service pour supprimer le patient
-        } catch (EmptyResultDataAccessException e) {
-            isDeleted = false; // Patient non trouvé
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false); // Autre exception
+        try{
+            isDeleted = patientService.deletePatientById(id);
+        }catch(EmptyResultDataAccessException e) {
+            isDeleted = false;
+        }catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }
         return ResponseEntity.ok(isDeleted);
     }

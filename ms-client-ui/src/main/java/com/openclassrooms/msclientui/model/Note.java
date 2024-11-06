@@ -26,7 +26,7 @@ public class Note {
     private String note;
 
     /**
-     * The name of the patient
+     * The lastname of the patient
      */
     private String patient;
 
