@@ -60,6 +60,25 @@ public class PatientController {
     }
 
     /**
+     * Checks if a patient exists via their ID.
+     *
+     * @param id the ID of the patient to check
+     * @return a Boolean, true if the patient exists, false otherwise.
+     */
+    @GetMapping("/exist/{id}")
+    public ResponseEntity<Boolean> isExist(@PathVariable("id") Long id){
+        log.info("GET request on the endpoint /patient/exist/{id}: Checks if a patient exists from its id");
+        Optional<Patient> patient = patientService.getPatientById(id);
+        if(patient.isEmpty() || patient == null){
+            log.error("The patient with the id {} doesn't exist", id);
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }else{
+            log.info("The patient with the id {} exists", id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+    }
+
+    /**
      * This method adds a patient to the repository
      * @param patientToAdd The patient to add
      * @return the patient added

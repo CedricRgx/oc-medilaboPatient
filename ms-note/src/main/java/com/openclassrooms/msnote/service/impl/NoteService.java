@@ -1,6 +1,7 @@
 package com.openclassrooms.msnote.service.impl;
 
 import com.openclassrooms.msnote.model.Note;
+import com.openclassrooms.msnote.proxy.FeignClient;
 import com.openclassrooms.msnote.repository.NoteRepository;
 import com.openclassrooms.msnote.service.INoteService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,9 @@ public class NoteService implements INoteService {
     @Autowired
     private NoteRepository noteRepository;
 
+    @Autowired
+    private FeignClient feignClient;
+
     /**
      * Get all notes for all patients.
      *
@@ -30,6 +34,11 @@ public class NoteService implements INoteService {
         return noteRepository.findAll();
     }
 
+    /**
+     * Retrieves a specific note by its ID.
+     * @param id The ID of the note.
+     * @return Optional containing the note if found, otherwise empty.
+     */
     public Optional<Note> getNoteById(String id) {
         log.info("Retrieve a note with ID: {}", id);
         try {
@@ -39,7 +48,6 @@ public class NoteService implements INoteService {
             return Optional.empty();
         }
     }
-
 
     /**
      * Get all notes associated with a patient ID.
@@ -57,10 +65,22 @@ public class NoteService implements INoteService {
      * @return The added Note object.
      */
     public Note saveNote(Note note) {
-        log.info("Adding an note");
-        return noteRepository.save(note);
+        log.info("Adding or updating a note for patient ID: {}", note.getPatId());
+        boolean isExist = feignClient.isExist(note.getPatId());
+//        if (!isExist) {
+//            log.error("Patient not found with ID: {}", note.getPatId());
+//            return null;
+//        }
+        Note savedNote = noteRepository.save(note);
+        log.info("Successfully added or updated a note with ID: {}", savedNote.getId());
+        return savedNote;
     }
 
+    /**
+     * Deletes a note by its ID.
+     * @param id The ID of the note to delete.
+     * @return true if the note was deleted, otherwise false.
+     */
     public boolean deleteNoteById(String id) {
         log.info("Deleting a note with ID: {}", id);
         try {
