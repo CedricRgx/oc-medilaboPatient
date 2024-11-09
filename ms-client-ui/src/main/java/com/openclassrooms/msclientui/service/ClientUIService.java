@@ -10,6 +10,7 @@ import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -103,6 +104,10 @@ public class ClientUIService {
     public Note saveNote(Note note){
         try {
             log.info("Saving note: {}", note);
+            if (note.getCreationDate()==null){
+                note.setCreationDate(LocalDate.now());
+            }
+            note.setUpdateDate(LocalDate.now());
             return feignClient.saveNote(note);
         } catch (FeignException.BadRequest e) {
             log.error("Error while saving note. BadRequest: {}", e.responseBody());

@@ -93,12 +93,16 @@
             <thead class="bg-success text-white">
             <tr>
                 <th>Note</th>
+                <th>Creation date</th>
+                <th>Update date</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody th:if="${notes!=null}">
                 <tr th:each="note : ${notes}">
                     <td th:text="${note.note}"></td>
+                    <td th:text="${#temporals.format(note.creationDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#temporals.format(note.updateDate, 'dd/MM/yyyy')}"></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center" style="gap: 10px;">
                             <a th:href="@{/note/edit/{id}(id=${note.id})}">
