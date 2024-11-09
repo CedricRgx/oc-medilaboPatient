@@ -66,7 +66,7 @@ public class NoteService implements INoteService {
      */
     public Note saveNote(Note note) {
         log.info("Adding or updating a note for patient ID: {}", note.getPatId());
-        boolean isExist = feignClient.isExist(note.getPatId());
+//        boolean isExist = feignClient.isExist(note.getPatId());
 //        if (!isExist) {
 //            log.error("Patient not found with ID: {}", note.getPatId());
 //            return null;
