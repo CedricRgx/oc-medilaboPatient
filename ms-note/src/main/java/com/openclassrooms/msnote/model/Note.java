@@ -2,14 +2,13 @@ package com.openclassrooms.msnote.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document(collection="note")
+@Document(collection="doctornotes")
 public class Note {
 
     /**

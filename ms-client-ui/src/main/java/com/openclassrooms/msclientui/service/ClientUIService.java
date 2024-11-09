@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 public class ClientUIService {
 
     private final FeignClient feignClient;
 
-    public ClientUIService(FeignClient feignClient) {
-        this.feignClient = feignClient;
+    public ClientUIService(FeignClient feignNote) {
+        this.feignClient = feignNote;
     }
 
     public List<Patient> getPatientsList() {

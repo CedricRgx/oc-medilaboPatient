@@ -166,8 +166,6 @@ public class ClientUIController {
             log.error("note not found with id: " + id);
             return "redirect:/home";
         }
-//        Patient patient = clientUIService.getPatientById(note.getPatId());
-//        model.addAttribute("patient", patient);
         model.addAttribute("note", note);
         return "editnote";
     }
