@@ -1,8 +1,9 @@
-package com.openclassrooms.mspatient.service.impl;
+package com.openclassrooms.mspatient.service;
 
 import com.openclassrooms.mspatient.exceptions.PatientNotFoundException;
 import com.openclassrooms.mspatient.model.Patient;
 import com.openclassrooms.mspatient.repository.PatientRepository;
+import com.openclassrooms.mspatient.service.impl.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,7 +83,7 @@ class PatientServiceTest {
     @Test
     public void testAddPatient() {
         when(patientRepository.save(any(Patient.class))).thenReturn(patient);
-        Patient result = patientService.addPatient(new Patient());
+        Patient result = patientService.savePatient(new Patient());
         assertNotNull(result);
         assertEquals("Abricot", result.getFirstname());
     }

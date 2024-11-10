@@ -18,7 +18,4 @@ public interface FeignClient {
     @GetMapping("/patient/exist/{id}")
     Boolean isExist(@PathVariable("id") Long id);
 
-
-
-
 }

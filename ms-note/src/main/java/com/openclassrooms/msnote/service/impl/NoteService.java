@@ -84,8 +84,14 @@ public class NoteService implements INoteService {
     public boolean deleteNoteById(String id) {
         log.info("Deleting a note with ID: {}", id);
         try {
-            noteRepository.deleteById(id);
-            return true;
+            Optional<Note> note = noteRepository.findById(id);
+            if (note.isPresent()) {
+                noteRepository.deleteById(id);
+                return true;
+            } else {
+                log.warn("Note with ID: {} not found", id);
+                return false;
+            }
         } catch (Exception e) {
             log.error("Unexpected error occurred while deleting note with ID: {}", id, e);
             return false;
