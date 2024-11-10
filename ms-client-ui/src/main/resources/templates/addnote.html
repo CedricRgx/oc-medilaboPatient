@@ -12,16 +12,7 @@
     <form th:action="@{/note/save}" th:object="${note}" method="post">
         <input type="hidden" name="patId" th:value="${patient.id}"/>
 
-        <table class="table table-bordered border border-dark">
-            <tbody>
-            <tr>
-                <td>Note</td>
-                <td>
-                    <textarea th:field="*{note}" placeholder="Enter the note about your patient" class="form-control" required></textarea>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <textarea th:field="*{note}" placeholder="Enter the note about your patient" class="form-control" required />
 
         <div class="text-center mt-3">
             <button type="submit" class="btn btn-primary">Save</button>
