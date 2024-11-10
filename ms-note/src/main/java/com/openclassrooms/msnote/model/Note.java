@@ -8,6 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a note in the MediLaboPatient application.
+ */
 @Getter
 @Setter
 @Document(collection="doctornotes")

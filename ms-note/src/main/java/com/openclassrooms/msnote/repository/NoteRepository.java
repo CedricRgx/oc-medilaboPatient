@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Spring Data Mongo repository for the Note entities.
+ */
 @Repository
 public interface NoteRepository extends MongoRepository<Note, String> {
 

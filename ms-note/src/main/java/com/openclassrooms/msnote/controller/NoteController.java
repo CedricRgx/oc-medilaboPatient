@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing notes.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/note")
@@ -19,6 +22,11 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
+    /**
+     * Retrieves all notes.
+     *
+     * @return ResponseEntity containing the list of all notes and HTTP status.
+     */
     @GetMapping("/allnotes")
     public ResponseEntity<List<Note>> getPatients() {
         log.info("GET request on the endpoint /note/allnotes: retrieve all notes");
@@ -32,6 +40,12 @@ public class NoteController {
         }
     }
 
+    /**
+     * Retrieves a note by its ID.
+     *
+     * @param id The ID of the note.
+     * @return ResponseEntity containing the note if found, and HTTP status.
+     */
     @GetMapping("/id/{id}")
     public ResponseEntity<Note> getNoteById(@PathVariable("id") String id){
         log.info("GET request on the endpoint /note/id/{id}: retrieve a note with ID: " + id);
@@ -45,6 +59,12 @@ public class NoteController {
         }
     }
 
+    /**
+     * Retrieves all notes for a specific patient by patient ID.
+     *
+     * @param patId The ID of the patient.
+     * @return ResponseEntity containing the list of notes for the patient and HTTP status.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<List<Note>> getNotesByPatientId(@PathVariable("id") Long patId) {
         log.info("GET request on the endpoint /note/{id}: retrieve all notes for the patient with ID: " + patId);
@@ -58,6 +78,12 @@ public class NoteController {
         }
     }
 
+    /**
+     * Adds a new note to the repository.
+     *
+     * @param noteToAdd The Note object to be added.
+     * @return ResponseEntity containing the added note and HTTP status.
+     */
     @PostMapping()
     public ResponseEntity<Note> saveNote(@RequestBody Note noteToAdd) {
         log.info("POST request on the endpoint /note: add a note to the repository");
@@ -71,6 +97,13 @@ public class NoteController {
         }
     }
 
+    /**
+     * Updates an existing note by its ID.
+     *
+     * @param id The ID of the note to update.
+     * @param updatedNote The Note object containing updated information.
+     * @return ResponseEntity containing the updated note and HTTP status.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable("id") String id, @RequestBody Note updatedNote) {
         log.info("PUT request on the endpoint /note/{id}: update a note with ID: " + id);
@@ -88,9 +121,10 @@ public class NoteController {
     }
 
     /**
-     * This method delete a note to the repository
-     * @param id Tne id of the note to delete
-     * @return the status code
+     * Deletes a note by its ID.
+     *
+     * @param id The ID of the note to delete.
+     * @return ResponseEntity indicating if the deletion is successful and HTTP status.
      */
     @PostMapping("/removeNote/{id}")
     public ResponseEntity<Boolean> deleteNoteById(@PathVariable("id") String id) {
