@@ -48,13 +48,13 @@ public class NoteController {
      */
     @GetMapping("/id/{id}")
     public ResponseEntity<Note> getNoteById(@PathVariable("id") String id){
-        log.info("GET request on the endpoint /note/id/{id}: retrieve a note with ID: " + id);
+        log.info("GET request on the endpoint /note/id/{id}: retrieve a note with ID: {}", id);
         Optional<Note> note = noteService.getNoteById(id);
         if(note.isEmpty()){
-            log.error("No note with ID: " + id);
+            log.error("No note with ID: {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            log.info("Success getting the note with ID: " + id);
+            log.info("Success getting the note with ID: {}", id);
             return new ResponseEntity<>(note.get(), HttpStatus.OK);
         }
     }
@@ -67,13 +67,13 @@ public class NoteController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<List<Note>> getNotesByPatientId(@PathVariable("id") Long patId) {
-        log.info("GET request on the endpoint /note/{id}: retrieve all notes for the patient with ID: " + patId);
+        log.info("GET request on the endpoint /note/{id}: retrieve all notes for the patient with ID: {}", patId);
         List<Note> notes = noteService.getNotesByPatId(patId);
         if(notes.isEmpty()){
-            log.warn("No list of notes for the patient with ID: " + patId);
+            log.warn("No list of notes for the patient with ID: {}", patId);
             return new ResponseEntity<>(notes, HttpStatus.NOT_FOUND);
         }else{
-            log.info("Success getting the list of notes for the patient with ID: " + patId);
+            log.info("Success getting the list of notes for the patient with ID: {}", patId);
             return new ResponseEntity<>(notes, HttpStatus.OK);
         }
     }
@@ -90,7 +90,7 @@ public class NoteController {
         Note note = noteService.saveNote(noteToAdd);
         if(note==null){
             log.error("Error adding the note");
-            return new ResponseEntity<>(note, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }else{
             log.info("Success adding the note");
             return new ResponseEntity<>(note, HttpStatus.OK);
@@ -106,16 +106,16 @@ public class NoteController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable("id") String id, @RequestBody Note updatedNote) {
-        log.info("PUT request on the endpoint /note/{id}: update a note with ID: " + id);
+        log.info("PUT request on the endpoint /note/{id}: update a note with ID: {}", id);
         Optional<Note> existingNote = noteService.getNoteById(id);
         if (existingNote.isEmpty()) {
-            log.error("Note not found with ID: " + id);
+            log.error("Note not found with ID: {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             Note note = existingNote.get();
             note.setNote(updatedNote.getNote());
             Note savedNote = noteService.saveNote(note);
-            log.info("Successfully updated the note with ID: " + id);
+            log.info("Successfully updated the note with ID: {}", id);
             return new ResponseEntity<>(savedNote, HttpStatus.OK);
         }
     }
@@ -132,10 +132,10 @@ public class NoteController {
         boolean isDeleted = noteService.deleteNoteById(id);
         if(!isDeleted){
             log.error("Error deleting the note from the id: {}", id);
-            return new ResponseEntity<>(isDeleted, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }else {
             log.info("Success deleting the note from the id: {}", id);
-            return new ResponseEntity<>(isDeleted, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
     }
 

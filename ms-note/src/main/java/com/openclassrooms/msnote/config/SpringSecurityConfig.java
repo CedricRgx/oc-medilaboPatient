@@ -60,7 +60,7 @@ public class SpringSecurityConfig {
     }
 
     /**
-     * Defines the bean for a UserDetailsService bean that provides an user
+     * Defines the bean for a UserDetailsService bean that provides a user
      * details service
      *
      * @param passwordEncoder the PasswordEncoder used to encode the user's password

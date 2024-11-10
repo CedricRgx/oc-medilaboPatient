@@ -13,7 +13,17 @@ import java.util.Optional;
 @Repository
 public interface NoteRepository extends MongoRepository<Note, String> {
 
-    List<Note> getNotesByPatId(Long patientId);
+    /**
+     * Get all notes associated with a patient ID.
+     * @param patId The ID of the patient.
+     * @return List of notes for the patient.
+     */
+    List<Note> getNotesByPatId(Long patId);
 
+    /**
+     * Finds a note by its ID.
+     * @param id The ID of the note.
+     * @return An Optional containing the note if found, or empty if not.
+     */
     Optional<Note> findById(String id);
 }
