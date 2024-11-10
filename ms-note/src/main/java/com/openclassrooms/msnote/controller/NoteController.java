@@ -139,4 +139,17 @@ public class NoteController {
         }
     }
 
+    @GetMapping("/patexist/{id}")
+    public ResponseEntity<Boolean> isExist(@PathVariable("id") Long id){
+        log.info("GET request on the endpoint /note/patexist/{id}: Checks if a patient exists from its id");
+        Boolean isExist = noteService.isExist(id);
+        if(!isExist){
+            log.error("The patient with the id {} doesn't exist", id);
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }else{
+            log.info("The patient with the id {} exists", id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+    }
+
 }

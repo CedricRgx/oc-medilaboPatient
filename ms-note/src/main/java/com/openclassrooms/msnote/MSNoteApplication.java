@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
  * The main class for the MediLaboNote application.
  * This class initializes the Spring Boot application and contains the entry point method.
  */
-
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.openclassrooms.msnote.proxy")
 @EnableDiscoveryClient

@@ -55,29 +55,26 @@ class PatientServiceTest {
         Long id = 1L;
         Patient patient = new Patient();
         patient.setId(id);
-        when(patientRepository.existsById(id)).thenReturn(true);
+
         when(patientRepository.findById(id)).thenReturn(Optional.of(patient));
+
         Optional<Patient> result = patientService.getPatientById(id);
 
         assertTrue(result.isPresent());
         assertEquals(patient, result.get());
-        verify(patientRepository, times(1)).existsById(id);
+
         verify(patientRepository, times(1)).findById(id);
     }
 
-
     @Test
     public void testGetPatientById_NotFound() {
-        when(patientRepository.existsById(1L)).thenReturn(false);
+        Long id = 1L;
+        when(patientRepository.findById(id)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(PatientNotFoundException.class, () -> {
-            patientService.getPatientById(1L);
-        });
+        Optional<Patient> result = patientService.getPatientById(id);
 
-        String expectedMessage = "Patient not found with ID: 1";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(result.isEmpty());
+        verify(patientRepository, times(1)).findById(id);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PatientControllerTest {
 
@@ -79,6 +80,31 @@ class PatientControllerTest {
     }
 
     @Test
+    public void isExist_ShouldReturnOkAndTrue_WhenPatientExists() {
+        Long patientId = 1L;
+        Patient patient = new Patient();
+        when(patientService.getPatientById(patientId)).thenReturn(Optional.of(patient));
+
+        ResponseEntity<Boolean> response = patientController.isExist(patientId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(true, response.getBody());
+        verify(patientService, times(1)).getPatientById(patientId);
+    }
+
+    @Test
+    public void isExist_ShouldReturnOkAndFalse_WhenPatientDoesNotExist() {
+        Long patientId = 1L;
+        when(patientService.getPatientById(patientId)).thenReturn(Optional.empty());
+
+        ResponseEntity<Boolean> response = patientController.isExist(patientId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(false, response.getBody());
+        verify(patientService, times(1)).getPatientById(patientId);
+    }
+
+    @Test
     public void testAddPatient() {
         when(patientService.savePatient(any(Patient.class))).thenReturn(patient);
 
@@ -131,6 +157,42 @@ class PatientControllerTest {
 
         ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
 
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void deletePatientById_ShouldReturnOkAndTrue_WhenDeletionIsSuccessful() {
+        Long patientId = 1L;
+        when(patientService.deletePatientById(patientId)).thenReturn(true);
+
+        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(true, response.getBody());
+        verify(patientService, times(1)).deletePatientById(patientId);
+    }
+
+    @Test
+    public void deletePatientById_ShouldReturnOkAndFalse_WhenPatientNotFound() {
+        Long patientId = 1L;
+        when(patientService.deletePatientById(patientId)).thenThrow(new EmptyResultDataAccessException(1));
+
+        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(false, response.getBody());
+        verify(patientService, times(1)).deletePatientById(patientId);
+    }
+
+    @Test
+    public void deletePatientById_ShouldReturnInternalServerError_WhenUnexpectedExceptionOccurs() {
+        Long patientId = 1L;
+        when(patientService.deletePatientById(patientId)).thenThrow(new RuntimeException("Unexpected error"));
+
+        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(false, response.getBody());
+        verify(patientService, times(1)).deletePatientById(patientId);
     }
 }

@@ -69,7 +69,7 @@ public class PatientController {
     public ResponseEntity<Boolean> isExist(@PathVariable("id") Long id){
         log.info("GET request on the endpoint /patient/exist/{id}: Checks if a patient exists from its id");
         Optional<Patient> patient = patientService.getPatientById(id);
-        if(patient.isEmpty() || patient == null){
+        if(patient.isEmpty()){
             log.error("The patient with the id {} doesn't exist", id);
             return new ResponseEntity<>(false, HttpStatus.OK);
         }else{

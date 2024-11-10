@@ -32,15 +32,11 @@ public class PatientService implements IPatientService {
     }
 
     /**
-     * Retrieves an user from the repository.
+     * Retrieves a user from the repository.
      * @return An Optional containing the patient.
      */
     public Optional<Patient> getPatientById(Long id) {
         log.info("Retrieve a patient with ID: {}", id);
-        if (!patientRepository.existsById(id)) {
-            log.error("Patient not found with ID: {}", id);
-            throw new PatientNotFoundException("Patient not found with ID: " + id);
-        }
         return patientRepository.findById(id);
     }
 

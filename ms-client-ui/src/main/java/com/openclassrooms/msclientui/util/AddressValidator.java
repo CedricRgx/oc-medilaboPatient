@@ -20,11 +20,11 @@ public class AddressValidator implements ConstraintValidator<ValidAddress, Strin
      * @param address the address to validate
      * @param context context in which the constraint is evaluated
      * @return True if the address is null, empty, or within the valid length range;
-     *         False otherwise
+     * False otherwise
      */
     @Override
     public boolean isValid(String address, ConstraintValidatorContext context) {
-        if(address == null || address.isEmpty()) {
+        if (address == null || address.isEmpty()) {
             log.info("Address is null or empty (valid)");
             return true;
         }

@@ -66,14 +66,23 @@ public class NoteService implements INoteService {
      */
     public Note saveNote(Note note) {
         log.info("Adding or updating a note for patient ID: {}", note.getPatId());
-//        boolean isExist = feignClient.isExist(note.getPatId());
-//        if (!isExist) {
-//            log.error("Patient not found with ID: {}", note.getPatId());
-//            return null;
-//        }
+        Boolean isExist = feignClient.isExist(note.getPatId());
+        if (!isExist) {
+            log.error("Patient not found with ID during saving or updating operation: {}", note.getPatId());
+            return null;
+        }
         Note savedNote = noteRepository.save(note);
         log.info("Successfully added or updated a note with ID: {}", savedNote.getId());
         return savedNote;
+    }
+
+    public Boolean isExist(Long patId) {
+        Boolean isExist = feignClient.isExist(patId);
+        if (!isExist) {
+            log.error("Patient not found with ID: {}", patId);
+            return false;
+        }
+        return true;
     }
 
     /**

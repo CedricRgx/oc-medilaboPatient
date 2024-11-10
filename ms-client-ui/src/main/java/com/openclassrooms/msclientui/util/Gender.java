@@ -1,6 +1,9 @@
 package com.openclassrooms.msclientui.util;
 
+/**
+ * Enumeration representing gender options.
+ */
 public enum Gender {
-    M,
-    F
+    M, // Male gender
+    F // Female gender
 }

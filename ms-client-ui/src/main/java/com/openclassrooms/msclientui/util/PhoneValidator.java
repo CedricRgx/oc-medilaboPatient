@@ -18,7 +18,7 @@ public class PhoneValidator implements ConstraintValidator<ValidPhone, String> {
     /**
      * Validates the phone number format. Accepts null or empty values.
      *
-     * @param phone the phone number to validate
+     * @param phone   the phone number to validate
      * @param context validation context
      * @return True if the phone number is null, empty, or matches the pattern; False otherwise
      */

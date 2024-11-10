@@ -9,7 +9,7 @@
 <div class="container col-6">
     <h2 class="text-center">Edit a patient</h2>
 
-    <form th:action="@{/patient/save}" th:object="${patient}" method="post">
+    <form th:action="@{/patient/update}" th:object="${patient}" method="post">
         <input type="hidden" th:field="${patient.id}"/>
 
         <table class="table table-bordered border border-dark">

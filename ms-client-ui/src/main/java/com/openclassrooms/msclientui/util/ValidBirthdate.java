@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * Annotation for validating that a LocalDate field is a valid birthdate, meaning it is prior to the current date.
  */
 @Constraint(validatedBy = BirthdateValidator.class)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidBirthdate {
 
