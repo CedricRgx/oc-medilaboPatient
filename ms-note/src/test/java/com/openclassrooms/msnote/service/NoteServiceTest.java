@@ -140,7 +140,7 @@ public class NoteServiceTest {
         newNote.setNote("Nouvelle note pour le patient.");
 
         when(noteRepository.save(newNote)).thenReturn(newNote);
-        // Si FeignClient est utilisé, décommentez la ligne suivante :
+
         // when(feignClient.isExist(104L)).thenReturn(true);
 
         // Act
@@ -150,7 +150,7 @@ public class NoteServiceTest {
         assertNotNull(result);
         assertEquals(newNote, result);
         verify(noteRepository, times(1)).save(newNote);
-        // Si FeignClient est utilisé :
+
         // verify(feignClient, times(1)).isExist(104L);
     }
 
