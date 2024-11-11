@@ -99,7 +99,7 @@ public class ClientUIController {
     public String editPatientForm(@PathVariable Long id, Model model) {
         Patient patient = clientUIService.getPatientById(id);
         if (patient == null) {
-            log.error("Patient not found with id: " + id);
+            log.error("Patient not found with id: {}", id);
             return "redirect:/home";
         }
         model.addAttribute("patient", patient);

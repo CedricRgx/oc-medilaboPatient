@@ -1,6 +1,5 @@
 package com.openclassrooms.mspatient.service;
 
-import com.openclassrooms.mspatient.exceptions.PatientNotFoundException;
 import com.openclassrooms.mspatient.model.Patient;
 import com.openclassrooms.mspatient.repository.PatientRepository;
 import com.openclassrooms.mspatient.service.impl.PatientService;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

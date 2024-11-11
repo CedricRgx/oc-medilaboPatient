@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PatientControllerTest {
@@ -75,7 +74,7 @@ class PatientControllerTest {
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(true, response.getBody().isPresent());
+        assertTrue(response.getBody().isPresent());
     }
 
     @Test
@@ -88,7 +87,7 @@ class PatientControllerTest {
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(false, response.getBody().isPresent());
+        assertFalse(response.getBody().isPresent());
     }
 
     @Test

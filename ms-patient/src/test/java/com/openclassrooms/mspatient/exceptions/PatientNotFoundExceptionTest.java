@@ -21,6 +21,6 @@ class PatientNotFoundExceptionTest {
         PatientNotFoundException exception = new PatientNotFoundException("Some message");
 
         // Assert
-        assertTrue(exception instanceof RuntimeException, "PatientNotFoundException should inherit from RuntimeException");
+        assertInstanceOf(RuntimeException.class, exception, "PatientNotFoundException should inherit from RuntimeException");
     }
 }

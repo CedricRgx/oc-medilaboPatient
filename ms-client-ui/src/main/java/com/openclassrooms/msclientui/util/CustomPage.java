@@ -1,5 +1,7 @@
 package com.openclassrooms.msclientui.util;
 
+import lombok.Getter;
+
 import java.util.List;
 
 /**
@@ -7,9 +9,28 @@ import java.util.List;
  *
  * @param <T> The type of elements contained in the page content.
  */
+@Getter
 public class CustomPage<T> {
+    /**
+     * -- GETTER --
+     *  Returns the content of the current page.
+     *
+     * @return A list of items on the current page.
+     */
     private List<T> content;
+    /**
+     * -- GETTER --
+     *  Returns the total number of pages available.
+     *
+     * @return The total page count.
+     */
     private int totalPages;
+    /**
+     * -- GETTER --
+     *  Returns the current page number.
+     *
+     * @return The current page index.
+     */
     private int currentPage;
 
     /**
@@ -25,30 +46,4 @@ public class CustomPage<T> {
         this.currentPage = currentPage;
     }
 
-    /**
-     * Returns the content of the current page.
-     *
-     * @return A list of items on the current page.
-     */
-    public List<T> getContent() {
-        return content;
-    }
-
-    /**
-     * Returns the total number of pages available.
-     *
-     * @return The total page count.
-     */
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    /**
-     * Returns the current page number.
-     *
-     * @return The current page index.
-     */
-    public int getCurrentPage() {
-        return currentPage;
-    }
 }
