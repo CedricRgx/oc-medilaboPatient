@@ -114,6 +114,7 @@ public class NoteController {
         } else {
             Note note = existingNote.get();
             note.setNote(updatedNote.getNote());
+            note.setUpdateDate(updatedNote.getUpdateDate());
             Note savedNote = noteService.saveNote(note);
             log.info("Successfully updated the note with ID: {}", id);
             return new ResponseEntity<>(savedNote, HttpStatus.OK);

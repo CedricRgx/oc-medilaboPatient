@@ -189,14 +189,16 @@ public class ClientUIService {
     /**
      * Updates an existing note by its ID.
      *
-     * @param id   The ID of the note to update.
-     * @param note The updated note data.
+     * @param note The updated note.
      * @return The updated Note.
      * @throws RuntimeException if an error occurs while updating the note.
      */
     public Note updateNote(String id, Note note) {
         try {
             log.info("Updating note with ID: {}", id);
+            log.info("1111111111111111111111111111", note.getUpdateDate());
+            note.setUpdateDate(LocalDate.now());
+            log.info("2222222222222222222222222222", note.getUpdateDate());
             return feignClient.updateNote(id, note);
         } catch (Exception e) {
             log.error("Error while updating note. Error: {}", e.getMessage());
