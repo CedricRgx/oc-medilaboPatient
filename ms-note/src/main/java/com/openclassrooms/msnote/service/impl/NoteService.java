@@ -76,15 +76,6 @@ public class NoteService implements INoteService {
         return savedNote;
     }
 
-    public Boolean isExist(Long patId) {
-        Boolean isExist = feignClient.isExist(patId);
-        if (!isExist) {
-            log.error("Patient not found with ID: {}", patId);
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Deletes a note by its ID.
      * @param id The ID of the note to delete.

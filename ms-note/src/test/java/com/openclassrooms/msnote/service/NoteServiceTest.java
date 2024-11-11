@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,12 +42,12 @@ public class NoteServiceTest {
         note1 = new Note();
         note1.setId("1");
         note1.setPatId(101L);
-        note1.setNote("Le patient est en bonne santé.");
+        note1.setNote("The patient is healthy.");
 
         note2 = new Note();
         note2.setId("2");
         note2.setPatId(102L);
-        note2.setNote("Le patient a un rhume.");
+        note2.setNote("The patient is sick.");
     }
 
     @Test
@@ -137,11 +138,11 @@ public class NoteServiceTest {
         // Arrange
         Note newNote = new Note();
         newNote.setPatId(104L);
-        newNote.setNote("Nouvelle note pour le patient.");
+        newNote.setNote("New note for the patient.");
 
         when(noteRepository.save(newNote)).thenReturn(newNote);
 
-        // when(feignClient.isExist(104L)).thenReturn(true);
+        when(feignClient.isExist(104L)).thenReturn(true);
 
         // Act
         Note result = noteService.saveNote(newNote);
@@ -151,26 +152,73 @@ public class NoteServiceTest {
         assertEquals(newNote, result);
         verify(noteRepository, times(1)).save(newNote);
 
-        // verify(feignClient, times(1)).isExist(104L);
+        verify(feignClient, times(1)).isExist(104L);
     }
 
-//    @Test
-//    public void testSaveNote_PatientNotFound() {
-//        // Arrange
-//        Note newNote = new Note();
-//        newNote.setPatId(105L);
-//        newNote.setNote("Une autre nouvelle note pour le patient.");
-//
-//        when(feignClient.isExist(105L)).thenReturn(false);
-//
-//        // Act
-//        Note result = noteService.saveNote(newNote);
-//
-//        // Assert
-//        assertNotNull(result);
-//        assertNull(result);
-//        verify(feignClient, times(1)).isExist(105L);
-//        verify(noteRepository, never()).save(any(Note.class));
-//    }
+    @Test
+    public void testSaveNote_PatientNotFound() {
+        // Arrange
+        Note newNote = new Note();
+        newNote.setPatId(105L);
+        newNote.setNote("An other new note for the patient.");
+        when(feignClient.isExist(105L)).thenReturn(false);
+
+        // Act
+        Note result = noteService.saveNote(newNote);
+
+        // Assert
+        assertNull(result);
+        verify(feignClient, times(1)).isExist(105L);
+        verify(noteRepository, never()).save(any(Note.class));
+    }
+
+    @Test
+    public void testDeleteNoteById_Success() {
+        // Arrange
+        String noteId = "1";
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note1));
+        doNothing().when(noteRepository).deleteById(noteId);
+
+        // Act
+        boolean result = noteService.deleteNoteById(noteId);
+
+        // Assert
+        assertTrue(result);
+        verify(noteRepository, times(1)).findById(noteId);
+        verify(noteRepository, times(1)).deleteById(noteId);
+    }
+
+    @Test
+    public void testDeleteNoteById_NoteNotFound() {
+        // Arrange
+        String noteId = "1";
+        when(noteRepository.findById(noteId)).thenReturn(Optional.empty());
+
+        // Act
+        boolean result = noteService.deleteNoteById(noteId);
+
+        // Assert
+        assertFalse(result);
+        verify(noteRepository, times(1)).findById(noteId);
+        verify(noteRepository, never()).deleteById(anyString());
+    }
+
+    @Test
+    public void testDeleteNoteById_Exception() {
+        // Arrange
+        String noteId = "1";
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note1));
+        doThrow(new RuntimeException("Database error")).when(noteRepository).deleteById(noteId);
+
+        // Act
+        boolean result = noteService.deleteNoteById(noteId);
+
+        // Assert
+        assertFalse(result);
+        verify(noteRepository, times(1)).findById(noteId);
+        verify(noteRepository, times(1)).deleteById(noteId);
+    }
+
+
 
 }

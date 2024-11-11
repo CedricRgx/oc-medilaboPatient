@@ -52,7 +52,7 @@ public class NoteTest {
     @Test
     public void testGetAndSetNoteContent() {
         // Arrange
-        String content = "Le patient est en bonne santé.";
+        String content = "The patient is healthy.";
 
         // Act
         note.setNote(content);
@@ -93,7 +93,7 @@ public class NoteTest {
         // Arrange
         String id = "12345";
         Long patId = 101L;
-        String content = "Le patient est en bonne santé.";
+        String content = "The patient is healthy.";
         LocalDate creationDate = LocalDate.of(2023, 10, 1);
         LocalDate updateDate = LocalDate.of(2023, 10, 15);
 

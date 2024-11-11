@@ -28,17 +28,32 @@
         </div>
 
         <div class="text-center mb-3">
-            <div th:if="${errorUpdatePatientMessage}" class="alert alert-success" role="alert">
-                <p th:text="${errorUpdatePatientMessage}"></p>
-            </div>
             <div th:if="${successAddPatientMessage}" class="alert alert-success" role="alert">
                 <p th:text="${successAddPatientMessage}"></p>
             </div>
             <div th:if="${successUpdatePatientMessage}" class="alert alert-success" role="alert">
                 <p th:text="${successUpdatePatientMessage}"></p>
             </div>
+            <div th:if="${errorUpdatePatientMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${errorUpdatePatientMessage}"></p>
+            </div>
             <div th:if="${successAddNoteMessage}" class="alert alert-success" role="alert">
                 <p th:text="${successAddNoteMessage}"></p>
+            </div>
+            <div th:if="${errorAddNoteMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${errorAddNoteMessage}"></p>
+            </div>
+            <div th:if="${successUpdateNoteMessage}" class="alert alert-success" role="alert">
+                <p th:text="${successUpdateNoteMessage}"></p>
+            </div>
+            <div th:if="${errorUpdateNoteMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${errorUpdateNoteMessage}"></p>
+            </div>
+            <div th:if="${successDeleteNoteMessage}" class="alert alert-success" role="alert">
+                <p th:text="${successDeleteNoteMessage}"></p>
+            </div>
+            <div th:if="${errorDeleteNoteMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${errorDeleteNoteMessage}"></p>
             </div>
         </div>
 

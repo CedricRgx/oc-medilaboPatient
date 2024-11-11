@@ -9,65 +9,88 @@ public class PatientTest {
 
     @Test
     public void testGetId() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setId(1L);
+
+        // Assert
         assertThat(patient.getId()).isEqualTo(1L);
     }
 
     @Test
     public void testGetLastname() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setLastname("Dupont");
+
+        // Assert
         assertThat(patient.getLastname()).isEqualTo("Dupont");
     }
 
     @Test
     public void testGetFirstname() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setFirstname("Charles");
+
+        // Assert
         assertThat(patient.getFirstname()).isEqualTo("Charles");
     }
 
     @Test
     public void testGetBirthdate() {
+        // Arrange & Act
         LocalDate birthdate = LocalDate.of(1998, 2, 3);
         Patient patient = new Patient();
         patient.setBirthdate(birthdate);
+
+        // Assert
         assertThat(patient.getBirthdate()).isEqualTo(birthdate);
     }
 
     @Test
     public void testGetGender() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setGender(Gender.M);
+
+        // Assert
         assertThat(patient.getGender()).isEqualTo(Gender.M);
     }
 
     @Test
     public void testGetAddress() {
+        // Arrange & Act
         Patient patient = new Patient();
-        patient.setAddress("45 rue de la Rue, 65000 Ville");
-        assertThat(patient.getAddress()).isEqualTo("45 rue de la Rue, 65000 Ville");
+        patient.setAddress("45 Street street, 65000 City");
+
+        // Assert
+        assertThat(patient.getAddress()).isEqualTo("45 Street street, 65000 City");
     }
 
     @Test
     public void testGetPhone() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setPhone("123-456-7890");
+
+        // Assert
         assertThat(patient.getPhone()).isEqualTo("123-456-7890");
     }
 
-    // Tests pour les setters
-
     @Test
     public void testSetId() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setId(2L);
+
+        // Assert
         assertThat(patient.getId()).isEqualTo(2L);
     }
 
     @Test
     public void testSetLastname() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setLastname("Anjou");
         assertThat(patient.getLastname()).isEqualTo("Anjou");
@@ -75,37 +98,52 @@ public class PatientTest {
 
     @Test
     public void testSetFirstname() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setFirstname("Marguerite");
+
+        // Assert
         assertThat(patient.getFirstname()).isEqualTo("Marguerite");
     }
 
     @Test
     public void testSetBirthdate() {
+        // Arrange & Act
         LocalDate birthdate = LocalDate.of(1993, 10, 23);
         Patient patient = new Patient();
         patient.setBirthdate(birthdate);
+
+        // Assert
         assertThat(patient.getBirthdate()).isEqualTo(birthdate);
     }
 
     @Test
     public void testSetGender() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setGender(Gender.F);
+
+        // Assert
         assertThat(patient.getGender()).isEqualTo(Gender.F);
     }
 
     @Test
     public void testSetAddress() {
+        // Arrange & Act
         Patient patient = new Patient();
-        patient.setAddress("76 boulevard du Boulevard, 65003 Grande ville");
-        assertThat(patient.getAddress()).isEqualTo("76 boulevard du Boulevard, 65003 Grande ville");
+        patient.setAddress("76 Main Street, 65003 Great city");
+
+        // Assert
+        assertThat(patient.getAddress()).isEqualTo("76 Main Street, 65003 Great city");
     }
 
     @Test
     public void testSetPhone() {
+        // Arrange & Act
         Patient patient = new Patient();
         patient.setPhone("987-654-3210");
+
+        // Assert
         assertThat(patient.getPhone()).isEqualTo("987-654-3210");
     }
 }
