@@ -1,5 +1,6 @@
 package com.openclassrooms.mspatient.service;
 
+import com.openclassrooms.mspatient.exceptions.PatientNotFoundException;
 import com.openclassrooms.mspatient.model.Patient;
 import com.openclassrooms.mspatient.repository.PatientRepository;
 import com.openclassrooms.mspatient.service.impl.PatientService;
@@ -98,32 +99,74 @@ class PatientServiceTest {
     }
 
     @Test
-    public void testUpdatePatient() {
+    public void testUpdatePatient_Success() {
         // Arrange
-        when(patientRepository.existsById(patient.getId())).thenReturn(true);
-        when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+        Long patientId = 1L;
+        Patient patient = new Patient();
+        patient.setId(patientId);
+        when(patientRepository.existsById(patientId)).thenReturn(true);
+        when(patientRepository.save(patient)).thenReturn(patient);
 
         // Act
-        Patient result = patientService.updatePatient(patient);
+        Patient updatedPatient = patientService.updatePatient(patient);
 
         // Assert
-        assertNotNull(result);
-        assertEquals("Abricot", result.getFirstname());
+        assertEquals(patient, updatedPatient);
+        verify(patientRepository).save(patient);
     }
 
     @Test
-    public void testDeletePatientById() {
+    void testUpdatePatient_PatientNotFound() {
+        // Arrange & Act
+        Long patientId = 2L;
+        Patient patient = new Patient();
+        patient.setId(patientId);
+        when(patientRepository.existsById(patientId)).thenReturn(false);
+
+        // assert
+        assertThrows(PatientNotFoundException.class, () -> patientService.updatePatient(patient));
+        verify(patientRepository, never()).save(any(Patient.class));
+    }
+
+    @Test
+    public void testDeletePatientById_Success() {
         // Arrange
-        Long id = 1L;
-        when(patientRepository.existsById(id)).thenReturn(true);
-        doNothing().when(patientRepository).deleteById(id);
+        Long patientId = 1L;
+        when(patientRepository.existsById(patientId)).thenReturn(true);
 
         // Act
-        boolean result = patientService.deletePatientById(id);
+        boolean result = patientService.deletePatientById(patientId);
 
         // Assert
         assertTrue(result);
-        verify(patientRepository, times(1)).deleteById(id);
+        verify(patientRepository).deleteById(patientId);
     }
+
+//    @Test
+//    public void testDeletePatientById_PatientNotFound() {
+//        // Arrange & Act
+//        Long patientId = 2L;
+//        when(patientRepository.existsById(patientId)).thenReturn(false);
+//
+//        // Assert
+//        assertThrows(PatientNotFoundException.class, () -> patientService.deletePatientById(patientId));
+//        verify(patientRepository, never()).deleteById(anyLong());
+//    }
+
+    @Test
+    public void testDeletePatientById_UnexpectedException() {
+        // Arrange
+        Long patientId = 3L;
+        when(patientRepository.existsById(patientId)).thenReturn(true);
+        doThrow(new RuntimeException("Database error")).when(patientRepository).deleteById(patientId);
+
+        // Act
+        boolean result = patientService.deletePatientById(patientId);
+
+        // Assert
+        assertFalse(result);
+    }
+
+
 
 }
