@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Feign client interface to interact with the Patient microservice through the ms-gateway-server
+ * Feign client interface to interact with the Patient microservice, the Note microservice and the Diabete microservice through the ms-gateway-server
  */
 @org.springframework.cloud.openfeign.FeignClient(name="ms-gateway-server", url="http://localhost:8082", configuration=FeignClientConfig.class)
 public interface FeignClient {
@@ -57,12 +57,29 @@ public interface FeignClient {
     @DeleteMapping("/patient/{id}")
     boolean deletePatient(@PathVariable("id") Long id);
 
+    /**
+     * Retrieves all notes.
+     *
+     * @return ResponseEntity containing the list of all notes and HTTP status.
+     */
     @GetMapping("/note/allnotes")
     List<Note> getNotesList();
 
+    /**
+     * Retrieves a note by its ID.
+     *
+     * @param patId The ID of the note.
+     * @return ResponseEntity containing the note if found, and HTTP status.
+     */
     @GetMapping("/note/{id}")
     List<Note> getNotesByPatientId(@PathVariable("id") Long patId);
 
+    /**
+     * Retrieves all notes for a specific patient by patient ID.
+     *
+     * @param id The ID of the patient.
+     * @return ResponseEntity containing the list of notes for the patient and HTTP status.
+     */
     @GetMapping("/note/id/{id}")
     Note getNoteById(@PathVariable("id") String id);
 
