@@ -28,7 +28,14 @@ public class GatewayServerApplication implements CommandLineRunner {
         SpringApplication.run(GatewayServerApplication.class, args);
     }
 
-
+    /**
+     * Configures custom routes for Spring Cloud Gateway to route requests to specific microservices
+     * based on path patterns. Each route directs to a corresponding service using load balancing.
+     *
+     * @param builder the RouteLocatorBuilder used to define the routes
+     * @return a RouteLocator containing the configured routes for microservices
+     *         "ms-patient", "ms-note", and "ms-diabete"
+     */
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -36,9 +43,18 @@ public class GatewayServerApplication implements CommandLineRunner {
                     .uri("lb://MS-PATIENT"))
                 .route("ms-note", r -> r.path("/note/**")
                     .uri("lb://MS-NOTE"))
+                .route("ms-diabete", r -> r.path("/diabete/**")
+                    .uri("lb://MS-DIABETE"))
                 .build();
     }
 
+    /**
+     * Configures dynamic routing for Spring Cloud Gateway using services from a discovery client.
+     *
+     * @param rdc the reactive discovery client for retrieving registered services
+     * @param dlp properties for customizing route discovery
+     * @return a route definition locator for dynamic route configuration
+     */
     @Bean
     public DiscoveryClientRouteDefinitionLocator dynamicRoutes(ReactiveDiscoveryClient rdc, DiscoveryLocatorProperties dlp) {
         return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
