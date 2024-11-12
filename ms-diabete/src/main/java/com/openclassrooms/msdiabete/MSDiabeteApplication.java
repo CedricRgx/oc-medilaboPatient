@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * The main class for the MediLaboDiabete application.
+ * The main class for the MS-Diabete application.
  * This class initializes the Spring Boot application and contains the entry point method.
  */
 @SpringBootApplication

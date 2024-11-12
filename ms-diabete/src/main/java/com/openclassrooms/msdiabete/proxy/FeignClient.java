@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 /**
- * Feign client interface to interact with the Patient microservice through the ms-gateway-server
+ * Feign client interface to interact with the Patient microservice and the Note microservice through the ms-gateway-server
  */
 @org.springframework.cloud.openfeign.FeignClient(name="ms-gateway-server", url="http://localhost:8082", configuration= FeignClientConfig.class)
 public interface FeignClient {
