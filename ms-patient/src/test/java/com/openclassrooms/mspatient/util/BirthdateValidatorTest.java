@@ -24,7 +24,6 @@ public class BirthdateValidatorTest {
 
     @Test
     public void testIsValid_withFutureBirthdate_shouldReturnFalse() {
-        // Given a birthdate in the future
         LocalDate birthdate = LocalDate.now().plusDays(1);
         boolean result = validator.isValid(birthdate, null);
         assertFalse(result);

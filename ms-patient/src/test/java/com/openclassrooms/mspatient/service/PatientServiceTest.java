@@ -142,17 +142,6 @@ class PatientServiceTest {
         verify(patientRepository).deleteById(patientId);
     }
 
-//    @Test
-//    public void testDeletePatientById_PatientNotFound() {
-//        // Arrange & Act
-//        Long patientId = 2L;
-//        when(patientRepository.existsById(patientId)).thenReturn(false);
-//
-//        // Assert
-//        assertThrows(PatientNotFoundException.class, () -> patientService.deletePatientById(patientId));
-//        verify(patientRepository, never()).deleteById(anyLong());
-//    }
-
     @Test
     public void testDeletePatientById_UnexpectedException() {
         // Arrange

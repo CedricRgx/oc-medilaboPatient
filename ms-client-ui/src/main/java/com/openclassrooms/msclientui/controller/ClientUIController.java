@@ -187,11 +187,10 @@ public class ClientUIController {
         boolean isDeleted = clientUIService.deletePatient(id);
         if (isDeleted) {
             redirectAttributes.addFlashAttribute("successDeletePatientMessage", "Success to delete the patient.");
-            return "redirect:/home";
         } else {
             redirectAttributes.addFlashAttribute("errorDeletePatientMessage", "Unable to delete the patient. Please try again.");
-            return "redirect:/home";
         }
+        return "redirect:/home";
     }
 
     /**

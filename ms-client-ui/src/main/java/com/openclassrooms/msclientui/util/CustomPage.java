@@ -11,22 +11,22 @@ import java.util.List;
  */
 @Getter
 public class CustomPage<T> {
+
     /**
-     * -- GETTER --
      *  Returns the content of the current page.
      *
      * @return A list of items on the current page.
      */
     private List<T> content;
+
     /**
-     * -- GETTER --
      *  Returns the total number of pages available.
      *
      * @return The total page count.
      */
     private int totalPages;
+
     /**
-     * -- GETTER --
      *  Returns the current page number.
      *
      * @return The current page index.
