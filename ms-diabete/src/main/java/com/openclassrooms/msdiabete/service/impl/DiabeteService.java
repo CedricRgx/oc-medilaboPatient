@@ -55,17 +55,13 @@ public class DiabeteService implements IDiabeteService {
      *         "BORDERLINE", "IN_DANGER", or "EARLY_ONSET"
      */
     public DiabeteRiskLevel evaluateDiabeteRiskLevel(Long patientId) {
+        log.info("Evaluate the diabete risk level for the patient with ID: {}", patientId);
         Patient patient = feignClient.getPatientById(patientId);
         List<Note> patientNotes = feignClient.getNotesByPatientId(patientId);
 
         int age = new CalculateAge().getAge(patient.getBirthdate());
         List<String> medicalNotes = patientNotes.stream().map(Note::getNote).toList();
         int count = countTerms(medicalNotes);
-
-        log.info("Patient ID: {}", patientId);
-        log.info("Nombre de notes: {}", patientNotes.size());
-        log.info("Âge: {}", age);
-        log.info("Nombre de termes trouvés: {}", count);
 
         if (count == 0) {
             return DiabeteRiskLevel.NONE;
@@ -104,6 +100,7 @@ public class DiabeteService implements IDiabeteService {
      * @return the total count of occurrences of the predefined terms across all notes
      */
     private int countTerms(List<String> medicalNotes) {
+        log.info("Count the terms in the list of medical notes");
         return medicalNotes.stream()
                 .mapToInt(medicalNote -> (int) TERMS.stream()
                         .filter(medicalNote::contains)
