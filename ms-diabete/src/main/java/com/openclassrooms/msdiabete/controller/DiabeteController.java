@@ -29,7 +29,7 @@ public class DiabeteController {
         log.info("GET request on the endpoint /diabete/{id}: retrieve diabete level for the patient with ID: {}", patId);
         try{
             String diabeteLevel = diabeteService.evaluateDiabeteRiskLevel(patId).name();
-            if(diabeteLevel == null){
+            if(diabeteLevel.isEmpty()){
                 log.error("No diabete level for the patient with ID: {}", patId);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No diabete level for the patient with ID: " + patId);
             }
