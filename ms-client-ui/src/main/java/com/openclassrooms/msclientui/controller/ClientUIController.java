@@ -85,6 +85,16 @@ public class ClientUIController {
         } catch (NoteNotFoundException e) {
             log.warn("No notes found for patient with id: {}", id);
         }
+        try {
+            String diabetesRiskLevel = clientUIService.getDiabetesRiskLevel(id);
+            if (diabetesRiskLevel != null && !diabetesRiskLevel.isEmpty()) {
+                model.addAttribute("diabetesRiskLevel", diabetesRiskLevel);
+            } else {
+                log.warn("No diabetes risk level found for patient with id: {}", id);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to retrieve diabetes risk level for patient with id: {}", id, e);
+        }
         return "patient";
     }
 

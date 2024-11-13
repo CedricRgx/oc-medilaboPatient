@@ -216,4 +216,16 @@ public class ClientUIService {
         return isDeleted;
     }
 
+    /**
+     * Retrieves the diabetes risk level for a patient with the specified ID.
+     *
+     * @param id the unique identifier of the patient
+     * @return a String representing the diabetes risk level of the patient
+     */
+    public String getDiabetesRiskLevel(Long id){
+        log.info("getDiabetesRiskLevel");
+        String diabetesRiskLevel = feignClient.getDiabetesRiskLevel(id);
+        return diabetesRiskLevel;
+    }
+
 }

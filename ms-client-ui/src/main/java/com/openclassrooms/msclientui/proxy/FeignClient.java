@@ -111,5 +111,13 @@ public interface FeignClient {
     @PostMapping("/note/removeNote/{id}")
     boolean deleteNoteById(@PathVariable("id") String id);
 
+    /**
+     * Retrieves the diabetes risk level for a patient with the specified ID.
+     *
+     * @param id the unique identifier of the patient
+     * @return a String representing the diabetes risk level of the patient
+     */
+    @GetMapping("/diabete/{id}")
+    String getDiabetesRiskLevel(@PathVariable("id") Long id);
 
 }
