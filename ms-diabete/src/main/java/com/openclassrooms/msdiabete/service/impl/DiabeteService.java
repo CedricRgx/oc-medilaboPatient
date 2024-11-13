@@ -5,6 +5,7 @@ import com.openclassrooms.msdiabete.model.Patient;
 import com.openclassrooms.msdiabete.proxy.FeignClient;
 import com.openclassrooms.msdiabete.service.IDiabeteService;
 import com.openclassrooms.msdiabete.util.CalculateAge;
+import com.openclassrooms.msdiabete.util.DiabeteRiskLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class DiabeteService implements IDiabeteService {
      * @return a String representing the diabetes risk level, which can be "NONE",
      *         "BORDERLINE", "IN_DANGER", or "EARLY_ONSET"
      */
-    public String evaluateDiabeteRisk(Long patientId) {
+    public DiabeteRiskLevel evaluateDiabeteRiskLevel(Long patientId) {
         Patient patient = feignClient.getPatientById(patientId);
         List<Note> patientNotes = feignClient.getNotesByPatientId(patientId);
 
@@ -66,33 +67,33 @@ public class DiabeteService implements IDiabeteService {
         log.info("Nombre de termes trouvés: {}", count);
 
         if (count == 0) {
-            return "NONE";
+            return DiabeteRiskLevel.NONE;
         }
 
         if (age > 30) {
             if (count >= 2 && count <= 5) {
-                return "BORDERLINE";
+                return DiabeteRiskLevel.BORDERLINE;
             } else if (count == 6 || count == 7) {
-                return "IN_DANGER";
+                return DiabeteRiskLevel.IN_DANGER;
             } else if (count >= 8) {
-                return "EARLY_ONSET";
+                return DiabeteRiskLevel.EARLY_ONSET;
             }
         } else {
             if ("M".equals(patient.getGender())) {
                 if (count >= 3 && count < 5) {
-                    return "IN_DANGER";
+                    return DiabeteRiskLevel.IN_DANGER;
                 } else if (count >= 5) {
-                    return "EARLY_ONSET";
+                    return DiabeteRiskLevel.EARLY_ONSET;
                 }
             } else if ("F".equals(patient.getGender())) {
                 if (count >= 4 && count < 7) {
-                    return "IN_DANGER";
+                    return DiabeteRiskLevel.IN_DANGER;
                 } else if (count >= 7) {
-                    return "EARLY_ONSET";
+                    return DiabeteRiskLevel.EARLY_ONSET;
                 }
             }
         }
-        return "NONE";
+        return DiabeteRiskLevel.NONE;
     }
 
     /**
