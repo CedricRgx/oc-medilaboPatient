@@ -6,6 +6,7 @@ import com.openclassrooms.msdiabete.proxy.FeignClient;
 import com.openclassrooms.msdiabete.service.IDiabeteService;
 import com.openclassrooms.msdiabete.util.CalculateAge;
 import com.openclassrooms.msdiabete.util.DiabeteRiskLevel;
+import com.openclassrooms.msdiabete.util.Gender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,13 +80,13 @@ public class DiabeteService implements IDiabeteService {
                 return DiabeteRiskLevel.EARLY_ONSET;
             }
         } else {
-            if ("M".equals(patient.getGender())) {
+            if (Gender.M.equals(patient.getGender())) {
                 if (count >= 3 && count < 5) {
                     return DiabeteRiskLevel.IN_DANGER;
                 } else if (count >= 5) {
                     return DiabeteRiskLevel.EARLY_ONSET;
                 }
-            } else if ("F".equals(patient.getGender())) {
+            } else if (Gender.F.equals(patient.getGender())) {
                 if (count >= 4 && count < 7) {
                     return DiabeteRiskLevel.IN_DANGER;
                 } else if (count >= 7) {
