@@ -56,8 +56,14 @@ public class DiabeteService implements IDiabeteService {
      */
     public DiabeteRiskLevel evaluateDiabeteRiskLevel(Long patientId) {
         log.info("Evaluate the diabete risk level for the patient with ID: {}", patientId);
+
         Patient patient = feignClient.getPatientById(patientId);
+
         List<Note> patientNotes = feignClient.getNotesByPatientId(patientId);
+        if (patientNotes == null) {
+            log.warn("No medical notes found for patient with ID: {}", patientId);
+            return null;
+        }
 
         int age = new CalculateAge().getAge(patient.getBirthdate());
         List<String> medicalNotes = patientNotes.stream().map(Note::getNote).toList();
@@ -90,7 +96,7 @@ public class DiabeteService implements IDiabeteService {
                 }
             }
         }
-        return DiabeteRiskLevel.NONE;
+        return null;
     }
 
     /**
