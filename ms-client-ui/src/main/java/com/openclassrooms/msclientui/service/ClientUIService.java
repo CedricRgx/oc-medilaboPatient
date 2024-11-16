@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,6 +54,10 @@ public class ClientUIService {
         int totalPatients = patientslist.size();
         int totalPages = (int) Math.ceil((double) totalPatients / size);
         int start = page * size;
+        if (start >= totalPatients) {
+            return new CustomPage<>(Collections.emptyList(), totalPages, page);
+        }
+
         int end = Math.min((start + size), totalPatients);
 
         List<Patient> pageContent = patientslist.subList(start, end);

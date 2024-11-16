@@ -292,6 +292,12 @@ public class ClientUIController {
     public String deleteNote(@RequestParam("id") String id, RedirectAttributes redirectAttributes) {
         log.info("deleteNote");
         Note note = clientUIService.getNoteById(id); // for redirect the user to /patient/note.getPatId()
+        if (note == null) {
+            log.error("Note not found with id: {}", id);
+            redirectAttributes.addFlashAttribute("errorDeleteNoteMessage", "Note not found. Unable to delete.");
+            return "redirect:/home";
+        }
+
         boolean isDeleted = clientUIService.deleteNoteById(id);
         if (isDeleted) {
             redirectAttributes.addFlashAttribute("successDeleteNoteMessage", "Success to delete the note.");
