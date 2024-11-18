@@ -34,7 +34,6 @@ public class DiabeteServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Configuration de patients types
         malePatientUnder30 = new Patient();
         malePatientUnder30.setId(1L);
         malePatientUnder30.setFirstname("John");

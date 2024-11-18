@@ -17,11 +17,11 @@ public class NoteTest {
     @InjectMocks
     private Note note;
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-        note = new Note();
-    }
+//    @BeforeEach
+//    public void setup() {
+//        MockitoAnnotations.openMocks(this);
+//        note = new Note();
+//    }
 
     @Test
     public void testGetAndSetId() {

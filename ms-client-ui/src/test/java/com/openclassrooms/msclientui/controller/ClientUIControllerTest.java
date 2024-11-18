@@ -329,7 +329,7 @@ public class ClientUIControllerTest {
         patient.setId(patientId);
         when(clientUIService.getPatientById(patientId)).thenReturn(patient);
         when(clientUIService.getNotesByPatientId(patientId)).thenReturn(Collections.emptyList());
-        when(clientUIService.getDiabetesRiskLevel(patientId)).thenReturn(""); // Test avec niveau de risque vide
+        when(clientUIService.getDiabetesRiskLevel(patientId)).thenReturn("");
 
         // Act
         String result = clientUIController.getPatientById(patientId, model, redirectAttributes);
