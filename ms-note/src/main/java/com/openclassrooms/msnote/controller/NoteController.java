@@ -71,7 +71,7 @@ public class NoteController {
         List<Note> notes = noteService.getNotesByPatId(patId);
         if(notes.isEmpty()){
             log.warn("No list of notes for the patient with ID: {}", patId);
-            return new ResponseEntity<>(notes, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notes, HttpStatus.OK);
         }else{
             log.info("Success getting the list of notes for the patient with ID: {}", patId);
             return new ResponseEntity<>(notes, HttpStatus.OK);

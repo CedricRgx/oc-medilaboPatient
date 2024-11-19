@@ -80,6 +80,8 @@ public class DiabeteService implements IDiabeteService {
                 return DiabeteRiskLevel.IN_DANGER;
             } else if (count >= 8) {
                 return DiabeteRiskLevel.EARLY_ONSET;
+//            } else {
+//                return DiabeteRiskLevel.NONE;
             }
         } else {
             if (Gender.M.equals(patient.getGender())) {
@@ -96,7 +98,7 @@ public class DiabeteService implements IDiabeteService {
                 }
             }
         }
-        return null;
+        return DiabeteRiskLevel.NONE;
     }
 
     /**
