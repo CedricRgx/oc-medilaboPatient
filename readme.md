@@ -25,4 +25,5 @@ To start the Medilabo application, you have to start according this order :
 2. MS-Patient
 3. MS-Note
 4. MS-Diabete
-5. MS-Gateway-server
+5. MS-Client-UI
+6. MS-Gateway-server
