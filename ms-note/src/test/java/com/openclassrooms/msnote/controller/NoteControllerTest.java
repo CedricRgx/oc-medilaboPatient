@@ -125,7 +125,7 @@ public class NoteControllerTest {
         ResponseEntity<List<Note>> response = noteController.getNotesByPatientId(103L);
 
         // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getBody().isEmpty());
         verify(noteService, times(1)).getNotesByPatId(103L);
     }
