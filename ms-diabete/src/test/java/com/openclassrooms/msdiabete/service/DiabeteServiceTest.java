@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,6 +55,40 @@ public class DiabeteServiceTest {
         patientOver30.setLastname("Brown");
         patientOver30.setBirthdate(LocalDate.now().minusYears(40));
         patientOver30.setGender(Gender.F);
+    }
+
+    @Test
+    public void testEvaluateDiabeteRiskLevel_NoPatientFound() {
+        // Arrange
+        Long patientId = 1L;
+        when(feignClient.getPatientById(patientId)).thenReturn(null);
+
+        // Act
+        DiabeteRiskLevel result = diabeteService.evaluateDiabeteRiskLevel(patientId);
+
+        // Assert
+        assertNull(result);
+        verify(feignClient).getPatientById(patientId);
+    }
+
+    @Test
+    public void testEvaluateDiabeteRiskLevel_NotDefined() {
+        // Arrange
+        Long patientId = 1L;
+        List<Note> notes = List.of(
+                new Note() {{ setNote("Cholestérol"); }}
+        );
+
+        when(feignClient.getPatientById(patientId)).thenReturn(patientOver30);
+        when(feignClient.getNotesByPatientId(patientId)).thenReturn(notes);
+
+        // Act
+        DiabeteRiskLevel result = diabeteService.evaluateDiabeteRiskLevel(patientId);
+
+        // Assert
+        assertEquals(DiabeteRiskLevel.NOT_DEFINED, result);
+        verify(feignClient).getPatientById(patientId);
+        verify(feignClient).getNotesByPatientId(patientId);
     }
 
     @Test

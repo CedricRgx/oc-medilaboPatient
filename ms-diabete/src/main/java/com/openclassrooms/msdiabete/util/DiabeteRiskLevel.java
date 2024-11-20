@@ -5,6 +5,7 @@ package com.openclassrooms.msdiabete.util;
  * and medical notes.
  */
 public enum DiabeteRiskLevel {
+    NOT_DEFINED,
     NONE,
     BORDERLINE,
     IN_DANGER,

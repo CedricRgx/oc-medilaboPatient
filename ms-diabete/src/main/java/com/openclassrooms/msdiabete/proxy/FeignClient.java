@@ -23,6 +23,12 @@ public interface FeignClient {
     @GetMapping("/patient/{id}")
     Patient getPatientById(@PathVariable("id") Long id);
 
+    /**
+     * Retrieves a list of notes of a specific patient.
+     *
+     * @param patId The ID of the patient whose notes are to be retrieved.
+     * @return A list of Note objects associated with the given patient ID.
+     */
     @GetMapping("/note/{id}")
     List<Note> getNotesByPatientId(@PathVariable("id") Long patId);
 

@@ -39,6 +39,22 @@ public class DiabeteControllerTest {
     }
 
     @Test
+    public void testGetDiabeteLevelByPatientId_DiabeteRiskLevelNull() {
+        // Arrange
+        Long patientId = 2L;
+        when(diabeteService.evaluateDiabeteRiskLevel(patientId)).thenReturn(null);
+
+        // Act
+        ResponseEntity<String> response = diabeteController.getDiabeteLevelByPatientId(patientId);
+
+        // Assert
+        String expectedErrorMessage = "Error getting diabete level for the patient with ID: " + patientId;
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(expectedErrorMessage, response.getBody());
+        verify(diabeteService).evaluateDiabeteRiskLevel(patientId);
+    }
+
+    @Test
     public void testGetDiabeteLevelByPatientId_InternalServerError() {
         // Arrange
         Long patientId = 2L;

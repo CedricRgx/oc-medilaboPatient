@@ -9,12 +9,16 @@ import java.time.Period;
 public class CalculateAge {
 
     /**
-     * Calculates the age in years from the given birthdate to the current date.
+     * Checks if a person is older than 30 years old.
      *
-     * @param birthdate the birthdate of the individual
-     * @return the age in years
+     * @param birthdate The person's birthdate.
+     * @return true if the person is older than 30, false otherwise.
      */
-    public int getAge(LocalDate birthdate) {
-        return Period.between(birthdate, LocalDate.now()).getYears();
+    public boolean isOlderThan30(LocalDate birthdate) {
+        boolean isOlderThan30 = false;
+        if (Period.between(birthdate, LocalDate.now()).getYears() > 30) {
+            isOlderThan30 = true;
+        }
+        return isOlderThan30;
     }
 }

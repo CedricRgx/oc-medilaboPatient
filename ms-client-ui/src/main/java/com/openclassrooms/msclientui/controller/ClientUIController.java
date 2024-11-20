@@ -88,6 +88,9 @@ public class ClientUIController {
         try {
             String diabetesRiskLevel = clientUIService.getDiabetesRiskLevel(id);
             if (diabetesRiskLevel != null && !diabetesRiskLevel.isEmpty()) {
+                if(diabetesRiskLevel=="NOT_DEFINED"){
+                    diabetesRiskLevel = "Not defined";
+                }
                 model.addAttribute("diabetesRiskLevel", diabetesRiskLevel);
             } else {
                 log.warn("No diabetes risk level found for patient with id: {}", id);

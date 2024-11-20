@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.openclassrooms.msdiabete.util.DiabeteRiskLevel.NOT_DEFINED;
+
 /**
  * The DiabeteService class provides business logic related to Diabete logic.
  */
@@ -58,6 +60,10 @@ public class DiabeteService implements IDiabeteService {
         log.info("Evaluate the diabete risk level for the patient with ID: {}", patientId);
 
         Patient patient = feignClient.getPatientById(patientId);
+        if (patient == null) {
+            log.warn("No patient found for patient with ID: {}", patientId);
+            return null;
+        }
 
         List<Note> patientNotes = feignClient.getNotesByPatientId(patientId);
         if (patientNotes == null) {
@@ -65,7 +71,7 @@ public class DiabeteService implements IDiabeteService {
             return null;
         }
 
-        int age = new CalculateAge().getAge(patient.getBirthdate());
+        boolean isOlderThan30 = new CalculateAge().isOlderThan30(patient.getBirthdate());
         List<String> medicalNotes = patientNotes.stream().map(Note::getNote).toList();
         int count = countTerms(medicalNotes);
 
@@ -73,15 +79,13 @@ public class DiabeteService implements IDiabeteService {
             return DiabeteRiskLevel.NONE;
         }
 
-        if (age > 30) {
+        if (isOlderThan30) {
             if (count >= 2 && count <= 5) {
                 return DiabeteRiskLevel.BORDERLINE;
             } else if (count == 6 || count == 7) {
                 return DiabeteRiskLevel.IN_DANGER;
             } else if (count >= 8) {
                 return DiabeteRiskLevel.EARLY_ONSET;
-//            } else {
-//                return DiabeteRiskLevel.NONE;
             }
         } else {
             if (Gender.M.equals(patient.getGender())) {
@@ -98,7 +102,7 @@ public class DiabeteService implements IDiabeteService {
                 }
             }
         }
-        return DiabeteRiskLevel.NONE;
+        return NOT_DEFINED;
     }
 
     /**
@@ -108,11 +112,15 @@ public class DiabeteService implements IDiabeteService {
      * @return the total count of occurrences of the predefined terms across all notes
      */
     private int countTerms(List<String> medicalNotes) {
-        log.info("Count the terms in the list of medical notes");
+        log.info("Count the terms in the list of medical notes ignoring case");
         return medicalNotes.stream()
-                .mapToInt(medicalNote -> (int) TERMS.stream()
-                        .filter(medicalNote::contains)
-                        .count())
+                .mapToInt(medicalNote -> {
+                    String lowerCaseNote = medicalNote.toLowerCase();
+                    return (int) TERMS.stream()
+                            .map(String::toLowerCase)
+                            .filter(lowerCaseNote::contains)
+                            .count();
+                })
                 .sum();
     }
 
