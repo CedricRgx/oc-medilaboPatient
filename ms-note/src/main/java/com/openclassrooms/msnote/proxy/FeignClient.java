@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Feign client interface to interact with the Patient microservice through the ms-gateway-server
  */
-@org.springframework.cloud.openfeign.FeignClient(name="ms-gateway-server", url="http://localhost:8082", configuration= FeignClientConfig.class)
+@org.springframework.cloud.openfeign.FeignClient(name="ms-gateway-server", url="${feign.client.ms-gateway.url}", configuration= FeignClientConfig.class)
 public interface FeignClient {
 
     /**
