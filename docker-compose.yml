@@ -32,7 +32,8 @@ services:
     ports:
       - "27017:27017"
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_started
     volumes:
       - ./data/mongo:/data/db
       - ./config/mongo:/data/configdb
@@ -69,7 +70,8 @@ services:
     ports:
       - "8761:8761"
     depends_on:
-      - mongo-db
+      mongo-db:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:
@@ -91,7 +93,8 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - ms-eureka-server
+      ms-eureka-server:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
@@ -117,7 +120,8 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - ms-patient
+      ms-patient:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
@@ -143,7 +147,8 @@ services:
     ports:
       - "8084:8084"
     depends_on:
-      - ms-note
+      ms-note:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
@@ -166,7 +171,8 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - ms-diabete
+      ms-diabete:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
@@ -187,7 +193,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - ms-gateway-server
+      ms-gateway-server:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
