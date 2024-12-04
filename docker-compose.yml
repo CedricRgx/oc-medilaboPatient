@@ -1,6 +1,27 @@
 services:
 
   ########################################
+  ##### Eureka-server
+  ########################################
+  ms-eureka-server:
+    image: ms-eureka-server:latest
+    build:
+      context: ./ms-eureka-server
+      dockerfile: dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - medilabo-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ########################################
   ##### MySQL
   ########################################
   mysql-db:
@@ -8,6 +29,9 @@ services:
     container_name: mysql-db
     ports:
       - "3306:3306"
+    depends_on:
+      ms-eureka-server:
+        condition: service_healthy
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "medilabopatient"
@@ -33,54 +57,55 @@ services:
       - "27017:27017"
     depends_on:
       mysql-db:
-        condition: service_started
+        condition: service_healthy
     volumes:
-      - ./data/mongo:/data/db
-      - ./config/mongo:/data/configdb
       - ./ms-note/src/main/resources/medicalNotes.csv:/docker-entrypoint-initdb.d/medicalNotes.csv
-      - ./logs/mongo:/var/log
-    command: >
-      bash -c '
-      mongod --bind_ip_all --logpath /var/log/mongodb.log --fork &&
-      until mongo --eval "db.stats()" >/dev/null 2>&1; do
-      echo "Waiting for MongoDB to be ready...";
-      sleep 2;
-      done &&
-      echo "MongoDB is ready. Importing initial data..." &&
-      mongoimport --db medilabopatient --collection notes --type csv --file /medicalNotes.csv --headerline &&
-      echo "Data imported. MongoDB is running."
-      '
-#    healthcheck:
-#      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
-    networks:
-      - medilabo-network
-
-  ########################################
-  ##### Eureka-server
-  ########################################
-  ms-eureka-server:
-    image: ms-eureka-server:latest
-    build:
-      context: ./ms-eureka-server
-      dockerfile: dockerfile
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    depends_on:
-      mongo-db:
-        condition: service_started
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
     networks:
       - medilabo-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://eureka-server:8761/actuator/health"]
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh --quiet"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 3
+
+  ########################################
+  ##### MongoDB Initializer
+  ########################################
+  mongo-init:
+    image: mongo:latest
+    container_name: mongo-init
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    volumes:
+      - ./ms-note/src/main/resources/medicalNotes.csv:/medicalNotes.csv
+    networks:
+      - medilabo-network
+    entrypoint: >
+      bash -c "
+      mongoimport --host mongo-db --db medilabopatient --collection notes --type csv --file /medicalNotes.csv --headerline"
+
+  ########################################
+  ##### MS-Gateway-Server
+  ########################################
+  ms-gateway-server:
+    image: ms-gateway-server:latest
+    build:
+      context: ./ms-gateway-server
+      dockerfile: dockerfile
+    container_name: ms-gateway-server
+    ports:
+      - "8082:8082"
+    depends_on:
+      ms-eureka-server:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
+      GATEWAY_USERNAME: "username"
+      GATEWAY_PASSWORD: "password"
+    networks:
+      - medilabo-network
 
   ########################################
   ##### MS-Patient
@@ -93,7 +118,7 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      ms-eureka-server:
+      ms-gateway-server:
         condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
@@ -120,6 +145,8 @@ services:
     ports:
       - "8083:8083"
     depends_on:
+      mongo-db:
+        condition: service_healthy
       ms-patient:
         condition: service_started
     environment:
@@ -160,28 +187,6 @@ services:
       - medilabo-network
 
   ########################################
-  ##### MS-Gateway-Server
-  ########################################
-  ms-gateway-server:
-    image: ms-gateway-server:latest
-    build:
-      context: ./ms-gateway-server
-      dockerfile: dockerfile
-    container_name: ms-gateway-server
-    ports:
-      - "8082:8082"
-    depends_on:
-      ms-diabete:
-        condition: service_started
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      GATEWAY_USERNAME: "username"
-      GATEWAY_PASSWORD: "password"
-    networks:
-      - medilabo-network
-
-  ########################################
   ##### MS-Client-UI
   ########################################
   ms-client-ui:
@@ -193,18 +198,13 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      ms-gateway-server:
+      ms-diabete:
         condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
       CLIENT-UI_USERNAME: "username"
       CLIENT-UI_PASSWORD: "password"
-#    healthcheck:
-#      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
     networks:
       - medilabo-network
 
