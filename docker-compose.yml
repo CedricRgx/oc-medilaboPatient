@@ -59,7 +59,14 @@ services:
       mysql-db:
         condition: service_healthy
     volumes:
-      - ./ms-note/src/main/resources/medicalNotes.csv:/docker-entrypoint-initdb.d/medicalNotes.csv
+      - ./ms-note/src/main/resources/medicalNotes.csv:/data/medicalNotes.csv
+    command: >
+      sh -c "
+      mongod --bind_ip_all &
+      sleep 5 &&
+      mongoimport --host localhost --db medilabopatient --collection doctornotes --type csv --file ./data/medicalNotes.csv --headerline &&
+      tail -f /dev/null
+      "
     networks:
       - medilabo-network
     healthcheck:
@@ -67,23 +74,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-
-  ########################################
-  ##### MongoDB Initializer
-  ########################################
-  mongo-init:
-    image: mongo:latest
-    container_name: mongo-init
-    depends_on:
-      mongo-db:
-        condition: service_healthy
-    volumes:
-      - ./ms-note/src/main/resources/medicalNotes.csv:/medicalNotes.csv
-    networks:
-      - medilabo-network
-    entrypoint: >
-      bash -c "
-      mongoimport --host mongo-db --db medilabopatient --collection notes --type csv --file /medicalNotes.csv --headerline"
 
   ########################################
   ##### MS-Gateway-Server
