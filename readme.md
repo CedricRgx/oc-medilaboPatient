@@ -87,3 +87,80 @@ This command will stop and remove all containers, networks, and volumes created 
   * **MongoDB (mongo-db):** The MongoDB database is intended to be initialized using the CSV file located at ./ms-note/src/main/resources/medicalNotes.csv. However, additional configuration is required to import this CSV file into MongoDB at startup. You may need to create an initialization script or adjust the configuration to ensure the data is imported correctly.
 * **Health Checks:** Health checks (healthcheck) are defined for each service to monitor their status. This can help orchestrate the startup sequence and monitor the application's health.
 * **Network Configuration:** All services are connected via the Docker network medilabo-network, allowing them to communicate with each other using their service names.
+
+## Starting the Application without Docker
+
+If you want to run the microservices locally without using Docker and Docker Compose, follow the steps below.
+Make sure you have Java and Maven installed beforehand (see Prerequisites).
+
+## Installing and Configuring MySQL
+1. Install MySQL (if not already installed):
+Download and install MySQL from https://dev.mysql.com/downloads/.
+2. Create the Database:
+When MySQL is running, connect via the command line:
+`mysql -u root -p`
+Create the database (for example `medilabopatient`):
+`CREATE DATABASE medilabo_patient;`
+3. Import the Schema:
+Import the SQL script provided in `ms-patient/src/main/resources/schemaMedilaboPatient.sql`:
+`mysql -u root -p medilabo_patient < ms-patient/src/main/resources/schemaMedilaboPatient.sql`
+This script will create the necessary tables for the `ms-patient` application.
+4. Configure Your Credentials in the Application:
+In the `application.properties`, ensure that the database properties match your local MySQL configuration (host, port...).
+
+## Installing and Configuring MongoDB
+1. Install MongoDB:
+Download and install MongoDB from https://www.mongodb.com/try/download/community.
+2. Start MongoDB:
+Make sure MongoDB is running locally on the default port (27017).
+3. Initialize the Database:
+The `ms-note` service uses data from the CSV file `ms-note/src/main/resources/medicalNotes.csv`. To import it into MongoDB, you can use the `mongoimport` tool (or tool like MongoDB Compass):
+`mongoimport --host localhost --db medilabopatient --collection doctornotes --type csv --headerline --file ms-note/src/main/resources/medicalNotes.csv`
+This will create the medicalNotes collection in the medilabo_notes database.
+Check the connection properties in the `ms-note` configuration (by default host=localhost and port=27017).
+
+## Starting the Microservices
+1. Compile the Applications:
+
+   `mvn clean install`
+
+2. Start MS-Eureka-Server First (Service Registry):
+
+    `cd ms-eureka-server`
+
+    `mvn spring-boot:run`
+
+The Eureka server will run on port 8761. Wait for it to fully start before launching the other services.
+
+3. Start the Other Microservices:
+Open a new terminal for each service and run:
+
+    `cd ms-patient`
+    
+    `mvn spring-boot:run`
+    
+    `cd ms-note`
+    
+    `mvn spring-boot:run`
+    
+    `cd ms-diabete`
+    
+    `mvn spring-boot:run`
+    
+    `cd ms-gateway-server`
+    
+    `mvn spring-boot:run`
+    
+    `cd ms-client-ui`
+    
+    `mvn spring-boot:run`
+
+4. Access the Services:
+* **MS-Client-UI:** http://localhost:8080
+* **MS-Patient:** http://localhost:8081
+* **MS-Gateway-Server:** http://localhost:8082
+* **MS-Note:** http://localhost:8083
+* **MS-Diabete:** http://localhost:8084
+* **MS-Eureka-Server:** http://localhost:8761
+
+The services should now be accessible directly on your local machine, without Docker, using the locally installed MySQL and MongoDB.
