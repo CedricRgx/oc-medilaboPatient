@@ -12,7 +12,7 @@ services:
     ports:
       - "8761:8761"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     networks:
       - medilabo-network
     healthcheck:
@@ -33,14 +33,14 @@ services:
       ms-eureka-server:
         condition: service_healthy
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "medilabopatient"
-      MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ./ms-patient/src/main/resources/schemaMedilaboPatient.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db", "-uadmin", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "${APP_DB_HOST}", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -87,15 +87,20 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      ms-eureka-server:
+      mongo-db:
         condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      GATEWAY_USERNAME: "username"
-      GATEWAY_PASSWORD: "password"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      GATEWAY_USERNAME: ${GATEWAY_USERNAME}
+      GATEWAY_PASSWORD: ${GATEWAY_PASSWORD}
     networks:
       - medilabo-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "${GATEWAY_USERNAME}:${GATEWAY_PASSWORD}", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ########################################
   ##### MS-Patient
@@ -109,19 +114,24 @@ services:
       - "8081:8081"
     depends_on:
       ms-gateway-server:
-        condition: service_started
+        condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      APP_DB_HOST: "mysql-db"
-      APP_DB_PORT: "3306"
-      APP_DB_NAME: "medilabopatient"
-      DATASOURCE_USERNAME: "admin"
-      DATASOURCE_PASSWORD: "root"
-      PATIENT_USERNAME: "username"
-      PATIENT_PASSWORD: "password"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      APP_DB_HOST: ${APP_DB_HOST}
+      APP_DB_PORT: ${APP_DB_PORT}
+      APP_DB_NAME: ${APP_DB_NAME}
+      DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
+      DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      PATIENT_USERNAME: ${PATIENT_USERNAME}
+      PATIENT_PASSWORD: ${PATIENT_PASSWORD}
     networks:
       - medilabo-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "${PATIENT_USERNAME}:${PATIENT_PASSWORD}", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ########################################
   ##### MS-Note
@@ -135,22 +145,25 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      mongo-db:
-        condition: service_healthy
       ms-patient:
-        condition: service_started
+        condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      NOTE_USERNAME: "username"
-      NOTE_PASSWORD: "password"
-      MSNOTE-FEIGN_USERNAME: "username"
-      MSNOTE-FEIGN_PASSWORD: "password"
-      MONGO_HOST: "mongo-db"
-      MONGO_PORT: "27017"
-      MONGO_DATABASE: "medilabopatient"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      NOTE_USERNAME: ${NOTE_USERNAME}
+      NOTE_PASSWORD: ${NOTE_PASSWORD}
+      MSNOTE-FEIGN_USERNAME: ${MSNOTE_FEIGN_USERNAME}
+      MSNOTE-FEIGN_PASSWORD: ${MSNOTE_FEIGN_PASSWORD}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_DATABASE: ${MONGO_DATABASE}
     networks:
       - medilabo-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "${NOTE_USERNAME}:${NOTE_PASSWORD}", "http://localhost:8083/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ########################################
   ##### MS-Diabete
@@ -165,16 +178,21 @@ services:
       - "8084:8084"
     depends_on:
       ms-note:
-        condition: service_started
+        condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      DIABETE_USERNAME: "username"
-      DIABETE_PASSWORD: "password"
-      MSDIABETE-FEIGN_USERNAME: "username"
-      MSDIABETE-FEIGN_PASSWORD: "password"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      DIABETE_USERNAME: ${DIABETE_USERNAME}
+      DIABETE_PASSWORD: ${DIABETE_PASSWORD}
+      MSDIABETE-FEIGN_USERNAME: ${MSDIABETE_FEIGN_USERNAME}
+      MSDIABETE-FEIGN_PASSWORD: ${MSDIABETE_FEIGN_PASSWORD}
     networks:
       - medilabo-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-u", "${DIABETE_USERNAME}:${DIABETE_PASSWORD}", "http://localhost:8084/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ########################################
   ##### MS-Client-UI
@@ -189,14 +207,19 @@ services:
       - "8080:8080"
     depends_on:
       ms-diabete:
-        condition: service_started
+        condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka/"
-      CLIENT-UI_USERNAME: "username"
-      CLIENT-UI_PASSWORD: "password"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      CLIENT-UI_USERNAME: ${CLIENT_UI_USERNAME}
+      CLIENT-UI_PASSWORD: ${CLIENT_UI_PASSWORD}
     networks:
       - medilabo-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-u", "${CLIENT_UI_USERNAME}:${CLIENT_UI_PASSWORD}", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 ########################################
 ##### Networks

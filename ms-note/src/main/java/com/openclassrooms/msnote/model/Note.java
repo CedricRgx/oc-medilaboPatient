@@ -1,5 +1,6 @@
 package com.openclassrooms.msnote.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -36,13 +37,11 @@ public class Note {
     /**
      * The date of creation of the note
      */
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
 
     /**
      * The date of the last update of the note
      */
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate updateDate;
 
 }
