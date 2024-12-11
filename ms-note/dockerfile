@@ -1,5 +1,5 @@
-# Step1: Build the Java application
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+# Build the Java application
+FROM maven:3.9.9-eclipse-temurin-17-alpine AS build
 
 # Set the working directory
 WORKDIR /app
@@ -9,10 +9,14 @@ COPY pom.xml ./
 COPY src ./src
 
 # Compile and package the application (generates a JAR file in the target/ directory)
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests && \
+    rm -rf ~/.m2/repository
 
-# Step 2: Run the Java application
-FROM eclipse-temurin:17-jdk
+# Run the Java application
+FROM eclipse-temurin:17-jre-alpine
+
+# Add curl for the healthcheck
+RUN apk add --no-cache curl
 
 # Set the working directory
 WORKDIR /app
