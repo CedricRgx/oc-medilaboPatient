@@ -203,21 +203,59 @@ public class NoteServiceTest {
     }
 
     @Test
-    public void testDeleteNoteById_Exception() {
+    public void testExistsByPatId_NotesExist() {
         // Arrange
-        String noteId = "1";
-        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note1));
-        doThrow(new RuntimeException("Database error")).when(noteRepository).deleteById(noteId);
+        Long patientId = 101L;
+        when(noteRepository.existsNotesByPatId(patientId)).thenReturn(true);
 
         // Act
-        boolean result = noteService.deleteNoteById(noteId);
+        boolean result = noteService.existsByPatId(patientId);
+
+        // Assert
+        assertTrue(result);
+        verify(noteRepository, times(1)).existsNotesByPatId(patientId);
+    }
+
+    @Test
+    public void testExistsByPatId_NoNotes() {
+        // Arrange
+        Long patientId = 102L;
+        when(noteRepository.existsNotesByPatId(patientId)).thenReturn(false);
+
+        // Act
+        boolean result = noteService.existsByPatId(patientId);
 
         // Assert
         assertFalse(result);
-        verify(noteRepository, times(1)).findById(noteId);
-        verify(noteRepository, times(1)).deleteById(noteId);
+        verify(noteRepository, times(1)).existsNotesByPatId(patientId);
     }
 
+    @Test
+    public void testDeleteNotesByPatientId_Success() {
+        // Arrange
+        Long patientId = 101L;
+        when(noteRepository.deleteByPatId(patientId)).thenReturn(3L);
 
+        // Act
+        boolean result = noteService.deleteNotesByPatientId(patientId);
+
+        // Assert
+        assertTrue(result);
+        verify(noteRepository, times(1)).deleteByPatId(patientId);
+    }
+
+    @Test
+    public void testDeleteNotesByPatientId_NoNotesToDelete() {
+        // Arrange
+        Long patientId = 102L;
+        when(noteRepository.deleteByPatId(patientId)).thenReturn(0L);
+
+        // Act
+        boolean result = noteService.deleteNotesByPatientId(patientId);
+
+        // Assert
+        assertFalse(result);
+        verify(noteRepository, times(1)).deleteByPatId(patientId);
+    }
 
 }

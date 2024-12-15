@@ -98,5 +98,34 @@ public class NoteService implements INoteService {
         }
     }
 
+    /**
+     * Checks if notes exist for the specified patient ID in the repository.
+     *
+     * @param patId the ID of the patient to check
+     * @return true if notes exist for the given patient ID, false otherwise
+     */
+    @Override
+    public boolean existsByPatId(Long patId) {
+        return noteRepository.existsNotesByPatId(patId);
+    }
+
+    /**
+     * Deletes all notes associated with the specified patient ID.
+     *
+     * @param patId the ID of the patient whose notes are to be deleted
+     * @return true if the deletion was successful, false otherwise
+     */
+    public boolean deleteNotesByPatientId(Long patId) {
+        log.info("Deleting all notes for patient ID: {}", patId);
+        Long count = noteRepository.deleteByPatId(patId);
+        if (count > 0) {
+            log.info("Successfully deleted notes for patient ID: {}", patId);
+            return true;
+        }else{
+            log.error("Error occurred while deleting notes for patient ID: {}", patId);
+            return false;
+        }
+    }
+
 
 }

@@ -45,4 +45,12 @@ public interface INoteService {
      * @return true if the note was deleted, otherwise false.
      */
     boolean deleteNoteById(String id);
+
+    /**
+     * Checks if any notes exist for the given patient ID.
+     *
+     * @param patientId the ID of the patient
+     * @return true if notes exist, false otherwise
+     */
+    boolean existsByPatId(Long patientId);
 }

@@ -226,4 +226,65 @@ public class NoteControllerTest {
         assertFalse(response.getBody());
         verify(noteService, times(1)).deleteNoteById("3");
     }
+
+    @Test
+    public void testExistsNotesByPatientId_NotesExist() {
+        // Arrange
+        Long patientId = 101L;
+        when(noteService.existsByPatId(patientId)).thenReturn(true);
+
+        // Act
+        ResponseEntity<Boolean> response = noteController.existsNotesByPatientId(patientId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody());
+        verify(noteService, times(1)).existsByPatId(patientId);
+    }
+
+    @Test
+    public void testExistsNotesByPatientId_NotesDoNotExist() {
+        // Arrange
+        Long patientId = 102L;
+        when(noteService.existsByPatId(patientId)).thenReturn(false);
+
+        // Act
+        ResponseEntity<Boolean> response = noteController.existsNotesByPatientId(patientId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertFalse(response.getBody());
+        verify(noteService, times(1)).existsByPatId(patientId);
+    }
+
+    @Test
+    public void testDeleteNotesByPatientId_Success() {
+        // Arrange
+        Long patientId = 101L;
+        when(noteService.deleteNotesByPatientId(patientId)).thenReturn(true);
+
+        // Act
+        ResponseEntity<Boolean> response = noteController.deleteNotesByPatientId(patientId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody());
+        verify(noteService, times(1)).deleteNotesByPatientId(patientId);
+    }
+
+    @Test
+    public void testDeleteNotesByPatientId_Failure() {
+        // Arrange
+        Long patientId = 102L;
+        when(noteService.deleteNotesByPatientId(patientId)).thenReturn(false);
+
+        // Act
+        ResponseEntity<Boolean> response = noteController.deleteNotesByPatientId(patientId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertFalse(response.getBody());
+        verify(noteService, times(1)).deleteNotesByPatientId(patientId);
+    }
+
 }

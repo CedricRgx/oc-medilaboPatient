@@ -26,4 +26,20 @@ public interface NoteRepository extends MongoRepository<Note, String> {
      * @return An Optional containing the note if found, or empty if not.
      */
     Optional<Note> findById(String id);
+
+    /**
+     * Checks if notes exist for the specified patient ID in the repository.
+     *
+     * @param patientId the ID of the patient to check
+     * @return true if notes exist for the given patient ID, false otherwise
+     */
+    boolean existsNotesByPatId(Long patientId);
+
+    /**
+     * Deletes all notes associated with the specified patient ID.
+     *
+     * @param patId the ID of the patient whose notes are to be deleted
+     * @return true if the deletion was successful, false otherwise
+     */
+    long deleteByPatId(Long patId);
 }

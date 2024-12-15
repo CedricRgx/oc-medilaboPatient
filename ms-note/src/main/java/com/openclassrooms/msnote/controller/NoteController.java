@@ -79,6 +79,25 @@ public class NoteController {
     }
 
     /**
+     * Checks if notes exist for a given patient ID.
+     *
+     * @param patientId the ID of the patient
+     * @return true if notes exist, false otherwise
+     */
+    @GetMapping("/existsNotesByPatientId/{patientId}")
+    public ResponseEntity<Boolean> existsNotesByPatientId(@PathVariable("patientId") Long patientId) {
+        log.info("GET request on the endpoint /existsByPatId/{patientId}: checking existence of notes for patient ID: {}", patientId);
+        boolean exists = noteService.existsByPatId(patientId);
+        if(exists){
+            log.info("Notes exist for patient ID: {}", patientId);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else{
+            log.info("Notes do not exist for patient ID: {}", patientId);
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+    }
+
+    /**
      * Adds a new note to the repository.
      *
      * @param noteToAdd The Note object to be added.
@@ -136,6 +155,26 @@ public class NoteController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }else {
             log.info("Success deleting the note from the id: {}", id);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * Deletes all notes associated with the specified patient ID.
+     *
+     * @param patientId the ID of the patient whose notes are to be deleted
+     * @return a ResponseEntity containing a Boolean indicating the success of the deletion
+     *         and the appropriate HTTP status code (200 if successful, 404 if no notes found)
+     */
+    @DeleteMapping("/removeNoteByPatId/{patientId}")
+    public ResponseEntity<Boolean> deleteNotesByPatientId(@PathVariable("patientId") Long patientId) {
+        log.info("DELETE request on the endpoint /note/patient/{patientId}: delete all notes for the patient with ID: {}", patientId);
+        boolean isDeleted = noteService.deleteNotesByPatientId(patientId);
+        if(!isDeleted){
+            log.error("Error deleting the note from the patient id: {}", patientId);
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }else {
+            log.info("Success deleting the note from the patient id: {}", patientId);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
     }

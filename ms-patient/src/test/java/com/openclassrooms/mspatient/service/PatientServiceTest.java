@@ -2,6 +2,7 @@ package com.openclassrooms.mspatient.service;
 
 import com.openclassrooms.mspatient.exceptions.PatientNotFoundException;
 import com.openclassrooms.mspatient.model.Patient;
+import com.openclassrooms.mspatient.proxy.FeignClient;
 import com.openclassrooms.mspatient.repository.PatientRepository;
 import com.openclassrooms.mspatient.service.impl.PatientService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,9 @@ class PatientServiceTest {
 
     @Mock
     private PatientRepository patientRepository;
+
+    @Mock
+    private FeignClient feignClient;
 
     private Patient patient;
 
@@ -116,7 +120,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void testUpdatePatient_PatientNotFound() {
+    public void testUpdatePatient_PatientNotFound() {
         // Arrange & Act
         Long patientId = 2L;
         Patient patient = new Patient();
@@ -129,21 +133,55 @@ class PatientServiceTest {
     }
 
     @Test
-    public void testDeletePatientById_Success() {
+    public void testDeletePatientById_Success_WithNotes() {
         // Arrange
         Long patientId = 1L;
         when(patientRepository.existsById(patientId)).thenReturn(true);
+        when(feignClient.existsNotesByPatientId(patientId)).thenReturn(true);
 
         // Act
         boolean result = patientService.deletePatientById(patientId);
 
         // Assert
         assertTrue(result);
-        verify(patientRepository).deleteById(patientId);
+        verify(feignClient, times(1)).deleteNotesByPatientId(patientId);
+        verify(patientRepository, times(1)).deleteById(patientId);
     }
 
     @Test
-    public void testDeletePatientById_UnexpectedException() {
+    public void testDeletePatientById_Success_NoNotes() {
+        // Arrange
+        Long patientId = 1L;
+        when(patientRepository.existsById(patientId)).thenReturn(true);
+        when(feignClient.existsNotesByPatientId(patientId)).thenReturn(false);
+
+        // Act
+        boolean result = patientService.deletePatientById(patientId);
+
+        // Assert
+        assertTrue(result);
+        verify(feignClient, never()).deleteNotesByPatientId(patientId);
+        verify(patientRepository, times(1)).deleteById(patientId);
+    }
+
+    @Test
+    public void testDeletePatientById_Failure_NotesCheckFails() {
+        // Arrange
+        Long patientId = 1L;
+        when(patientRepository.existsById(patientId)).thenReturn(true);
+        doThrow(new RuntimeException("Feign client error")).when(feignClient).existsNotesByPatientId(patientId);
+
+        // Act
+        boolean result = patientService.deletePatientById(patientId);
+
+        // Assert
+        assertFalse(result);
+        verify(patientRepository, never()).deleteById(patientId);
+        verify(feignClient, times(1)).existsNotesByPatientId(patientId);
+    }
+
+    @Test
+    public void testDeletePatientById_Failure_UnexpectedError() {
         // Arrange
         Long patientId = 3L;
         when(patientRepository.existsById(patientId)).thenReturn(true);
@@ -154,6 +192,8 @@ class PatientServiceTest {
 
         // Assert
         assertFalse(result);
+        verify(feignClient, times(1)).existsNotesByPatientId(patientId);
+        verify(patientRepository, times(1)).deleteById(patientId);
     }
 
 

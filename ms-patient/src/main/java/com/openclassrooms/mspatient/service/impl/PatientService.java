@@ -2,6 +2,7 @@ package com.openclassrooms.mspatient.service.impl;
 
 import com.openclassrooms.mspatient.exceptions.PatientNotFoundException;
 import com.openclassrooms.mspatient.model.Patient;
+import com.openclassrooms.mspatient.proxy.FeignClient;
 import com.openclassrooms.mspatient.repository.PatientRepository;
 import com.openclassrooms.mspatient.service.IPatientService;
 import jakarta.transaction.Transactional;
@@ -21,6 +22,9 @@ public class PatientService implements IPatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private FeignClient feignClient;
 
     /**
      * Retrieves all users from the repository.
@@ -79,6 +83,18 @@ public class PatientService implements IPatientService {
                 log.error("Patient not found with ID: {}", id);
                 throw new PatientNotFoundException("Patient not found with ID: " + id);
             }
+            try {
+                boolean notesExist = feignClient.existsNotesByPatientId(id);
+                if (notesExist) {
+                    feignClient.deleteNotesByPatientId(id);
+                    log.info("Successfully deleted notes for patient ID: {}", id);
+                } else {
+                    log.info("No notes found for patient ID: {}, skipping note deletion.", id);
+                }
+            } catch (Exception e) {
+                log.error("Failed to check/delete notes for patient ID: {}. Root cause: {}", id, e.getMessage(), e);
+                return false;
+            }
             patientRepository.deleteById(id);
             return true;
         } catch (Exception e) {
@@ -86,4 +102,5 @@ public class PatientService implements IPatientService {
             return false;
         }
     }
+
 }
