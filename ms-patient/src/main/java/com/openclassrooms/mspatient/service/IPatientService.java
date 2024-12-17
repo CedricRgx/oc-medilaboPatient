@@ -37,10 +37,18 @@ public interface IPatientService {
     Patient updatePatient(Patient patient);
 
     /**
+     * Deactivates a patient by their ID.
+     *
+     * @param id The ID of the patient to be deactivated.
+     * @return True if the deactivation was successful, False otherwise.
+     */
+    boolean deactivatePatientById(Long id);
+
+    /**
      * Deletes a patient by their ID.
      * @param id The ID of the patient to be deleted.
      * @return True if the deletion was successful, otherwise False.
      */
-    boolean deletePatientById(Long id);
+//    boolean deletePatientById(Long id);
 
 }

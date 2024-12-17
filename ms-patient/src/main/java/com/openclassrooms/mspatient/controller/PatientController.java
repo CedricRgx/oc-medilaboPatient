@@ -124,7 +124,7 @@ public class PatientController {
         log.info("DELETE request on the endpoint /patient/{id}: delete a patient from its id");
         boolean isDeleted = false;
         try{
-            isDeleted = patientService.deletePatientById(id);
+            isDeleted = patientService.deactivatePatientById(id);
         }catch(EmptyResultDataAccessException e) {
             isDeleted = false;
         }catch(Exception e) {

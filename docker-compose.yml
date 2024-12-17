@@ -18,7 +18,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8761" ]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   ########################################
@@ -42,7 +42,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "${APP_DB_HOST}", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
     networks:
       - medilabo-network
@@ -72,8 +72,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh --quiet"]
       interval: 10s
-      timeout: 5s
-      retries: 3
+      timeout: 10s
+      retries: 5
 
   ########################################
   ##### MS-Gateway-Server
@@ -99,7 +99,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${GATEWAY_USERNAME}:${GATEWAY_PASSWORD}", "http://localhost:8082/actuator/health"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   ########################################
@@ -130,7 +130,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${PATIENT_USERNAME}:${PATIENT_PASSWORD}", "http://localhost:8081/actuator/health"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   ########################################
@@ -162,7 +162,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${NOTE_USERNAME}:${NOTE_PASSWORD}", "http://localhost:8083/actuator/health"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   ########################################
@@ -193,7 +193,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "-u", "${DIABETE_USERNAME}:${DIABETE_PASSWORD}", "http://localhost:8084/actuator/health" ]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   ########################################
@@ -220,7 +220,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "-u", "${CLIENT_UI_USERNAME}:${CLIENT_UI_PASSWORD}", "http://localhost:8080/actuator/health" ]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
 ########################################

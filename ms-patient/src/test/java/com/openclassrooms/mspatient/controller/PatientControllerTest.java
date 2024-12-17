@@ -174,7 +174,7 @@ class PatientControllerTest {
     @Test
     public void testDeletePatientById() {
         // Arrange
-        when(patientService.deletePatientById(1L)).thenReturn(true);
+        when(patientService.deactivatePatientById(1L)).thenReturn(true);
 
         // Act
         ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
@@ -186,7 +186,7 @@ class PatientControllerTest {
     @Test
     public void testDeletePatientByIdError() {
         // Arrange
-        when(patientService.deletePatientById(1L)).thenReturn(false);
+        when(patientService.deactivatePatientById(1L)).thenReturn(false);
 
         // Act
         ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
@@ -199,7 +199,7 @@ class PatientControllerTest {
     public void deletePatientById_ShouldReturnOkAndTrue_WhenDeletionIsSuccessful() {
         // Arrange
         Long patientId = 1L;
-        when(patientService.deletePatientById(patientId)).thenReturn(true);
+        when(patientService.deactivatePatientById(patientId)).thenReturn(true);
 
         // Act
         ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
@@ -207,14 +207,14 @@ class PatientControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(true, response.getBody());
-        verify(patientService, times(1)).deletePatientById(patientId);
+        verify(patientService, times(1)).deactivatePatientById(patientId);
     }
 
     @Test
     public void deletePatientById_ShouldReturnOkAndFalse_WhenPatientNotFound() {
         // Arrange
         Long patientId = 1L;
-        when(patientService.deletePatientById(patientId)).thenThrow(new EmptyResultDataAccessException(1));
+        when(patientService.deactivatePatientById(patientId)).thenThrow(new EmptyResultDataAccessException(1));
 
         // Act
         ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
@@ -222,14 +222,14 @@ class PatientControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(false, response.getBody());
-        verify(patientService, times(1)).deletePatientById(patientId);
+        verify(patientService, times(1)).deactivatePatientById(patientId);
     }
 
     @Test
     public void deletePatientById_ShouldReturnInternalServerError_WhenUnexpectedExceptionOccurs() {
         // Arrange
         Long patientId = 1L;
-        when(patientService.deletePatientById(patientId)).thenThrow(new RuntimeException("Unexpected error"));
+        when(patientService.deactivatePatientById(patientId)).thenThrow(new RuntimeException("Unexpected error"));
 
         // Act
         ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
@@ -237,6 +237,75 @@ class PatientControllerTest {
         // Assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals(false, response.getBody());
-        verify(patientService, times(1)).deletePatientById(patientId);
+        verify(patientService, times(1)).deactivatePatientById(patientId);
     }
+
+//    @Test
+//    public void testDeletePatientById() {
+//        // Arrange
+//        when(patientService.deletePatientById(1L)).thenReturn(true);
+//
+//        // Act
+//        ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
+//
+//        // Assert
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//    }
+//
+//    @Test
+//    public void testDeletePatientByIdError() {
+//        // Arrange
+//        when(patientService.deletePatientById(1L)).thenReturn(false);
+//
+//        // Act
+//        ResponseEntity<Boolean> response = patientController.deletePatientById(1L);
+//
+//        // Assert
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//    }
+//
+//    @Test
+//    public void deletePatientById_ShouldReturnOkAndTrue_WhenDeletionIsSuccessful() {
+//        // Arrange
+//        Long patientId = 1L;
+//        when(patientService.deletePatientById(patientId)).thenReturn(true);
+//
+//        // Act
+//        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+//
+//        // Assert
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(true, response.getBody());
+//        verify(patientService, times(1)).deletePatientById(patientId);
+//    }
+//
+//    @Test
+//    public void deletePatientById_ShouldReturnOkAndFalse_WhenPatientNotFound() {
+//        // Arrange
+//        Long patientId = 1L;
+//        when(patientService.deletePatientById(patientId)).thenThrow(new EmptyResultDataAccessException(1));
+//
+//        // Act
+//        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+//
+//        // Assert
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(false, response.getBody());
+//        verify(patientService, times(1)).deletePatientById(patientId);
+//    }
+//
+//    @Test
+//    public void deletePatientById_ShouldReturnInternalServerError_WhenUnexpectedExceptionOccurs() {
+//        // Arrange
+//        Long patientId = 1L;
+//        when(patientService.deletePatientById(patientId)).thenThrow(new RuntimeException("Unexpected error"));
+//
+//        // Act
+//        ResponseEntity<Boolean> response = patientController.deletePatientById(patientId);
+//
+//        // Assert
+//        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+//        assertEquals(false, response.getBody());
+//        verify(patientService, times(1)).deletePatientById(patientId);
+//    }
 }

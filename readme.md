@@ -132,7 +132,7 @@ Check the connection properties in the `ms-note` configuration (by default host=
 
 The Eureka server will run on port 8761. Wait for it to fully start before launching the other services.
 
-3. Start the Other Microservices:
+3. Start the other microservices:
 Open a new terminal for each service and run:
 
     `cd ms-patient`

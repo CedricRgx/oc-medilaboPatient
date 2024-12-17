@@ -78,4 +78,10 @@ public class Patient {
     @ValidPhone(message="The phone number is invalid.")
     @Column(name="phone")
     private String phone;
+
+    /**
+     * The status of the patient
+     */
+    @Column(name="is_active")
+    private boolean isActive;
 }
