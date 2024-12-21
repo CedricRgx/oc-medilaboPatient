@@ -17,9 +17,10 @@ services:
       - medilabo-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8761" ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MySQL
@@ -41,9 +42,10 @@ services:
       - ./ms-patient/src/main/resources/schemaMedilaboPatient.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "${APP_DB_HOST}", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
     networks:
       - medilabo-network
 
@@ -71,9 +73,10 @@ services:
       - medilabo-network
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh --quiet"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MS-Gateway-Server
@@ -98,9 +101,10 @@ services:
       - medilabo-network
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${GATEWAY_USERNAME}:${GATEWAY_PASSWORD}", "http://localhost:8082/actuator/health"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MS-Patient
@@ -129,9 +133,10 @@ services:
       - medilabo-network
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${PATIENT_USERNAME}:${PATIENT_PASSWORD}", "http://localhost:8081/actuator/health"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MS-Note
@@ -161,9 +166,10 @@ services:
       - medilabo-network
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "${NOTE_USERNAME}:${NOTE_PASSWORD}", "http://localhost:8083/actuator/health"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MS-Diabete
@@ -192,9 +198,10 @@ services:
       - medilabo-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "-u", "${DIABETE_USERNAME}:${DIABETE_PASSWORD}", "http://localhost:8084/actuator/health" ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
   ########################################
   ##### MS-Client-UI
@@ -219,9 +226,10 @@ services:
       - medilabo-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "-u", "${CLIENT_UI_USERNAME}:${CLIENT_UI_PASSWORD}", "http://localhost:8080/actuator/health" ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+      interval: 30s   # Checks every 30 seconds
+      timeout: 5s     # Waiting time for a response
+      retries: 3      # Attempts before declaring the container 'unhealthy'
+      start_period: 60s # Delay before starting the tests, to allow the service to stabilize
 
 ########################################
 ##### Networks
